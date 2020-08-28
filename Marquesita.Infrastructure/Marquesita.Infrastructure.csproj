@@ -13,4 +13,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbContexts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Marquesita.Models\Marquesita.Models.csproj" />
+  </ItemGroup>
+
 </Project>
