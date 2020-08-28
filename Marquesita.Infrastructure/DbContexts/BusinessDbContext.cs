@@ -14,7 +14,7 @@ namespace Marquesita.Infrastructure.DbContexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
-        public DbSet<FavoriteList> FavoriteLists { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Comments> Comments { get; set; }
@@ -83,16 +83,16 @@ namespace Marquesita.Infrastructure.DbContexts
                 .IsRequired();
             });
 
-            modelBuilder.Entity<FavoriteList>(entity =>
+            modelBuilder.Entity<WishList>(entity =>
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.ProductId).IsRequired();
                 entity.Property(p => p.UserId).IsRequired();
 
                 entity.HasOne(p => p.product)
-                .WithMany(fl => fl.favoriteLists)
+                .WithMany(wl => wl.wishLists)
                 .HasForeignKey(fk => fk.ProductId)
-                .HasConstraintName("FK_FavoriteList_ProductId")
+                .HasConstraintName("FK_WishList_ProductId")
                 .IsRequired();
             });
 

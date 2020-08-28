@@ -2,7 +2,7 @@
 
 namespace Marquesita.Models.Business
 {
-    public class FavoriteList
+    public class WishList
     {
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
