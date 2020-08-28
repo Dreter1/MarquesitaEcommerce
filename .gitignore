@@ -431,3 +431,13 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+MarquesitaDashboards/appsettings.Development.json
+MarquesitaDashboards/appsettings.json
+/MarquesitaDashboards/appsettings.Development.json
+/MarquesitaDashboards/appsettings.Development.json
+
+MarquesitaEcommerce/appsettings.Development.json
+MarquesitaEcommerce/appsettings.json
+/MarquesitaEcommerce/appsettings.Development.json
+/MarquesitaEcommerce/appsettings.Development.json
