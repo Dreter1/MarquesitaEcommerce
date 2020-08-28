@@ -1,0 +1,118 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Marquesita.Infrastructure.DbContexts;
+using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using MotleyFlash;
+using MotleyFlash.AspNetCore.MessageProviders;
+
+namespace MarquesitaDashboards
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+            services.AddSession();
+            FlashMessagesConfiguration(services);
+            DbConnectionsConfiguration(services);
+            IdentityConfiguration(services);
+        }
+
+        private void DbConnectionsConfiguration(IServiceCollection services)
+        {
+            services.AddDbContext<BusinessDbContext>(opt =>
+            opt.UseSqlServer(Configuration.GetConnectionString("BusinessDB"),
+            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
+            );
+
+            services.AddDbContext<AuthIdentityDbContext>(opt =>
+            opt.UseSqlServer(Configuration.GetConnectionString("IdentityDB"),
+            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
+            );
+        }
+
+        private void IdentityConfiguration(IServiceCollection services)
+        {
+            services.AddIdentity<User, Role>(config =>
+            {
+                config.User.RequireUniqueEmail = false;
+                config.Password.RequiredLength = 8;
+                config.Password.RequireDigit = false;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireLowercase = false;
+            }).AddEntityFrameworkStores<AuthIdentityDbContext>();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Security.Cookie";
+                config.LoginPath = "/Auth/SignIn";
+                config.AccessDeniedPath = "/Auth/AccessDenied";
+                config.SlidingExpiration = true;
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            });
+        }
+
+
+        private void FlashMessagesConfiguration(IServiceCollection services)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(x => x.GetRequiredService<IHttpContextAccessor>().HttpContext.Session);
+            services.AddScoped<IMessageProvider, SessionMessageProvider>();
+
+            services.AddScoped<IMessageTypes>(x =>
+            {
+                return new MessageTypes(error: "danger", information: "info");
+            });
+
+            services.AddScoped<IMessengerOptions, MessengerOptions>();
+
+            services.AddScoped<IMessenger, StackMessenger>();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseSession();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Auth}/{action=SignIn}/{id?}");
+            });
+        }
+    }
+}
