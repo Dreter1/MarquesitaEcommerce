@@ -1,9 +1,9 @@
-﻿//using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace Marquesita.Models.Identity
 {
-    public class User /*: IdentityUser*/
+    public class User : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
