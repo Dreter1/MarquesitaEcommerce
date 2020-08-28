@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -22,16 +23,23 @@ namespace MarquesitaDashboards
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            MvcConfiguration(services);
             services.AddSession();
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
+        }
+
+        private void MvcConfiguration(IServiceCollection services)
+        {
+            services.AddMvc().AddRazorOptions(options =>
+            {
+                options.ViewLocationFormats.Add("/{0}.cshtml");
+            }).AddFluentValidation();
         }
 
         private void DbConnectionsConfiguration(IServiceCollection services)
@@ -221,7 +229,7 @@ namespace MarquesitaDashboards
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Auth}/{action=SignIn}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
