@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -16,8 +16,6 @@
 
   <ItemGroup>
     <Folder Include="DbContexts\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\Dashboards\" />
     <Folder Include="ViewModels\Ecommerce\" />
