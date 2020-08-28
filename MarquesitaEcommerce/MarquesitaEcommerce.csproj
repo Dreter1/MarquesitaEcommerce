@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Marquesita.Infrastructure\Marquesita.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

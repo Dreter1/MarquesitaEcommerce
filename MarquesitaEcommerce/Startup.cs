@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -24,13 +25,21 @@ namespace MarquesitaEcommerce
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            MvcConfiguration(services);
             services.AddSession();
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
+        }
+
+        private void MvcConfiguration(IServiceCollection services)
+        {
+            services.AddMvc().AddRazorOptions(options =>
+            {
+                options.ViewLocationFormats.Add("/{0}.cshtml");
+            }).AddFluentValidation();
         }
 
         private void DbConnectionsConfiguration(IServiceCollection services)
@@ -105,7 +114,6 @@ namespace MarquesitaEcommerce
             //services.AddTransient<IValidator<RoleViewModel>, RoleEditViewModelValidator>();
 
             //services.AddTransient<IValidator<PermissionViewModel>, PermissionViewModelValidator>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
