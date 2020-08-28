@@ -43,7 +43,8 @@ namespace Marquesita.Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     TotalAmount = table.Column<decimal>(nullable: false),
-                    TipeOfPay = table.Column<byte>(nullable: false),
+                    PaymentType = table.Column<byte>(nullable: false),
+                    TypeOfSale = table.Column<byte>(nullable: false),
                     SaleStatus = table.Column<byte>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     AddressId = table.Column<Guid>(nullable: false)
@@ -105,25 +106,6 @@ namespace Marquesita.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavoriteLists",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FavoriteLists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FavoriteList_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SaleDetails",
                 columns: table => new
                 {
@@ -171,14 +153,28 @@ namespace Marquesita.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "WishLists",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishList_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProductId",
                 table: "Comments",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FavoriteLists_ProductId",
-                table: "FavoriteLists",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -205,6 +201,11 @@ namespace Marquesita.Infrastructure.Migrations
                 name: "IX_ShoppingCarts_ProductId",
                 table: "ShoppingCarts",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishLists_ProductId",
+                table: "WishLists",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -213,13 +214,13 @@ namespace Marquesita.Infrastructure.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "FavoriteLists");
-
-            migrationBuilder.DropTable(
                 name: "SaleDetails");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");
+
+            migrationBuilder.DropTable(
+                name: "WishLists");
 
             migrationBuilder.DropTable(
                 name: "Sales");

@@ -95,25 +95,6 @@ namespace Marquesita.Infrastructure.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Marquesita.Models.Business.FavoriteList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("FavoriteLists");
-                });
-
             modelBuilder.Entity("Marquesita.Models.Business.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -164,14 +145,17 @@ namespace Marquesita.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("SaleStatus")
+                    b.Property<byte>("PaymentType")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("TipeOfPay")
+                    b.Property<byte>("SaleStatus")
                         .HasColumnType("tinyint");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte>("TypeOfSale")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -235,22 +219,31 @@ namespace Marquesita.Infrastructure.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
+            modelBuilder.Entity("Marquesita.Models.Business.WishList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("WishLists");
+                });
+
             modelBuilder.Entity("Marquesita.Models.Business.Comments", b =>
                 {
                     b.HasOne("Marquesita.Models.Business.Product", "product")
                         .WithMany("comments")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_Comment_ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Marquesita.Models.Business.FavoriteList", b =>
-                {
-                    b.HasOne("Marquesita.Models.Business.Product", "product")
-                        .WithMany("favoriteLists")
-                        .HasForeignKey("ProductId")
-                        .HasConstraintName("FK_FavoriteList_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -298,6 +291,16 @@ namespace Marquesita.Infrastructure.Migrations
                         .WithMany("ShopingCartItems")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_ShoppingCart_ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Marquesita.Models.Business.WishList", b =>
+                {
+                    b.HasOne("Marquesita.Models.Business.Product", "product")
+                        .WithMany("wishLists")
+                        .HasForeignKey("ProductId")
+                        .HasConstraintName("FK_WishList_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
