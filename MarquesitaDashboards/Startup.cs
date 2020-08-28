@@ -34,6 +34,8 @@ namespace MarquesitaDashboards
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
+            PoliciesConfiguration(services);
+            ValidatorsConfiguration(services);
         }
 
         private void DbConnectionsConfiguration(IServiceCollection services)
@@ -86,6 +88,119 @@ namespace MarquesitaDashboards
             services.AddScoped<IMessengerOptions, MessengerOptions>();
 
             services.AddScoped<IMessenger, StackMessenger>();
+        }
+
+        private void PoliciesConfiguration(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                // User Policy
+                options.AddPolicy("CanViewUsers", policy =>
+                {
+                    policy.RequireClaim("Permission", "ViewUsers");
+                });
+
+                options.AddPolicy("CanAddUsers", policy =>
+                {
+                    policy.RequireClaim("Permission", "AddUsers");
+                });
+
+                options.AddPolicy("CanEditUsers", policy =>
+                {
+                    policy.RequireClaim("Permission", "EditUsers");
+                });
+
+                options.AddPolicy("CanDeleteUsers", policy =>
+                {
+                    policy.RequireClaim("Permission", "DeleteUsers");
+                });
+
+                // Roles Policy
+                options.AddPolicy("CanViewRoles", policy =>
+                {
+                    policy.RequireClaim("Permission", "ViewRoles");
+                });
+
+                options.AddPolicy("CanAddRoles", policy =>
+                {
+                    policy.RequireClaim("Permission", "AddRoles");
+                });
+
+                options.AddPolicy("CanEditRoles", policy =>
+                {
+                    policy.RequireClaim("Permission", "EditRoles");
+                });
+
+                options.AddPolicy("CanDeleteRoles", policy =>
+                {
+                    policy.RequireClaim("Permission", "DeleteRoles");
+                });
+
+                // Products Policy
+                options.AddPolicy("CanViewProducts", policy =>
+                {
+                    policy.RequireClaim("Permission", "ViewProducts");
+                });
+
+                options.AddPolicy("CanAddProducts", policy =>
+                {
+                    policy.RequireClaim("Permission", "AddProducts");
+                });
+
+                options.AddPolicy("CanEditProducts", policy =>
+                {
+                    policy.RequireClaim("Permission", "EditProducts");
+                });
+
+                options.AddPolicy("CanDeleteProducts", policy =>
+                {
+                    policy.RequireClaim("Permission", "DeleteProducts");
+                });
+
+                // Category Policy
+                options.AddPolicy("CanAddCategory", policy =>
+                {
+                    policy.RequireClaim("Permission", "AddCategory");
+                });
+
+                options.AddPolicy("CanEditCategory", policy =>
+                {
+                    policy.RequireClaim("Permission", "EditCategory");
+                });
+
+                options.AddPolicy("CanDeleteCategory", policy =>
+                {
+                    policy.RequireClaim("Permission", "DeleteCategory");
+                });
+
+                // Sales Policy
+                options.AddPolicy("CanViewSales", policy =>
+                {
+                    policy.RequireClaim("Permission", "ViewSales");
+                });
+
+                options.AddPolicy("CanAddSales", policy =>
+                {
+                    policy.RequireClaim("Permission", "AddSales");
+                });
+
+                options.AddPolicy("CanEditSales", policy =>
+                {
+                    policy.RequireClaim("Permission", "EditSales");
+                });
+            });
+        }
+
+        private void ValidatorsConfiguration(IServiceCollection services)
+        {
+            //services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
+            //services.AddTransient<IValidator<UserViewModel>, UserEditViewModelValidator>();
+
+            //services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
+            //services.AddTransient<IValidator<RoleViewModel>, RoleEditViewModelValidator>();
+
+            //services.AddTransient<IValidator<PermissionViewModel>, PermissionViewModelValidator>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
