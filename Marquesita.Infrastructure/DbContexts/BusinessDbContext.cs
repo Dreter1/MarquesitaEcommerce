@@ -52,7 +52,8 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.AddressId).IsRequired();
                 entity.Property(p => p.TotalAmount).IsRequired();
                 entity.Property(p => p.SaleStatus).IsRequired();
-                entity.Property(p => p.TipeOfPay).IsRequired();
+                entity.Property(p => p.PaymentType).IsRequired();
+                entity.Property(p => p.TypeOfSale).IsRequired();
 
                 entity.HasOne(a => a.address)
                 .WithMany(s => s.sales)
