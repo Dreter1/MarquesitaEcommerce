@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
+using System;
 
 namespace MarquesitaDashboards
 {
@@ -65,14 +61,13 @@ namespace MarquesitaDashboards
 
             services.ConfigureApplicationCookie(config =>
             {
-                config.Cookie.Name = "Security.Cookie";
+                config.Cookie.Name = "Security.DashboardsCookie";
                 config.LoginPath = "/Auth/SignIn";
                 config.AccessDeniedPath = "/Auth/AccessDenied";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
         }
-
 
         private void FlashMessagesConfiguration(IServiceCollection services)
         {
