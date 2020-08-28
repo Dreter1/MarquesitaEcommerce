@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
+using System;
 
 namespace MarquesitaEcommerce
 {
@@ -28,6 +29,8 @@ namespace MarquesitaEcommerce
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
+            PoliciesConfiguration(services);
+            ValidatorsConfiguration(services);
         }
 
         private void DbConnectionsConfiguration(IServiceCollection services)
@@ -55,16 +58,15 @@ namespace MarquesitaEcommerce
                 config.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<AuthIdentityDbContext>();
 
-            //services.ConfigureApplicationCookie(config =>
-            //{
-            //    config.Cookie.Name = "Security.Cookie";
-            //    config.LoginPath = "/Auth/SignIn";
-            //    config.AccessDeniedPath = "/Auth/AccessDenied";
-            //    config.SlidingExpiration = true;
-            //    config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-            //});
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Security.EcommerceCookie";
+                config.LoginPath = "/Home/Index";
+                config.AccessDeniedPath = "/Home/AccessDenied";
+                config.SlidingExpiration = true;
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            });
         }
-
 
         private void FlashMessagesConfiguration(IServiceCollection services)
         {
@@ -80,6 +82,30 @@ namespace MarquesitaEcommerce
             services.AddScoped<IMessengerOptions, MessengerOptions>();
 
             services.AddScoped<IMessenger, StackMessenger>();
+        }
+
+        private void PoliciesConfiguration(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                // Client Policy
+                options.AddPolicy("ClientPolicy", policy =>
+                {
+                    policy.RequireClaim("Permission", "Shop");
+                });
+            });
+        }
+
+        private void ValidatorsConfiguration(IServiceCollection services)
+        {
+            //services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
+            //services.AddTransient<IValidator<UserViewModel>, UserEditViewModelValidator>();
+
+            //services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
+            //services.AddTransient<IValidator<RoleViewModel>, RoleEditViewModelValidator>();
+
+            //services.AddTransient<IValidator<PermissionViewModel>, PermissionViewModelValidator>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
