@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\templateDesign\**" />
+    <Content Remove="wwwroot\templateDesign\**" />
+    <EmbeddedResource Remove="wwwroot\templateDesign\**" />
+    <None Remove="wwwroot\templateDesign\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
@@ -16,6 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Marquesita.Infrastructure\Marquesita.Infrastructure.csproj" />
     <ProjectReference Include="..\Marquesita.Models\Marquesita.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\template\" />
   </ItemGroup>
 
 </Project>
