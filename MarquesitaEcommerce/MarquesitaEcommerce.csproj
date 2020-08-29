@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Validators\" />
+    <Folder Include="wwwroot\templateDesign\" />
   </ItemGroup>
 
 </Project>
