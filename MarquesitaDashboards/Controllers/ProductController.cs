@@ -6,7 +6,7 @@ namespace MarquesitaDashboards.Controllers
     [Authorize]
     public class ProductController : Controller
     {
-        [AllowAnonymous]
+        [Authorize(Policy = "CanViewProducts")]
         public IActionResult Index()
         {
             return View();
