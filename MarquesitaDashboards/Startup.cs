@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Marquesita.Infrastructure;
 using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace MarquesitaDashboards
 {
@@ -206,7 +208,7 @@ namespace MarquesitaDashboards
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -231,6 +233,8 @@ namespace MarquesitaDashboards
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            ApplicationDbInitializer.SeedUsers(userManager, roleManager).Wait();
         }
     }
 }
