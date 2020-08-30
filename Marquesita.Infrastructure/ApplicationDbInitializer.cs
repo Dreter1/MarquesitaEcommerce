@@ -29,6 +29,7 @@ namespace Marquesita.Infrastructure
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddProducts"));
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditProducts"));
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteProducts"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewCategory"));
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddCategory"));
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditCategory"));
                 await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteCategory"));
