@@ -13,6 +13,8 @@ using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 
 namespace MarquesitaDashboards
 {
@@ -34,6 +36,7 @@ namespace MarquesitaDashboards
             IdentityConfiguration(services);
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
+            RepositoriesConfiguration(services);
         }
 
         private void MvcConfiguration(IServiceCollection services)
@@ -206,6 +209,14 @@ namespace MarquesitaDashboards
 
             //services.AddTransient<IValidator<PermissionViewModel>, PermissionViewModelValidator>();
 
+        }
+
+        private void RepositoriesConfiguration(IServiceCollection services)
+        {
+            //services.AddTransient<IRepository<Permission>, PermissionRepository>();
+            services.AddTransient<IUserManagerService, UserManagerService>();
+            services.AddTransient<IRoleManagerService, RoleManagerService>();
+            services.AddTransient<IAuthManagerService, AuthManagerService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)

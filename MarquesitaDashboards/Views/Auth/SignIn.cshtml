@@ -1,4 +1,4 @@
-﻿
+﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.LoginViewModel
 @{
     ViewData["Title"] = "Log In";
     Layout = "_LoginLayout";
@@ -12,27 +12,26 @@
     <div class="card-body login-card-body">
         <p class="login-box-msg">Ingrese lo campos</p>
 
-        <form action="#" method="post">
-            <div class="input-group mb-3">
-                <input type="email" class="form-control" placeholder="Email">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
-                    </div>
-                </div>
+        <form asp-controller="Auth" asp-action="SignIn" method="post">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Usuario </label>
+                <input type="text" asp-for="Username" class="form-control" placeholder="usuario">
             </div>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Contraseña</label>
+                <input type="password" asp-for="Password" class="form-control" placeholder="******">
             </div>
+            <input type="hidden" name="returnUrl" value="@Url.ActionContext.HttpContext.Request.Query["ReturnUrl"]" />
             <div class="text-center">
                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
             </div>
         </form>
     </div>
 </div>
+
+<style>
+    .alert.alert-danger > ul {
+        margin: 0
+    }
+</style>
 

@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
 {
     public class AuthController : Controller
     {
-        public AuthController()
-        {
+        private readonly IAuthManagerService _signsInManager;
+        private readonly IUserManagerService _usersManager;
 
+        public AuthController(IAuthManagerService signsInManager, IUserManagerService usersManager)
+        {
+            _signsInManager = signsInManager;
+            _usersManager = usersManager;
         }
 
         [HttpGet]
@@ -19,6 +22,49 @@ namespace MarquesitaDashboards.Controllers
         public IActionResult SignIn()
         {
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> SignIn(LoginViewModel model, string returnUrl)
+        {
+            returnUrl ??= Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                var user = await _usersManager.GetUserByNameAsync(model.Username);
+
+                if (user != null)
+                {
+                    if (user.IsActive)
+                    {
+                        var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
+                        if (signInResult.Succeeded)
+                        {
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Your account is disabled");
+                        return View();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Username or Password incorrect");
+                    return View();
+                }
+
+            }
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LogOut(string Id)
+        {
+            _signsInManager.LogOut();
+            return RedirectToAction("SignIn");
         }
     }
 }
