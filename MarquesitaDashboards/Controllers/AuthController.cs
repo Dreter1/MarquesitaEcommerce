@@ -45,18 +45,18 @@ namespace MarquesitaDashboards.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Your account is disabled");
+                        ModelState.AddModelError(string.Empty, "Su cuenta fue desactiva, comuniquese con un administrador");
                         return View();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Username or Password incorrect");
+                    ModelState.AddModelError(string.Empty, "Usuario o Contraseña Incorrecta");
                     return View();
                 }
 
             }
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty,"");
             return View();
         }
 

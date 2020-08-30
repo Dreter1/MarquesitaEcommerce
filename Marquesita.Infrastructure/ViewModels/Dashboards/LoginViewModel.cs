@@ -7,10 +7,10 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El usuario es obligatorio")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La Contraseña es obligatorio")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
