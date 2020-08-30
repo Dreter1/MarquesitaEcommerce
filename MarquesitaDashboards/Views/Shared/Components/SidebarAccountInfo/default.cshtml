@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model Marquesita.Models.Identity.User
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a asp-controller="Home" asp-action="Index" class="brand-link">
+        <img src="~/template/dist/img/AdminLTELogo.png" alt="Marquesita Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">La Marquesita</span>
+    </a>
+
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/template/dist/img/avatar.png" class="img-circle elevation-2" alt="@Model.FirstName @Model.LastName Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">@Model.FirstName @Model.LastName</a>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanAddUsers")).Succeeded)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="User" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                }
+
+                @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanAddRoles")).Succeeded)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Role" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-user-tag"></i>
+                            <p>Roles</p>
+                        </a>
+                    </li>
+                }
+
+                @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewCategory")).Succeeded)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Category" asp-action="Index" class="nav-link">
+                            <i class="nav-icon far fa-list-alt"></i>
+                            <p>Categorias</p>
+                        </a>
+                    </li>
+                }
+
+                @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewProducts")).Succeeded)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Product" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fab fa-product-hunt"></i>
+                            <p>Productos</p>
+                        </a>
+                    </li>
+                }
+
+                @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewSales")).Succeeded)
+                {
+                    <li class="nav-item has-treeview">
+                        <a asp-controller="Sale" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-store"></i>
+                            <p>
+                                Tienda <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a asp-controller="Sale" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p> Lista de Ventas</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-cart-plus"></i>
+                                    <p> Realizar Venta</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</aside>

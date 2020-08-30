@@ -166,6 +166,11 @@ namespace MarquesitaDashboards
                 });
 
                 // Category Policy
+                options.AddPolicy("CanViewCategory", policy =>
+                {
+                    policy.RequireClaim("Permission", "ViewCategory");
+                });
+
                 options.AddPolicy("CanAddCategory", policy =>
                 {
                     policy.RequireClaim("Permission", "AddCategory");
