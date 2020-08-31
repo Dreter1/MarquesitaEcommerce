@@ -127,9 +127,14 @@ namespace Marquesita.Infrastructure.Services
                 };
 
             }
-
             return null;
+        }
 
+        public bool EmailExists(string email)
+        {
+            if (_context.Users.Any(u => u.Email == email))
+                return true;
+            return false;
         }
     }
 }

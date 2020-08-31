@@ -22,5 +22,6 @@ namespace Marquesita.Infrastructure.Interfaces
         Task UpdatingRoleOfUserAsync(User user, string UserRol);
         void RemovingRestoringCredentials(User user);
         UserViewModel UserToViewModel(User obj);
+        bool EmailExists(string email);
     }
 }
