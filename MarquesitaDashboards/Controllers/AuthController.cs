@@ -35,17 +35,26 @@ namespace MarquesitaDashboards.Controllers
 
                 if (user != null)
                 {
-                    if (user.IsActive)
+                    var userRole = await _usersManager.GetUserRole(user);
+                    if(userRole != "Cliente")
                     {
-                        var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
-                        if (signInResult.Succeeded)
+                        if (user.IsActive)
                         {
-                            return LocalRedirect(returnUrl);
+                            var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
+                            if (signInResult.Succeeded)
+                            {
+                                return LocalRedirect(returnUrl);
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Su cuenta fue desactiva, comuniquese con un administrador");
+                            return View();
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Su cuenta fue desactiva, comuniquese con un administrador");
+                        ModelState.AddModelError(string.Empty, "Cuenta no valida, comuniquese con un administrador");
                         return View();
                     }
                 }

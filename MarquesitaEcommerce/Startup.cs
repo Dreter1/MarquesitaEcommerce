@@ -100,7 +100,7 @@ namespace MarquesitaEcommerce
                 // Client Policy
                 options.AddPolicy("ClientPolicy", policy =>
                 {
-                    policy.RequireClaim("Permission", "Shop");
+                    policy.RequireClaim("Permission", "Compras");
                 });
             });
         }
