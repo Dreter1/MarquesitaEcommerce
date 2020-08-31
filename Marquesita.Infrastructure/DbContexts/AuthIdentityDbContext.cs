@@ -19,6 +19,15 @@ namespace Marquesita.Infrastructure.DbContexts
             modelBuilder.Entity<User>(b =>
             {
                 b.ToTable("Users");
+
+                b.Property(u => u.UserName).IsRequired();
+                b.Property(u => u.Email).IsRequired();
+                b.Property(u => u.FirstName).IsRequired();
+                b.Property(u => u.LastName).IsRequired();
+                b.Property(u => u.Phone).IsRequired();
+                b.Property(u => u.DateOfBirth).IsRequired();
+                b.Property(u => u.RegisterDate).IsRequired();
+                b.Property(u => u.IsActive).IsRequired().HasDefaultValue(true);
             });
 
             modelBuilder.Entity<User>()
