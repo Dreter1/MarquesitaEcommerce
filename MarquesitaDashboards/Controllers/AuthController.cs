@@ -56,7 +56,7 @@ namespace MarquesitaDashboards.Controllers
                 }
 
             }
-            ModelState.AddModelError(string.Empty,"");
+            ModelState.AddModelError(string.Empty, "");
             return View();
         }
 
@@ -65,6 +65,12 @@ namespace MarquesitaDashboards.Controllers
         {
             _signsInManager.LogOut();
             return RedirectToAction("SignIn");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
