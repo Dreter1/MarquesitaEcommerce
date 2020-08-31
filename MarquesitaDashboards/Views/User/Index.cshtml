@@ -23,10 +23,7 @@
     </div>
 </section>
 
-<!-- Main content -->
 <section class="content">
-
-    <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body">
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddUsers")).Succeeded)

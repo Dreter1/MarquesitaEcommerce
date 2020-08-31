@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -55,15 +56,15 @@ namespace Marquesita.Infrastructure.Services
             return await _roleManager.CreateAsync(role);
         }
 
-        //public async Task AssignPermissionsToRole(RoleViewModel model)
-        //{
-        //    var role = await GetRoleByName(model.Name);
+        public async Task AssignPermissionsToRole(RoleViewModel model)
+        {
+            var role = await GetRoleByName(model.Name);
 
-        //    foreach (var permission in model.Permissions)
-        //    {
-        //        await _roleManager.AddClaimAsync(role, new Claim("Permission", permission));
-        //    }
-        //}
+            foreach (var permission in model.Permissions)
+            {
+                await _roleManager.AddClaimAsync(role, new Claim("Permission", permission));
+            }
+        }
 
         public async Task DeletingRoleAsync(Role role)
         {
@@ -93,5 +94,12 @@ namespace Marquesita.Infrastructure.Services
         //    _context.Entry(role).State = EntityState.Modified;
         //    _context.SaveChanges();
         //}
+
+        public List<string> PermissionList()
+        {
+            return new List<string>() { 
+                "Hello"
+            };
+        }
     }
 }

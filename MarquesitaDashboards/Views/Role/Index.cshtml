@@ -1,9 +1,11 @@
-﻿
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Roles";
 }
 
-<div class="content-header">
+<section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -17,5 +19,59 @@
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddRoles")).Succeeded)
+            {
+                <div class="fa-pull-right">
+                    <a asp-controller="Role" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-square"></i> Nuevo Rol</a>
+                </div>
+            }
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td>@role.Name</td>
+                            <td>
+                                <div class="form-row text-center">
+                                    <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
+                                    {
+                                        <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                    }
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                                    {
+                                        <form asp-controller="Role" asp-action="Delete" method="post">
+                                            <input type="hidden" name="Id" value="@role.Id" />
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        dataTableScript();
+    });
+</script>
 
