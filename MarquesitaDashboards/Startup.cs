@@ -105,101 +105,101 @@ namespace MarquesitaDashboards
                 // User Policy
                 options.AddPolicy("CanViewUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "ViewUsers");
+                    policy.RequireClaim("Permission", "Ver Usuarios");
                 });
 
                 options.AddPolicy("CanAddUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "AddUsers");
+                    policy.RequireClaim("Permission", "Agregar Usuario");
                 });
 
                 options.AddPolicy("CanEditUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "EditUsers");
+                    policy.RequireClaim("Permission", "Editar Usuario");
                 });
 
                 options.AddPolicy("CanDeleteUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "DeleteUsers");
+                    policy.RequireClaim("Permission", "Eliminar Usuario");
                 });
 
                 // Roles Policy
                 options.AddPolicy("CanViewRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "ViewRoles");
+                    policy.RequireClaim("Permission", "Ver Roles");
                 });
 
                 options.AddPolicy("CanAddRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "AddRoles");
+                    policy.RequireClaim("Permission", "Agregar Roles");
                 });
 
                 options.AddPolicy("CanEditRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "EditRoles");
+                    policy.RequireClaim("Permission", "Editar Roles");
                 });
 
                 options.AddPolicy("CanDeleteRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "DeleteRoles");
+                    policy.RequireClaim("Permission", "Eliminar Roles");
                 });
 
                 // Products Policy
                 options.AddPolicy("CanViewProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "ViewProducts");
+                    policy.RequireClaim("Permission", "Ver Productos");
                 });
 
                 options.AddPolicy("CanAddProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "AddProducts");
+                    policy.RequireClaim("Permission", "Agregar Productos");
                 });
 
                 options.AddPolicy("CanEditProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "EditProducts");
+                    policy.RequireClaim("Permission", "Editar Productos");
                 });
 
                 options.AddPolicy("CanDeleteProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "DeleteProducts");
+                    policy.RequireClaim("Permission", "Eliminar Productos");
                 });
 
                 // Category Policy
                 options.AddPolicy("CanViewCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "ViewCategory");
+                    policy.RequireClaim("Permission", "Ver Categorias");
                 });
 
                 options.AddPolicy("CanAddCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "AddCategory");
+                    policy.RequireClaim("Permission", "Agregar Categoria");
                 });
 
                 options.AddPolicy("CanEditCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "EditCategory");
+                    policy.RequireClaim("Permission", "Editar Categoria");
                 });
 
                 options.AddPolicy("CanDeleteCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "DeleteCategory");
+                    policy.RequireClaim("Permission", "Eliminar Categoria");
                 });
 
                 // Sales Policy
                 options.AddPolicy("CanViewSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "ViewSales");
+                    policy.RequireClaim("Permission", "Ver Ventas");
                 });
 
                 options.AddPolicy("CanAddSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "AddSales");
+                    policy.RequireClaim("Permission", "Agregar Venta");
                 });
 
                 options.AddPolicy("CanEditSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "EditSales");
+                    policy.RequireClaim("Permission", "Editar Venta");
                 });
             });
         }

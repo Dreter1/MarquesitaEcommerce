@@ -1,5 +1,6 @@
 ﻿using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,25 +18,25 @@ namespace Marquesita.Infrastructure
                 await roleManager.CreateAsync(new Role { Name = "Super Admin", NormalizedName = "SUPER ADMIN" });
 
                 var newrole = await roleManager.FindByNameAsync("Super Admin");
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewUsers"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddUsers"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditUsers"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteUsers"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewRoles"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddRoles"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditRoles"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteRoles"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewProducts"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddProducts"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditProducts"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteProducts"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewCategory"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddCategory"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditCategory"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "DeleteCategory"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "ViewSales"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "AddSales"));
-                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "EditSales"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Ver Usuarios"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Agregar Usuario"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Editar Usuario"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Eliminar Usuario"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Ver Roles"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Agregar Roles"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Editar Roles"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Eliminar Roles"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Ver Productos"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Agregar Productos"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Editar Productos"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Eliminar Productos"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Ver Categorias"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Agregar Categoria"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Editar Categoria"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Eliminar Categoria"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Ver Ventas"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Agregar Venta"));
+                await roleManager.AddClaimAsync(newrole, new Claim("Permission", "Editar Venta"));
             }
 
             Thread.Sleep(300);
@@ -45,12 +46,15 @@ namespace Marquesita.Infrastructure
                 User user = new User
                 {
                     LockoutEnabled = false,
-                    IsActive = true,
+                    UserName = "superadmin",
                     FirstName = "admin",
                     LastName = "admin",
                     Email = "admin@gmail.com",
-                    NormalizedEmail = "ADMIN@GMAIL.COM",     
-                    UserName = "superadmin"
+                    NormalizedEmail = "ADMIN@GMAIL.COM",
+                    Phone = "12345678",
+                    DateOfBirth = new DateTime(1996, 05, 05),
+                    RegisterDate = DateTime.Now
+                    
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, "password").Result;
