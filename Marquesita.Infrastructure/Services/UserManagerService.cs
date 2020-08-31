@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,32 @@ namespace Marquesita.Infrastructure.Services
             await _userManager.AddToRoleAsync(user, role.Name);
         }
 
+        public void UpdatingUser(UserViewModel model, User user)
+        {
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.NormalizedEmail = model.Email.ToUpper();
+            user.Phone = model.Phone;
+            user.ImageRoute = model.ImageRoute;
+
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public async Task UpdatingRoleOfUserAsync(User user, string UserRol)
+        {
+            var role = await _roleManager.GetRoleByName(UserRol);
+            var UserRole = await GetUserRole(user);
+            if (UserRole == null)
+                await _userManager.AddToRoleAsync(user, role.Name);
+            else
+            {
+                await _userManager.RemoveFromRoleAsync(user, UserRole);
+                await _userManager.AddToRoleAsync(user, role.Name);
+            }
+        }
+
         public void RemovingRestoringCredentials(User user)
         {
             if (user.IsActive)
@@ -82,6 +109,26 @@ namespace Marquesita.Infrastructure.Services
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
             }
+
+        }
+
+        public UserViewModel UserToViewModel(User obj)
+        {
+            if(obj != null)
+            {
+                return new UserViewModel
+                {
+                    Id = obj.Id,
+                    FirstName = obj.FirstName,
+                    LastName = obj.LastName,
+                    Email = obj.Email,
+                    Phone = obj.Phone,
+                    ImageRoute = obj.ImageRoute
+                };
+
+            }
+
+            return null;
 
         }
     }

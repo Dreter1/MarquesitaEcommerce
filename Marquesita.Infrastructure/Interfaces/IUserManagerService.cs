@@ -1,4 +1,5 @@
-﻿using Marquesita.Models.Identity;
+﻿using Marquesita.Infrastructure.ViewModels.Dashboards;
+using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Marquesita.Infrastructure.Interfaces
         void UserUpdateAsync(User user);
         Task<IdentityResult> CreateUserAsync(User user, string password);
         Task AddingRoleToUserAsync(string UserId, string UserRol);
+        void UpdatingUser(UserViewModel model, User user);
+        Task UpdatingRoleOfUserAsync(User user, string UserRol);
         void RemovingRestoringCredentials(User user);
+        UserViewModel UserToViewModel(User obj);
     }
 }

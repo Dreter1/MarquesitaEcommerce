@@ -54,6 +54,48 @@ namespace MarquesitaDashboards.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize(Policy = "CanEditUsers")]
+        public async Task<IActionResult> EditAsync(string Id)
+        {
+            var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+            if (user != null)
+            {
+                ViewBag.Roles = _rolesManager.GetRolesList();
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                ViewBag.UserRole = await _usersManager.GetUserRole(user);
+                ViewBag.User = user.Id;
+                return View(user);
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanEditUsers")]
+        public async Task<IActionResult> Edit(UserViewModel model, string Id)
+        {
+            var user = await _usersManager.GetUserByIdAsync(Id);
+
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                {
+                    _usersManager.UpdatingUser(model, user);
+                    await _usersManager.UpdatingRoleOfUserAsync(user, model.Role);
+
+                    return RedirectToAction("Index", "User");
+                }
+            }
+
+            ViewBag.Roles = _rolesManager.GetRolesList();
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.UserRole = await _usersManager.GetUserRole(user);
+            ViewBag.User = user.Id;
+
+            return View(model);
+        }
+
         [HttpPost]
         [Authorize(Policy = "CanDeleteUsers")]
         public async Task<IActionResult> RemoveRestoreCredentials(string Id)

@@ -210,7 +210,7 @@ namespace MarquesitaDashboards
         private void ValidatorsConfiguration(IServiceCollection services)
         {
             services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
-            //services.AddTransient<IValidator<UserViewModel>, UserEditViewModelValidator>();
+            services.AddTransient<IValidator<UserViewModel>, UserEditViewModelValidator>();
 
             //services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
             //services.AddTransient<IValidator<RoleViewModel>, RoleEditViewModelValidator>();
