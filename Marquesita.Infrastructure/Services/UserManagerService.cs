@@ -1,6 +1,8 @@
-﻿using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.DbContexts;
+using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,13 @@ namespace Marquesita.Infrastructure.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IRoleManagerService _roleManager;
+        private readonly AuthIdentityDbContext _context;
 
-        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager)
+        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager, AuthIdentityDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task<User> GetUserByNameAsync(string Name)
@@ -53,7 +57,7 @@ namespace Marquesita.Infrastructure.Services
         public async Task<IdentityResult> CreateUserAsync(User user, string password)
         {
             user.Id = Guid.NewGuid().ToString();
-            user.IsActive = true;
+            user.RegisterDate = DateTime.Now;
             return await _userManager.CreateAsync(user, password);
         }
 
@@ -62,6 +66,23 @@ namespace Marquesita.Infrastructure.Services
             var user = await _userManager.FindByNameAsync(User);
             var role = await _roleManager.GetRoleByName(UserRol);
             await _userManager.AddToRoleAsync(user, role.Name);
+        }
+
+        public void RemovingRestoringCredentials(User user)
+        {
+            if (user.IsActive)
+            {
+                user.IsActive = false;
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            else
+            {
+                user.IsActive = true;
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+
         }
     }
 }

@@ -17,5 +17,6 @@ namespace Marquesita.Infrastructure.Interfaces
         void UserUpdateAsync(User user);
         Task<IdentityResult> CreateUserAsync(User user, string password);
         Task AddingRoleToUserAsync(string UserId, string UserRol);
+        void RemovingRestoringCredentials(User user);
     }
 }

@@ -15,6 +15,9 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Services;
+using Marquesita.Infrastructure.ViewModels.Dashboards;
+using MarquesitaDashboards.Validators;
+using FluentValidation;
 
 namespace MarquesitaDashboards
 {
@@ -206,7 +209,7 @@ namespace MarquesitaDashboards
 
         private void ValidatorsConfiguration(IServiceCollection services)
         {
-            //services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
+            services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
             //services.AddTransient<IValidator<UserViewModel>, UserEditViewModelValidator>();
 
             //services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
