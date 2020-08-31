@@ -53,50 +53,46 @@
                 <tbody>
                     @foreach (var user in Model)
                     {
-                        var role = await Component.InvokeAsync("UserRoleInfo", new { user = user });
-                        if (role.ToString() != "Cliente")
-                        {
-                            <tr>
-                                <td></td>
-                                <td>@user.UserName</td>
-                                <td>@user.FirstName</td>
-                                <td>@user.LastName</td>
-                                <td>@role</td>
-                                @if (user.IsActive)
-                                {
-                                    <td>Activo</td>
-                                }
-                                else
-                                {
-                                    <td>Inactivo</td>
-                                }
-                                <td>
-                                    <div class="form-row text-center">
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
+                        <tr>
+                            <td></td>
+                            <td>@user.UserName</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@await Component.InvokeAsync("UserRoleInfo", new { user = user })</td>
+                            @if (user.IsActive)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
+                            <td>
+                                <div class="form-row text-center">
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
+                                    {
+                                        <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
+                                    }
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                                    {
+                                        if (user.IsActive)
                                         {
-                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
+                                            <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                <input type="hidden" name="Id" value="@user.Id" />
+                                                <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
+                                            </form>
                                         }
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                                        else
                                         {
-                                            if (user.IsActive)
-                                            {
-                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                    <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
-                                                </form>
-                                            }
-                                            else
-                                            {
-                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                    <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
-                                                </form>
-                                            }
+                                            <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                <input type="hidden" name="Id" value="@user.Id" />
+                                                <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
+                                            </form>
                                         }
-                                    </div>
-                                </td>
-                            </tr>
-                        }
+                                    }
+                                </div>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

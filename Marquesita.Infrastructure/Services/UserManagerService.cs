@@ -40,9 +40,34 @@ namespace Marquesita.Infrastructure.Services
             return await _userManager.FindByIdAsync(Id);
         }
 
-        public List<User> GetUsersList()
+        public async Task<List<User>> GetUsersEmployeeList()
         {
-            return _userManager.Users.ToList();
+            var usersList = _userManager.Users.ToList();
+            var employeeList = new List<User>();
+            foreach(var user in usersList)
+            {
+                var role = await GetUserRole(user);
+                if (role != "Cliente")
+                {
+                    employeeList.Add(user);
+                }
+            }
+            return employeeList;
+        }
+
+        public async Task<List<User>> GetUsersClientsList()
+        {
+            var usersList = _userManager.Users.ToList();
+            var clientList = new List<User>();
+            foreach (var user in usersList)
+            {
+                var role = await GetUserRole(user);
+                if (role == "Cliente")
+                {
+                    clientList.Add(user);
+                }
+            }
+            return clientList;
         }
 
         public void UserUpdateAsync(User user)
@@ -69,7 +94,7 @@ namespace Marquesita.Infrastructure.Services
             await _userManager.AddToRoleAsync(user, role.Name);
         }
 
-        public void UpdatingUser(UserViewModel model, User user)
+        public void UpdatingUser(UserEditViewModel model, User user)
         {
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
@@ -112,11 +137,11 @@ namespace Marquesita.Infrastructure.Services
 
         }
 
-        public UserViewModel UserToViewModel(User obj)
+        public UserEditViewModel UserToViewModel(User obj)
         {
             if(obj != null)
             {
-                return new UserViewModel
+                return new UserEditViewModel
                 {
                     Id = obj.Id,
                     FirstName = obj.FirstName,

@@ -24,14 +24,14 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View(_usersManager.GetUsersList());
+            return View(await _usersManager.GetUsersEmployeeList());
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddUsers")]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewBag.Roles = _rolesManager.GetRolesList();
+            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
@@ -49,7 +49,7 @@ namespace MarquesitaDashboards.Controllers
                     return RedirectToAction("Index", "User");
                 }
             }
-            ViewBag.Roles = _rolesManager.GetRolesList();
+            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
@@ -62,7 +62,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (user != null)
             {
-                ViewBag.Roles = _rolesManager.GetRolesList();
+                ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 ViewBag.UserRole = await _usersManager.GetUserRole(user);
                 ViewBag.User = user.Id;
@@ -73,7 +73,7 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditUsers")]
-        public async Task<IActionResult> Edit(UserViewModel model, string Id)
+        public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
         {
             var user = await _usersManager.GetUserByIdAsync(Id);
 
@@ -88,7 +88,7 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.Roles = _rolesManager.GetRolesList();
+            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             ViewBag.UserRole = await _usersManager.GetUserRole(user);
             ViewBag.User = user.Id;

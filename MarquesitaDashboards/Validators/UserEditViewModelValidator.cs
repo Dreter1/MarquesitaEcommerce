@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Validators
 {
-    public class UserEditViewModelValidator : AbstractValidator<UserViewModel>
+    public class UserEditViewModelValidator : AbstractValidator<UserEditViewModel>
     {
-        public UserEditViewModelValidator(UserManager<User> userManager)
+        public UserEditViewModelValidator()
         {
             RuleFor(x => x.FirstName).NotEmpty().WithMessage("Nombres no puede estar vacio escriba uno");
             RuleFor(x => x.LastName).NotEmpty().WithMessage("Apellidos no puede estar vacio escriba uno");

@@ -10,7 +10,8 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IRoleManagerService
     {
-        List<Role> GetRolesList();
+        List<Role> GetAllRolesList();
+        List<Role> GetEmployeeRolesList();
         Task<Role> GetRoleByIdAsync(string Id);
         Task<Role> GetRoleByName(string Name);
         Task<IdentityResult> CreateRoleAsync(Role role);

@@ -21,9 +21,23 @@ namespace Marquesita.Infrastructure.Services
             _context = context;
         }
 
-        public List<Role> GetRolesList()
+        public List<Role> GetAllRolesList()
         {
             return _roleManager.Roles.ToList();
+        }
+
+        public List<Role> GetEmployeeRolesList()
+        {
+            var roleList = _roleManager.Roles.ToList();
+            var validRolesList = new List<Role>();
+            foreach (var role in roleList)
+            {
+                if (role.Name != "Cliente")
+                {
+                    validRolesList.Add(role);
+                }
+            }
+            return validRolesList;
         }
 
         public async Task<Role> GetRoleByIdAsync(string Id)
