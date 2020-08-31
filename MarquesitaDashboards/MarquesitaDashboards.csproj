@@ -25,8 +25,4 @@
     <ProjectReference Include="..\Marquesita.Models\Marquesita.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\template\" />
-  </ItemGroup>
-
 </Project>
