@@ -1,4 +1,5 @@
 ﻿using Marquesita.Models.Identity;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,6 +28,9 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
 
         [DisplayName("Foto")]
         public string ImageRoute { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+        public DateTime RegisterDate { get; set; }
 
         public static implicit operator User(UserEditViewModel obj)
         {

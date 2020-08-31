@@ -20,6 +20,57 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ProfileAsync()
+        {
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            var user = await _usersManager.GetUserByIdAsync(userId);
+
+            if (user != null)
+            {
+                ViewBag.UserRole = await _usersManager.GetUserRole(user);
+                ViewBag.UserId = userId;
+                return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
+
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(string Id)
+        {
+            var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+            if (user != null)
+            {
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                ViewBag.User = user.Id;
+                return View(user);
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
+        {
+            var user = await _usersManager.GetUserByIdAsync(Id);
+
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                {
+                    _usersManager.UpdatingUser(model, user);
+                    return RedirectToAction("Profile", "User");
+                }
+            }
+
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.UserRole = await _usersManager.GetUserRole(user);
+            ViewBag.User = user.Id;
+
+            return View(model);
+        }
+
+        [HttpGet]
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {

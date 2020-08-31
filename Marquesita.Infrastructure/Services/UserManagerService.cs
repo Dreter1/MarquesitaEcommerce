@@ -148,7 +148,9 @@ namespace Marquesita.Infrastructure.Services
                     LastName = obj.LastName,
                     Email = obj.Email,
                     Phone = obj.Phone,
-                    ImageRoute = obj.ImageRoute
+                    ImageRoute = obj.ImageRoute,
+                    DateOfBirth = obj.DateOfBirth,
+                    RegisterDate = obj.RegisterDate
                 };
 
             }
