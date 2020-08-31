@@ -51,8 +51,8 @@ label{
 .header-most-top p {
     text-align: center;
     color: #fff;
-    font-weight: 600;
-    padding: 8px;
+    font-weight: 500;
+    padding: 3px;
     letter-spacing: 2px;
     background: #ff5722;
 }
@@ -355,11 +355,11 @@ a.simpleCart_empty {
 button.w3view-cart {
     outline: none;
     border: none;
-    background: #FF5722;
-    width: 48px;
-    height: 43px;
-    font-size: 24px;
-    color: #fff;
+    background: #fff;
+    /*width: 48px;
+    height: 43px;*/
+    font-size: 40px;
+    color: #FF5722;
 }
 /*-- //cart details--*/
 /*-- //header-bottom --*/
@@ -383,10 +383,10 @@ button.w3view-cart {
 }
 /*-- carousel-slider --*/
 .carousel .item {
-    background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-1.jpg) no-repeat;
-    background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-1.jpg) no-repeat;
-    background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-1.jpg) no-repeat;
-    background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-1.jpg) no-repeat;
+    background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
+    background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
+    background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
+    background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
     background-size: cover;
 }
     .carousel .item.item2 {
@@ -398,10 +398,10 @@ button.w3view-cart {
     }
 
     .carousel .item.item3 {
-        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-3.jpg) no-repeat;
-        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-3.jpg) no-repeat;
-        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-3.jpg) no-repeat;
-        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-3.jpg) no-repeat;
+        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
+        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
+        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
+        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
         background-size: cover;
     }
 
@@ -419,7 +419,7 @@ button.w3view-cart {
     letter-spacing: 0px;
     text-transform: uppercase;
     text-shadow: 3px 8px 2px rgb(12, 12, 12);
-    background: rgba(0, 0, 0, 0.34);
+    /*background: rgba(0, 0, 0, 0.34);*/
     padding: 35px 0;
 }
 .carousel-caption h2 span, .carousel-caption h3 span{
@@ -2080,7 +2080,7 @@ li.subitem1 p {
 }
 .terms p {
     color: #777;
-    font-size: 15px;
+    font-size: 11px;
     font-weight: 300;
     line-height: 28px;
     margin-top: 15px;
