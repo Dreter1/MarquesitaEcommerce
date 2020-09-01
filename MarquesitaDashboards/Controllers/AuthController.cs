@@ -65,7 +65,7 @@ namespace MarquesitaDashboards.Controllers
                 }
 
             }
-            ModelState.AddModelError(string.Empty, "");
+            ModelState.AddModelError(string.Empty, "Usuario o Contraseña Incorrecta");
             return View();
         }
 
