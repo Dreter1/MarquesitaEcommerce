@@ -21,7 +21,7 @@ namespace Marquesita.Infrastructure.Interfaces
         void UserUpdateAsync(User user);
         Task<IdentityResult> CreateUserAsync(User user, string password, IFormFile image, string path);
         Task AddingRoleToUserAsync(string UserId, string UserRol);
-        void UpdatingUser(UserEditViewModel model, User user);
+        void UpdatingUser(UserEditViewModel model, User user, IFormFile image, string path);
         Task UpdatingRoleOfUserAsync(User user, string UserRol);
         void RemovingRestoringCredentials(User user);
         UserEditViewModel UserToViewModel(User obj);

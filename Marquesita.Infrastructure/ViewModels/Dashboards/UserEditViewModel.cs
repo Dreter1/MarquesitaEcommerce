@@ -1,4 +1,5 @@
 ﻿using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +30,9 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
         [DisplayName("Foto")]
         public string ImageRoute { get; set; }
 
+        [DisplayName("Upload")]
+        public IFormFile ProfileImage { get; set; }
+
         public DateTime DateOfBirth { get; set; }
         public DateTime RegisterDate { get; set; }
 
@@ -40,8 +44,8 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
                 Email = obj.Email,
+                ImageRoute = obj.ImageRoute,
                 Phone = obj.Phone,
-                ImageRoute = obj.ImageRoute
             };
         }
     }

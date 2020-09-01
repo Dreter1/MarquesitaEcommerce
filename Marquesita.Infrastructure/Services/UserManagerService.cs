@@ -92,47 +92,11 @@ namespace Marquesita.Infrastructure.Services
 
         public async Task<IdentityResult> CreateUserAsync(User user, string password, IFormFile image, string path)
         {
-            var imageRoute = UploadedFile(image);
             var imagen = UploadedServerFile(path, image);
             user.Id = Guid.NewGuid().ToString();
             user.RegisterDate = DateTime.Now;
             user.ImageRoute = imagen;
             return await _userManager.CreateAsync(user, password);
-        }
-
-        private string UploadedServerFile(string path, IFormFile image)
-        {
-            string uniqueFileName = null;
-            if (image != null)
-            {
-                string uploadsFolder = Path.Combine(path, "Images", "Users", "Employees");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
-
-                var ruta = _file.RoutePathEmployeeImages();
-                string localfilePath = ruta + uniqueFileName;
-
-                using (var fileStream = new FileStream(localfilePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
-
-        private string UploadedFile(IFormFile image)
-        {
-            string uniqueFileName = null;
-
-            if (image != null)
-            {
-
-            }
-            return uniqueFileName;
         }
 
         public async Task AddingRoleToUserAsync(string User, string UserRol)
@@ -142,17 +106,36 @@ namespace Marquesita.Infrastructure.Services
             await _userManager.AddToRoleAsync(user, role.Name);
         }
 
-        public void UpdatingUser(UserEditViewModel model, User user)
+        public void UpdatingUser(UserEditViewModel model, User user, IFormFile image, string path)
         {
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            user.NormalizedEmail = model.Email.ToUpper();
-            user.Phone = model.Phone;
-            user.ImageRoute = model.ImageRoute;
+            if(user.ImageRoute != null)
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.NormalizedEmail = model.Email.ToUpper();
+                user.Phone = model.Phone;
+                user.ImageRoute = model.ImageRoute;
 
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            else
+            {
+                DeleteServerFile(path,user.ImageRoute);
+                var imagen = UploadedServerFile(path, image);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.NormalizedEmail = model.Email.ToUpper();
+                user.Phone = model.Phone;
+                user.ImageRoute = imagen;
+
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+
         }
 
         public async Task UpdatingRoleOfUserAsync(User user, string UserRol)
@@ -220,6 +203,47 @@ namespace Marquesita.Infrastructure.Services
         public async Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword)
         {
            return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
+        }
+
+        private string UploadedServerFile(string path, IFormFile image)
+        {
+            string uniqueFileName = null;
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(path, "Images", "Users", "Employees");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                var ruta = _file.RoutePathEmployeeImages();
+                string localfilePath = ruta + uniqueFileName;
+
+                using (var fileStream = new FileStream(localfilePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+        private void DeleteServerFile(string path, string image)
+        {
+            string ruta = _file.RoutePathEmployeeImages();
+            string localFilePath = ruta + image;
+
+            if (File.Exists(localFilePath))
+                File.Delete(localFilePath);
+
+            if(image != null)
+            {
+                string serverFilePath = Path.Combine(path, "Images", "Users", "Employees", image);
+
+                if (File.Exists(serverFilePath))
+                    File.Delete(serverFilePath);
+            }
         }
     }
 }

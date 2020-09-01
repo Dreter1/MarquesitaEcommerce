@@ -64,12 +64,13 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
         {
             var user = await _usersManager.GetUserByIdAsync(Id);
+            var path = _webHostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
             {
                 if (user != null)
-                {
-                    _usersManager.UpdatingUser(model, user);
+                {               
+                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
                     return RedirectToAction("Profile", "User");
                 }
             }
@@ -140,12 +141,13 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
         {
             var user = await _usersManager.GetUserByIdAsync(Id);
+            var path = _webHostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
             {
                 if (user != null)
                 {
-                    _usersManager.UpdatingUser(model, user);
+                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
                     await _usersManager.UpdatingRoleOfUserAsync(user, model.Role);
 
                     return RedirectToAction("Index", "User");

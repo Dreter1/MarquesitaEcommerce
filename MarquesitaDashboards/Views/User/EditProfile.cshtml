@@ -27,9 +27,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
                         <div class="card-body">
-                            <form asp-controller="User" asp-action="EditProfile" method="post">
+                            <form asp-controller="User" asp-action="EditProfile" method="post"enctype="multipart/form-data">
                                 <input type="hidden" name="Id" value="@ViewBag.User" />
                                 <div class="form-row">
                                     <div class="form-group col-12 col-md-6">
@@ -44,28 +43,32 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-12 col-md-4 col-lg-3">
+                                    <div class="form-group col-12 col-md-6">
                                         <label asp-for="Email"></label>
                                         <input asp-for="Email" class="form-control" />
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group col-12 col-md-4 col-lg-3">
+                                    <div class="form-group col-12 col-md-6">
                                         <label asp-for="Phone"></label>
                                         <input asp-for="Phone" class="form-control" />
                                         <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group col-12 col-md-6">
-                                        <label for="exampleInputFile">Foto</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Escoje un archivo</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Cargar</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ProfileImage" class="control-label">Foto de colaborador </label>
+                                    <input asp-for="ProfileImage" id="fichero" accept="image/*" class="form-control-file btn btn-file">
+                                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                                    <p id="texto"> </p>
+                                    @if (Model.ImageRoute != null)
+                                    {
+                                        <img src="~/Images/Users/Employees/@Model.ImageRoute"
+                                             id="img" width="150" height="150"
+                                             asp-append-version="true" />
+                                    }
+                                    else
+                                    {
+                                        <img id="img" width="150" height="150" />
+                                    }
                                 </div>
                                 <a class="btn btn-danger" asp-controller="User" asp-action="Profile"><i class="fas fa-arrow-left"></i> Regresar</a>
                                 <button type="submit" class="btn btn-warning"><i class="fas fa-sync-alt"></i> Actualizar</button>
@@ -73,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </section>
