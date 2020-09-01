@@ -32,21 +32,26 @@ namespace MarquesitaDashboards.Controllers
                 return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
 
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404","Auth");
         }
 
         [HttpGet]
         public async Task<IActionResult> EditProfile(string Id)
         {
-            var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+            var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
 
-            if (user != null)
+            if (actualId == Id)
             {
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                ViewBag.User = user.Id;
-                return View(user);
+                var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+                if (user != null)
+                {
+                    ViewBag.UserId = actualId;
+                    ViewBag.User = user.Id;
+                    return View(user);
+                }
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
@@ -119,7 +124,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.User = user.Id;
                 return View(user);
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
@@ -157,7 +162,7 @@ namespace MarquesitaDashboards.Controllers
                 _usersManager.RemovingRestoringCredentials(user);
                 return RedirectToAction("Index");
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
     }
 }

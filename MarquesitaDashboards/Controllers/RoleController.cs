@@ -68,7 +68,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View(role);
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View(role);
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
@@ -115,7 +115,7 @@ namespace MarquesitaDashboards.Controllers
                 await _rolesManager.DeletingRoleAsync(role);
                 return RedirectToAction("Index");
             }
-            return new StatusCodeResult(StatusCodes.Status404NotFound);
+            return RedirectToAction("NotFound404", "Auth");
         }
     }
 }

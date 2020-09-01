@@ -69,6 +69,7 @@ namespace MarquesitaDashboards.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult LogOut(string Id)
         {
@@ -76,8 +77,15 @@ namespace MarquesitaDashboards.Controllers
             return RedirectToAction("SignIn");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult NotFound404()
         {
             return View();
         }
