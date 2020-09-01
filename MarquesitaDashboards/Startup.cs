@@ -23,12 +23,14 @@ namespace MarquesitaDashboards
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -73,7 +75,11 @@ namespace MarquesitaDashboards
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
                 config.Password.RequireLowercase = false;
-            }).AddEntityFrameworkStores<AuthIdentityDbContext>();
+            }).AddEntityFrameworkStores<AuthIdentityDbContext>().AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2)
+            );
 
             services.ConfigureApplicationCookie(config =>
             {
@@ -222,6 +228,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IUserManagerService, UserManagerService>();
             services.AddTransient<IRoleManagerService, RoleManagerService>();
             services.AddTransient<IAuthManagerService, AuthManagerService>();
+            services.AddTransient<IConstantService, ConstantService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)

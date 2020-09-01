@@ -2,10 +2,13 @@
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +20,24 @@ namespace Marquesita.Infrastructure.Services
         private readonly UserManager<User> _userManager;
         private readonly IRoleManagerService _roleManager;
         private readonly AuthIdentityDbContext _context;
+        private readonly IConstantService _file;
 
-        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager, AuthIdentityDbContext context)
+        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager, AuthIdentityDbContext context, IConstantService file)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
+            _file = file;
         }
 
         public async Task<User> GetUserByNameAsync(string Name)
         {
             return await _userManager.FindByNameAsync(Name);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string Email)
+        {
+            return await _userManager.FindByEmailAsync(Email);
         }
 
         public async Task<string> GetUserIdByNameAsync(string Name)
@@ -80,11 +90,49 @@ namespace Marquesita.Infrastructure.Services
             return (await _userManager.GetRolesAsync(user)).FirstOrDefault();
         }
 
-        public async Task<IdentityResult> CreateUserAsync(User user, string password)
+        public async Task<IdentityResult> CreateUserAsync(User user, string password, IFormFile image, string path)
         {
+            var imageRoute = UploadedFile(image);
+            var imagen = UploadedServerFile(path, image);
             user.Id = Guid.NewGuid().ToString();
             user.RegisterDate = DateTime.Now;
+            user.ImageRoute = imagen;
             return await _userManager.CreateAsync(user, password);
+        }
+
+        private string UploadedServerFile(string path, IFormFile image)
+        {
+            string uniqueFileName = null;
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(path, "Images", "Users", "Employees");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                var ruta = _file.RoutePathEmployeeImages();
+                string localfilePath = ruta + uniqueFileName;
+
+                using (var fileStream = new FileStream(localfilePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+        private string UploadedFile(IFormFile image)
+        {
+            string uniqueFileName = null;
+
+            if (image != null)
+            {
+
+            }
+            return uniqueFileName;
         }
 
         public async Task AddingRoleToUserAsync(string User, string UserRol)
@@ -162,6 +210,16 @@ namespace Marquesita.Infrastructure.Services
             if (_context.Users.Any(u => u.Email == email))
                 return true;
             return false;
+        }
+
+        public async Task<string> NewTokenPassword(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword)
+        {
+           return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
         }
     }
 }

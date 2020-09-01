@@ -29,4 +29,9 @@
     <ProjectReference Include="..\Marquesita.Models\Marquesita.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Images\Users\Employees\" />
+  </ItemGroup>
+
 </Project>

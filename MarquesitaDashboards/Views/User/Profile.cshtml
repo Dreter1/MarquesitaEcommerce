@@ -27,9 +27,16 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
+                            @if(Model.ImageRoute != null){
+                            <img src="~/Images/Users/Employees/@Model.ImageRoute"
+                                 class="profile-user-img img-fluid img-circle"
+                                 asp-append-version="true" />
+                            }
+                            else{
                             <img class="profile-user-img img-fluid img-circle"
                                  src="~/template/dist/img/user4-128x128.jpg"
                                  alt="User profile picture">
+                            }
                         </div>
 
                         <h3 class="profile-username text-center">@Model.FirstName @Model.LastName</h3>
@@ -50,6 +57,7 @@
                                 <b>Fecha de Ingreso</b> <a class="float-right">@Model.RegisterDate.ToShortDateString()</a>
                             </li>
                         </ul>
+                        <a asp-controller="User" asp-action="ResetPassword" class="btn btn-warning btn-block"><b>Cambia tu contraseña</b></a>
                     </div>
                 </div>
             </div>

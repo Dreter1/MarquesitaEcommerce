@@ -1,7 +1,9 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -12,11 +14,15 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IRoleManagerService _rolesManager;
+        private readonly IConstantService _images;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager)
+        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IConstantService images, IWebHostEnvironment webHostEnvironment)
         {
             _usersManager = usersManager;
             _rolesManager = rolesManager;
+            _images = images;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -32,7 +38,7 @@ namespace MarquesitaDashboards.Controllers
                 return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
 
             }
-            return RedirectToAction("NotFound404","Auth");
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
@@ -79,6 +85,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {
+            ViewBag.Image = _images.RoutePathEmployeeImages();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(await _usersManager.GetUsersEmployeeList());
         }
@@ -98,7 +105,8 @@ namespace MarquesitaDashboards.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _usersManager.CreateUserAsync(model, model.Password);
+                var path = _webHostEnvironment.WebRootPath;
+                var result = await _usersManager.CreateUserAsync(model, model.Password, model.ProfileImage, path);
                 if (result.Succeeded)
                 {
                     await _usersManager.AddingRoleToUserAsync(model.Username, model.Role);
@@ -163,6 +171,46 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("NotFound404", "Auth");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPasswordAsync()
+        {
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            if (user != null)
+            {
+                var token = await _usersManager.NewTokenPassword(user);
+                var model = new ResetEmployeePassword { Token = token, Email = user.Email };
+                return View(model);
+            }
+            return RedirectToAction("NotFound404", "Auth");
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetEmployeePassword resetPasswordModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _usersManager.GetUserByEmailAsync(resetPasswordModel.Email);
+
+                if (user != null)
+                {
+                    var resetPassResult = await _usersManager.ChangeEmployeePassword(user, resetPasswordModel);
+
+                    if (!resetPassResult.Succeeded)
+                    {
+                        foreach (var error in resetPassResult.Errors)
+                        {
+                            ModelState.TryAddModelError(error.Code, error.Description);
+                        }
+                        return View(resetPasswordModel);
+                    }
+                    return RedirectToAction("Profile", "User");
+                }
+                return RedirectToAction("NotFound404", "Auth");
+            }
+            return View(resetPasswordModel);
         }
     }
 }

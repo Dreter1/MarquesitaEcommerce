@@ -13,10 +13,19 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="~/template/dist/img/avatar.png" class="img-circle elevation-2" alt="@Model.FirstName @Model.LastName Image">
+                @if (Model.ImageRoute != null)
+                {
+                    <img src="~/Images/Users/Employees/@Model.ImageRoute"
+                         class="img-circle elevation-2"
+                         asp-append-version="true" />
+                }
+                else
+                {
+                    <img src="~/template/dist/img/avatar.png" class="img-circle elevation-2" alt="user Image">
+                }
             </div>
             <div class="info">
-                <a href="#" class="d-block">@Model.FirstName @Model.LastName</a>
+                <a asp-controller="User" asp-action="Profile" class="d-block">@Model.FirstName @Model.LastName</a>
             </div>
         </div>
 

@@ -10,7 +10,7 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IAuthManagerService _signsInManager;
         private readonly IUserManagerService _usersManager;
-
+        
         public AuthController(IAuthManagerService signsInManager, IUserManagerService usersManager)
         {
             _signsInManager = signsInManager;

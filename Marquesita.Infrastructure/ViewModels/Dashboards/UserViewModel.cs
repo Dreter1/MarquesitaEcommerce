@@ -1,4 +1,5 @@
 ﻿using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -38,7 +39,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
         public DateTime RegisterDate { get; set; }
 
         [DisplayName("Foto")]
-        public string ImageRoute { get; set; }
+        public IFormFile ProfileImage { get; set; }
 
         public static implicit operator User(UserViewModel obj)
         {
@@ -51,8 +52,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards
                 Email = obj.Email,
                 Phone = obj.Phone,
                 DateOfBirth = obj.DateOfBirth,
-                RegisterDate = obj.RegisterDate,
-                ImageRoute = obj.ImageRoute
+                RegisterDate = obj.RegisterDate
             };
         }
     }
