@@ -34,7 +34,7 @@ function deleteRol(rol) {
     console.log(roleId);
     Swal.fire({
         title: '¿Desea eliminar el Rol?',
-        text: "Si estas seguro presiona eliminar, de lo contrario cancelar",
+        text: "Si estas seguro presiona eliminar, recuerde que los usuarios que contengan este rol quedarán sin el. Por lo tanto luego debe asignarles un rol",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
