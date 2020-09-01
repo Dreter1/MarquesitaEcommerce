@@ -3,6 +3,7 @@ using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
@@ -107,15 +108,15 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanDeleteRoles")]
-        public async Task<IActionResult> Delete(string Id)
+        public async Task<Boolean> Delete(string Id)
         {
             var role = await _rolesManager.GetRoleByIdAsync(Id);
             if (role != null)
             {
                 await _rolesManager.DeletingRoleAsync(role);
-                return RedirectToAction("Index");
+                return true;
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return false;
         }
     }
 }

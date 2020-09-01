@@ -28,3 +28,51 @@
         }
     });
 }
+
+function deleteRol(rol) {
+    var roleId = rol.dataset.id;
+    console.log(roleId);
+    Swal.fire({
+        title: '¿Desea eliminar el Rol?',
+        text: "Si estas seguro presiona eliminar, de lo contrario cancelar",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/Role/Delete",
+                type: "POST",
+                data: {
+                    Id: roleId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'El rol fue eliminado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Role/Index";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El rol no se pudo eliminar'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Role/Index";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}

@@ -54,10 +54,14 @@
                                     }
                                     @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                                     {
-                                        <form asp-controller="Role" asp-action="Delete" method="post">
+                                        @*<form asp-controller="Role" asp-action="Delete" method="post">
                                             <input type="hidden" name="Id" value="@role.Id" />
+                                            
+                                        </form>*@
+
+                                        <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
                                             <button type="submit" class="btn btn-danger">Eliminar</button>
-                                        </form>
+                                        </div>
                                     }
                                 </div>
                             </td>
