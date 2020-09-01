@@ -212,11 +212,8 @@ namespace MarquesitaDashboards
             services.AddTransient<IValidator<UserViewModel>, UserViewModelValidator>();
             services.AddTransient<IValidator<UserEditViewModel>, UserEditViewModelValidator>();
 
-            //services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
-            //services.AddTransient<IValidator<RoleViewModel>, RoleEditViewModelValidator>();
-
-            //services.AddTransient<IValidator<PermissionViewModel>, PermissionViewModelValidator>();
-
+            services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
+            services.AddTransient<IValidator<RoleEditViewModel>, RoleEditViewModelValidator>();
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)

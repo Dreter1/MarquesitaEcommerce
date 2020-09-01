@@ -3,6 +3,7 @@ using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,18 +88,36 @@ namespace Marquesita.Infrastructure.Services
             return PermissionList;
         }
 
-        //public void UpdateRoles(RoleViewModel model, Role role)
-        //{
-        //    role.Name = model.Name;
-        //    role.NormalizedName = model.Name.ToUpper();
-        //    _context.Entry(role).State = EntityState.Modified;
-        //    _context.SaveChanges();
-        //}
+        public void UpdateRoles(RoleEditViewModel model, Role role)
+        {
+            role.Name = model.Name;
+            role.NormalizedName = model.Name.ToUpper();
+            _context.Entry(role).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
 
         public List<string> PermissionList()
         {
-            return new List<string>() { 
-                "Hello"
+            return new List<string>() {
+                "Ver Usuarios",
+                "Agregar Usuario",
+                "Editar Usuario",
+                "Eliminar Usuario",
+                "Ver Roles",
+                "Agregar Roles",
+                "Editar Roles",
+                "Eliminar Roles",
+                "Ver Productos",
+                "Agregar Productos",
+                "Editar Productos",
+                "Eliminar Productos",
+                "Ver Categorias",
+                "Agregar Categoria",
+                "Editar Categoria",
+                "Eliminar Categoria",
+                "Ver Ventas",
+                "Agregar Venta",
+                "Editar Venta",
             };
         }
     }

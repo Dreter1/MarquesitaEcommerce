@@ -14,7 +14,7 @@ namespace Marquesita.Infrastructure
 
             var adminRole = await roleManager.FindByNameAsync("Super Admin");
             var clientRole = await roleManager.FindByNameAsync("Cliente");
-            if (adminRole == null || clientRole == null)
+            if (adminRole == null && clientRole == null)
             {
                 await roleManager.CreateAsync(new Role { Name = "Super Admin", NormalizedName = "SUPER ADMIN" });
                 await roleManager.CreateAsync(new Role { Name = "Cliente", NormalizedName = "CLIENTE" });
@@ -46,7 +46,7 @@ namespace Marquesita.Infrastructure
 
             Thread.Sleep(300);
 
-            if (userManager.FindByNameAsync("superadmin").Result == null || userManager.FindByNameAsync("cliente").Result == null)
+            if (userManager.FindByNameAsync("superadmin").Result == null && userManager.FindByNameAsync("cliente").Result == null)
             {
                 User userAdmin = new User
                 {
@@ -56,7 +56,7 @@ namespace Marquesita.Infrastructure
                     LastName = "admin",
                     Email = "admin@gmail.com",
                     NormalizedEmail = "ADMIN@GMAIL.COM",
-                    Phone = "12345678",
+                    Phone = "123456789",
                     DateOfBirth = new DateTime(1996, 05, 05),
                     RegisterDate = DateTime.Now   
                 };

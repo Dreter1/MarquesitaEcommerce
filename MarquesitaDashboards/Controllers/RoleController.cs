@@ -1,6 +1,7 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -30,6 +31,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddRoles")]
         public async Task<IActionResult> CreateAsync()
         {
+            ViewBag.Permissions = _rolesManager.PermissionList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
@@ -48,8 +50,72 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Permissions = _rolesManager.PermissionList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewRoles")]
+        public async Task<IActionResult> DetailAsync(string Id)
+        {
+            var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+            if (role != null)
+            {
+                ViewBag.RoleId = role.Id;
+                ViewBag.RolePermissions = _rolesManager.PermissionListOfRole(role);
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                return View(role);
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanEditRoles")]
+        public async Task<IActionResult> Edit(string Id)
+        {
+            var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+            if (role != null)
+            {
+                ViewBag.RoleId = role.Id;
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                return View(role);
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanEditRoles")]
+        public async Task<IActionResult> Edit(RoleEditViewModel model, string Id)
+        {
+            var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+            if (ModelState.IsValid)
+            {
+                if (role != null)
+                {
+                    _rolesManager.UpdateRoles(model, role);
+                    return RedirectToAction("Index");
+                }
+            }
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.RoleId = Id;
+            return View(role);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanDeleteRoles")]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            if (role != null)
+            {
+                await _rolesManager.DeletingRoleAsync(role);
+                return RedirectToAction("Index");
+            }
+            return new StatusCodeResult(StatusCodes.Status404NotFound);
         }
     }
 }

@@ -39,19 +39,16 @@
                                 <label asp-for="Permissions"></label>
                                 <div class="select2-blue">
                                     <select asp-for="Permissions" class="select2" multiple="multiple" data-placeholder="Seleccione un rol" data-dropdown-css-class="select2-blue" style="width: 100%;">
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                        @foreach (var permission in ViewBag.Permissions)
+                                        {
+                                            <option value="@permission">@permission</option>
+                                        }
                                     </select>
                                 </div>
                                 <span asp-validation-for="Permissions" class="text-danger"></span>
                             </div>
-                            <a class="btn btn-danger" asp-controller="Role" asp-action="Index">Back</a>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <a class="btn btn-danger" asp-controller="Role" asp-action="Index"><i class="fas fa-arrow-left"></i> Regresar</a>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
                         </form>
                     </div>
                 </div>

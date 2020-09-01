@@ -20,7 +20,7 @@ namespace Marquesita.Infrastructure.Interfaces
         Task DeletingRoleAsync(Role role);
         IList<Claim> GetPermissionListOfRoleByRole(Role role);
         List<string> PermissionListOfRole(Role role);
-        //void UpdateRoles(RoleViewModel model, Role role);
+        void UpdateRoles(RoleEditViewModel model, Role role);
         List<string> PermissionList();
     }
 }
