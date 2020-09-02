@@ -61,7 +61,7 @@
                                     <p id="texto"> </p>
                                     @if (Model.ImageRoute != null)
                                     {
-                                        <img src="~/Images/Users/@Model.ImageRoute"
+                                        <img src="@ViewBag.Image@Model.ImageRoute"
                                              id="img" width="150" height="150"
                                              asp-append-version="true" />
                                     }
