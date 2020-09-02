@@ -34,4 +34,8 @@
     <Folder Include="wwwroot\Images\Users\Employees\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\template\fonts\fontomas-webfont.svg" />
+  </ItemGroup>
+
 </Project>
