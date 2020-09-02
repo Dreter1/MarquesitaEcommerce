@@ -14,7 +14,7 @@
 
         @if (!ViewData.ModelState.IsValid)
         {
-            <div asp-validation-summary="All" class="alert alert-danger"></div>
+            <div asp-validation-summary="All" class="alert alert-danger-login"></div>
         }
 
         <form asp-controller="Auth" asp-action="SignIn" method="post">
@@ -33,10 +33,4 @@
         </form>
     </div>
 </div>
-
-<style>
-    .alert.alert-danger > ul {
-        margin: 0
-    }
-</style>
 

@@ -5410,6 +5410,16 @@ a.badge-dark:focus, a.badge-dark.focus {
   border-color: #f5c6cb;
 }
 
+.alert-danger-login {
+    color: #ffffff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.alert.alert-danger-login > ul {
+    margin: 0
+}
+
 .alert-danger hr {
   border-top-color: #f1b0b7;
 }

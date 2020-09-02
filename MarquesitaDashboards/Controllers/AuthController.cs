@@ -71,7 +71,7 @@ namespace MarquesitaDashboards.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult LogOut(string Id)
+        public IActionResult LogOut()
         {
             _signsInManager.LogOut();
             return RedirectToAction("SignIn");
