@@ -15,8 +15,9 @@ namespace MarquesitaDashboards.ViewComponents
             _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(User user)
+        public async Task<IViewComponentResult> InvokeAsync(string userId)
         {
+            var user = await _userManager.GetUserByIdAsync(userId);
             var role = await _userManager.GetUserRole(user);
             return View(new RoleViewModel
             {

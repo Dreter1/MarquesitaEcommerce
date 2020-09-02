@@ -108,34 +108,37 @@ namespace Marquesita.Infrastructure.Services
 
         public void UpdatingUser(UserEditViewModel model, User user, IFormFile image, string path)
         {
-            if(user.ImageRoute != null)
-            {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Email = model.Email;
-                user.NormalizedEmail = model.Email.ToUpper();
-                user.Phone = model.Phone;
-                user.ImageRoute = model.ImageRoute;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.NormalizedEmail = model.Email.ToUpper();
+            user.Phone = model.Phone;
 
-                _context.Entry(user).State = EntityState.Modified;
-                _context.SaveChanges();
+            if (user.ImageRoute != null)
+            {
+                if(image != null)
+                {
+                    DeleteServerFile(path, user.ImageRoute);
+                    var imagen = UploadedServerFile(path, image);
+                    user.ImageRoute = imagen;
+                    _context.Entry(user).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    user.ImageRoute = user.ImageRoute;
+                    _context.Entry(user).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
             }
             else
             {
                 DeleteServerFile(path,user.ImageRoute);
                 var imagen = UploadedServerFile(path, image);
-
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Email = model.Email;
-                user.NormalizedEmail = model.Email.ToUpper();
-                user.Phone = model.Phone;
                 user.ImageRoute = imagen;
-
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
             }
-
         }
 
         public async Task UpdatingRoleOfUserAsync(User user, string UserRol)
