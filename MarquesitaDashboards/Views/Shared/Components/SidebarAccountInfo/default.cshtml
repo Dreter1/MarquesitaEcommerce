@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
+
 @model Marquesita.Models.Identity.User
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -15,17 +16,18 @@
             <div class="image">
                 @if (Model.ImageRoute != null)
                 {
-                    <img src="~/Images/Users/Employees/@Model.ImageRoute"
+                    <img src="@ViewBag.Image@Model.ImageRoute"
                          class="img-circle elevation-2"
+                         alt="user Img"
                          asp-append-version="true" />
                 }
                 else
                 {
-                    <img src="~/template/dist/img/avatar.png" class="img-circle elevation-2" alt="user Image">
+                    <img src="~/template/dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="user Img">
                 }
             </div>
             <div class="info">
-                <a asp-controller="User" asp-action="Profile" class="d-block">@Model.FirstName @Model.LastName</a>
+                <a asp-controller="User" asp-action="Profile" class="d-block">@await Component.InvokeAsync("UserRoleInfo", new { userId = Model.Id }) </a>
             </div>
         </div>
 

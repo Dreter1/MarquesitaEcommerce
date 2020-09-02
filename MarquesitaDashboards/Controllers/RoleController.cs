@@ -80,9 +80,13 @@ namespace MarquesitaDashboards.Controllers
 
             if (role != null)
             {
-                ViewBag.RoleId = role.Id;
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                return View(role);
+                if (role.Name != "Super Admin")
+                {
+                    ViewBag.RoleId = role.Id;
+                    ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                    return View(role);
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
         }
@@ -97,8 +101,12 @@ namespace MarquesitaDashboards.Controllers
             {
                 if (role != null)
                 {
-                    _rolesManager.UpdateRoles(model, role);
-                    return RedirectToAction("Index");
+                    if (role.Name != "Super Admin")
+                    {
+                        _rolesManager.UpdateRoles(model, role);
+                        return RedirectToAction("Index");
+                    }
+                    return RedirectToAction("NotFound404", "Auth");
                 }
             }
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
@@ -113,8 +121,12 @@ namespace MarquesitaDashboards.Controllers
             var role = await _rolesManager.GetRoleByIdAsync(Id);
             if (role != null)
             {
-                await _rolesManager.DeletingRoleAsync(role);
-                return true;
+                if(role.Name != "Super Admin")
+                {
+                    await _rolesManager.DeletingRoleAsync(role);
+                    return true;
+                }
+                return false;
             }
             return false;
         }

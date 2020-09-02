@@ -17,8 +17,9 @@
 
   <ItemGroup>
     <Folder Include="DbContexts\" />
-    <Folder Include="Images\" />
+    <Folder Include="Images\Products\" />
     <Folder Include="Images\Users\Employees\" />
+    <Folder Include="Images\Users\Clients\" />
     <Folder Include="ViewModels\Ecommerce\" />
   </ItemGroup>
 

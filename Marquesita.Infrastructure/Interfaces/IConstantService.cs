@@ -9,5 +9,8 @@ namespace Marquesita.Infrastructure.Interfaces
         string RoutePathEmployeeImages();
         string RoutePathClientsImages();
         string RoutePathProductsImages();
+        string RoutePathRootEmployeeImages();
+        string RoutePathRootClientsImages();
+        string RoutePathRootProductsImages();
     }
 }

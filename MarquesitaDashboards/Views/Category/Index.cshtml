@@ -1,21 +1,100 @@
-﻿
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Categorias";
 }
 
-<div class="content-header">
+<section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Categorias</h1>
+                <h1 class="m-0 text-dark">Lista de categorías</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categorias</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categorías</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddCategory")).Succeeded)
+            {
+                <div class="fa-pull-right">
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
+                </div>
+            }
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
+                        {
+                            <th>Opciones</th>
+                        }
+                        else
+                        {
+                            <th>Opcion</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var categoria in Model)
+                    {
+                        <tr>
+                            <td>@categoria.Name</td>
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                            {
+                                <td>
+                                    @if (categoria.Name != "Super Admin")
+                                    {
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
+                                            {
+                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                                            {
+                                                <div id="DeleteRoleClic_@categoria.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@categoria.Id" onclick="deleteRol(this)">
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
+                                        </div>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        dataTableScript();
+    });
+</script>
 

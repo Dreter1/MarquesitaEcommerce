@@ -43,65 +43,76 @@
                         <th>Estado</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                         {
-                            <th></th>
+                            <th>Opciones</th>
                         }
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
                     {
-                    <tr>
-                        @if (user.ImageRoute != null)
-                        {
-                        <td>
-                            <img src="~/Images/Users/Employees/@user.ImageRoute"
-                                 class="rounded-circle"
-                                 height="40" width="40"
-                                 asp-append-version="true" />
-                        </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        <td>@user.UserName</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@await Component.InvokeAsync("UserRoleInfo", new { user = user })</td>
-                        @if (user.IsActive)
-                        {
-                            <td>Activo</td>
-                        }
-                        else
-                        {
-                            <td>Inactivo</td>
-                        }
-                        <td>
-                            <div class="form-row text-center">
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
-                                {
-                                    <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
-                                }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
-                                {
-                                    if (user.IsActive)
-                                    {
-                                        <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                            <input type="hidden" name="Id" value="@user.Id" />
-                                            <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                            <input type="hidden" name="Id" value="@user.Id" />
-                                            <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
-                                        </form>
-                                    }
-                                }
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            @if (user.ImageRoute != null)
+                            {
+                                <td>
+                                    <img src="@ViewBag.Image@user.ImageRoute"
+                                         class="rounded-circle"
+                                         alt="User Img"
+                                         height="40" width="40"
+                                         asp-append-version="true" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <img src="~/template/dist/img/user4-128x128.jpg"
+                                         class="rounded-circle"
+                                         alt="User Img"
+                                         height="40" width="40"
+                                         asp-append-version="true">
+                                </td>
+                            }
+                            <td>@user.UserName</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@await Component.InvokeAsync("UserRoleInfo", new { userId = user.Id })</td>
+                            @if (user.IsActive)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
+
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
+                                        {
+                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
+                                        }
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                                        {
+                                            if (user.IsActive)
+                                            {
+                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                    <input type="hidden" name="Id" value="@user.Id" />
+                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                    <input type="hidden" name="Id" value="@user.Id" />
+                                                    <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
+                                                </form>
+                                            }
+                                        }
+                                    </div>
+                                </td>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>

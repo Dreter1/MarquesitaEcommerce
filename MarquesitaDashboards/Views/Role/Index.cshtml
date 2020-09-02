@@ -33,10 +33,14 @@
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Cargo</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                         {
-                            <th></th>
+                            <th>Opciones</th>
+                        }
+                        else
+                        {
+                            <th>Opcion</th>
                         }
                     </tr>
                 </thead>
@@ -45,26 +49,41 @@
                     {
                         <tr>
                             <td>@role.Name</td>
-                            <td>
-                                <div class="form-row text-center">
-                                    <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
-                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                            {
+                                <td>
+                                    @if (role.Name != "Super Admin")
                                     {
-                                        <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
-                                    }
-                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
-                                    {
-                                        @*<form asp-controller="Role" asp-action="Delete" method="post">
-                                            <input type="hidden" name="Id" value="@role.Id" />
-                                            
-                                        </form>*@
-
-                                        <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
+                                            {
+                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                                            {
+                                                <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </div>
+                                            }
                                         </div>
                                     }
-                                </div>
-                            </td>
+                                    else
+                                    {
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                        </div>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                    </div>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>

@@ -26,66 +26,10 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProfileAsync()
-        {
-            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            var user = await _usersManager.GetUserByIdAsync(userId);
-
-            if (user != null)
-            {
-                ViewBag.UserRole = await _usersManager.GetUserRole(user);
-                ViewBag.UserId = userId;
-                return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
-
-            }
-            return RedirectToAction("NotFound404", "Auth");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditProfile(string Id)
-        {
-            var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-
-            if (actualId == Id)
-            {
-                var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
-
-                if (user != null)
-                {
-                    ViewBag.UserId = actualId;
-                    ViewBag.User = user.Id;
-                    return View(user);
-                }
-            }
-            return RedirectToAction("NotFound404", "Auth");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
-        {
-            var user = await _usersManager.GetUserByIdAsync(Id);
-
-            if (ModelState.IsValid)
-            {
-                if (user != null)
-                {
-                    _usersManager.UpdatingUser(model, user);
-                    return RedirectToAction("Profile", "User");
-                }
-            }
-
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.UserRole = await _usersManager.GetUserRole(user);
-            ViewBag.User = user.Id;
-
-            return View(model);
-        }
-
-        [HttpGet]
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.Image = _images.RoutePathEmployeeImages();
+            ViewBag.Image = _images.RoutePathRootEmployeeImages();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(await _usersManager.GetUsersEmployeeList());
         }
@@ -126,6 +70,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (user != null)
             {
+                ViewBag.Image = _images.RoutePathRootEmployeeImages();
                 ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 ViewBag.UserRole = await _usersManager.GetUserRole(user);
@@ -140,18 +85,20 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
         {
             var user = await _usersManager.GetUserByIdAsync(Id);
+            var path = _webHostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
             {
                 if (user != null)
                 {
-                    _usersManager.UpdatingUser(model, user);
+                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
                     await _usersManager.UpdatingRoleOfUserAsync(user, model.Role);
 
                     return RedirectToAction("Index", "User");
                 }
             }
 
+            ViewBag.Image = _images.RoutePathRootEmployeeImages();
             ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             ViewBag.UserRole = await _usersManager.GetUserRole(user);
@@ -171,6 +118,66 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("NotFound404", "Auth");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProfileAsync()
+        {
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            var user = await _usersManager.GetUserByIdAsync(userId);
+
+            if (user != null)
+            {
+                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.UserRole = await _usersManager.GetUserRole(user);
+                ViewBag.UserId = userId;
+                return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
+
+            }
+            return RedirectToAction("NotFound404", "Auth");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(string Id)
+        {
+            var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+
+            if (actualId == Id)
+            {
+                var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+                if (user != null)
+                {
+                    ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                    ViewBag.UserId = actualId;
+                    ViewBag.User = user.Id;
+                    return View(user);
+                }
+            }
+            return RedirectToAction("NotFound404", "Auth");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
+        {
+            var user = await _usersManager.GetUserByIdAsync(Id);
+            var path = _webHostEnvironment.WebRootPath;
+
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                {
+                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
+                    return RedirectToAction("Profile", "User");
+                }
+            }
+
+            ViewBag.Image = _images.RoutePathRootEmployeeImages();
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.UserRole = await _usersManager.GetUserRole(user);
+            ViewBag.User = user.Id;
+
+            return View(model);
         }
 
         [HttpGet]
