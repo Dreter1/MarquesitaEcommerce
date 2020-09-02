@@ -213,7 +213,7 @@ namespace Marquesita.Infrastructure.Services
             string uniqueFileName = null;
             if (image != null)
             {
-                string uploadsFolder = Path.Combine(path, "Images", "Users", "Employees");
+                string uploadsFolder = Path.Combine(path, "Images", "Users");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -242,7 +242,7 @@ namespace Marquesita.Infrastructure.Services
 
             if(image != null)
             {
-                string serverFilePath = Path.Combine(path, "Images", "Users", "Employees", image);
+                string serverFilePath = Path.Combine(path, "Images", "Users", image);
 
                 if (File.Exists(serverFilePath))
                     File.Delete(serverFilePath);
