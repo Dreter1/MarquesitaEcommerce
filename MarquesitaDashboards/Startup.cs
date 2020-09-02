@@ -18,6 +18,8 @@ using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using MarquesitaDashboards.Validators;
 using FluentValidation;
+using Marquesita.Infrastructure.Repositories;
+using Marquesita.Models.Business;
 
 namespace MarquesitaDashboards
 {
@@ -224,11 +226,15 @@ namespace MarquesitaDashboards
 
         private void RepositoriesConfiguration(IServiceCollection services)
         {
-            //services.AddTransient<IRepository<Permission>, PermissionRepository>();
+            services.AddTransient<IRepository<Category>, CategoryRepository>();
+
+            services.AddTransient<ICategoryService, CategoryService>();
+
             services.AddTransient<IUserManagerService, UserManagerService>();
             services.AddTransient<IRoleManagerService, RoleManagerService>();
             services.AddTransient<IAuthManagerService, AuthManagerService>();
             services.AddTransient<IConstantService, ConstantService>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)

@@ -33,7 +33,7 @@
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Cargo</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                         {
                             <th>Opciones</th>
@@ -84,8 +84,6 @@
                                     </div>
                                 </td>
                             }
-
-
                         </tr>
                     }
                 </tbody>
