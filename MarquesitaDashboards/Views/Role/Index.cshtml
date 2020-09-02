@@ -36,7 +36,11 @@
                         <th>Name</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                         {
-                            <th></th>
+                            <th>Opciones</th>
+                        }
+                        else
+                        {
+                            <th>Opcion</th>
                         }
                     </tr>
                 </thead>
@@ -45,31 +49,43 @@
                     {
                         <tr>
                             <td>@role.Name</td>
-                            <td>
-                                @if (role.Name != "Super Admin")
-                                {
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                            {
+                                <td>
+                                    @if (role.Name != "Super Admin")
+                                    {
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
+                                            {
+                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                            }
+                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                                            {
+                                                <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-row text-center">
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                        </div>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                    </div>
+                                </td>
+                            }
 
-                                    <div class="form-row text-center">
-                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
-                                        {
-                                            <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
-                                        }
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
-                                        {
-                                            <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-row text-center">
-                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
-                                    </div>
-                                }
-                            </td>
+
                         </tr>
                     }
                 </tbody>

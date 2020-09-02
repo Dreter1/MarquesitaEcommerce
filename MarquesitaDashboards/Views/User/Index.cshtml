@@ -43,7 +43,7 @@
                         <th>Estado</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                         {
-                            <th></th>
+                            <th>Opciones</th>
                         }
                     </tr>
                 </thead>
@@ -83,31 +83,35 @@
                             {
                                 <td>Inactivo</td>
                             }
-                            <td>
-                                <div class="form-row text-center">
-                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
-                                    {
-                                        <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
-                                    }
-                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
-                                    {
-                                        if (user.IsActive)
+
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
                                         {
-                                            <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                <input type="hidden" name="Id" value="@user.Id" />
-                                                <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
-                                            </form>
+                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
                                         }
-                                        else
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                                         {
-                                            <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                <input type="hidden" name="Id" value="@user.Id" />
-                                                <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
-                                            </form>
+                                            if (user.IsActive)
+                                            {
+                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                    <input type="hidden" name="Id" value="@user.Id" />
+                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
+                                                    <input type="hidden" name="Id" value="@user.Id" />
+                                                    <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
+                                                </form>
+                                            }
                                         }
-                                    }
-                                </div>
-                            </td>
+                                    </div>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
