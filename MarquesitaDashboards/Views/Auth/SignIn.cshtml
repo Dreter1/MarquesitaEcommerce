@@ -21,8 +21,10 @@
                 @if (!ViewData.ModelState.IsValid)
                 {
 
-                    <div asp-validation-summary="All" class="alert alert-danger-login" >
-                        <button type="button" class="close" data-dismiss="alert" aria-label="close">&times;</button>
+                    <div asp-validation-summary="All" class="alert alert-danger-login">
+                        <label type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                            <span aria-hidden="true" style="font-size:20pt">&times;</span>
+                        </label>
                     </div>
                 }
 

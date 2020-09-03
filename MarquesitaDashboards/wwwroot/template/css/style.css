@@ -253,13 +253,17 @@ body {
         color: #040505;
     }
 
-button.close {
+label.close {
     position: absolute;
+    border: transparent;
     background-color: transparent;
-    color: white;
-    top: -0px;
-    right: -0px;
+    z-index: 5;
+    color: burlywood;
+    top: 0px;
+    right: 5px;
 }
+
+
 
 /*-- main --*/
 .agileinfo-row {
