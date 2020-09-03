@@ -96,7 +96,7 @@ img {
 /*-- end reset --*/
 body {
     font-family: 'Muli', sans-serif;
-    background: url(../images/fondo1.jpg)no-repeat center 0px;
+    background: url(../template/images/fondo1.jpg)no-repeat center 0px;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;

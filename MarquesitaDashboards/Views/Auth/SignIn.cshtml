@@ -1,14 +1,11 @@
 ﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.LoginViewModel
 @{
-    ViewData["Title"] = "Log In";
+    ViewData["Title"] = "Iniciar Sesión";
     Layout = "_LoginLayout";
-
 }
-
-
 <div class="w3top-nav">
     <div class="w3top-nav-left">
-        <h1><a asp-controller="Auth" asp-action="SignIn"><img src="~/template/images/logo3-1.png" /></a></h1>
+        <h1><img src="~/template/images/logo3-1.png" /></h1>
     </div>
 </div>
 
@@ -17,10 +14,8 @@
     <div class="header-bottom">
         <div class="header-right w3agile">
             <div class="header-left-bottom agileinfo">
-
                 @if (!ViewData.ModelState.IsValid)
                 {
-
                     <div asp-validation-summary="All" class="alert alert-danger-login">
                         <label type="button" class="close" data-dismiss="alert" aria-label="Close" >
                             <span aria-hidden="true" style="font-size:20pt">&times;</span>
