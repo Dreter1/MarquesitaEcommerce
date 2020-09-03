@@ -27,8 +27,9 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddCategory")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
                 </div>
+                <br /><br />
             }
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
