@@ -432,13 +432,15 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-MarquesitaDashboards/appsettings.Development.json
-MarquesitaDashboards/appsettings.json
-/MarquesitaDashboards/appsettings.Development.json
-/MarquesitaDashboards/appsettings.Development.json
-
-MarquesitaEcommerce/appsettings.Development.json
-MarquesitaEcommerce/appsettings.json
-/MarquesitaEcommerce/appsettings.Development.json
-/MarquesitaEcommerce/appsettings.Development.json
 /Marquesita.Infrastructure/Images/*
+
+/MarquesitaDashboards/appsettings.json
+/MarquesitaDashboards/appsettings.Development.json
+/MarquesitaDashboards/wwwroot/Images/*
+
+/MarquesitaEcommerce/appsettings.json
+/MarquesitaEcommerce/appsettings.Development.json
+/MarquesitaEcommerce/wwwroot/Images/*
+
+
+
