@@ -252,6 +252,15 @@ body {
     .alert-dark .alert-link {
         color: #040505;
     }
+
+button.close {
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    top: -0px;
+    right: -0px;
+}
+
 /*-- main --*/
 .agileinfo-row {
     width: 65%;
