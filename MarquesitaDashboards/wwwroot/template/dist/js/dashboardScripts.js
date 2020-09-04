@@ -76,3 +76,51 @@ function deleteRol(rol) {
         }
     });
 }
+
+function deleteCategory(category) {
+    var roleId = category.dataset.id;
+    console.log(roleId);
+    Swal.fire({
+        title: '¿Desea eliminar la Categoria?',
+        text: "Si estas seguro presiona eliminar, recuerde que los productos que tengan esta categoria, tambien serán borrados!, tenga en cuenta eso",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/Category/Delete",
+                type: "POST",
+                data: {
+                    Id: roleId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'La categoría fue eliminado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Category/Index";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La categoría no se pudo eliminar'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Category/Index";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}

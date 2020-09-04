@@ -1,17 +1,18 @@
-﻿@model Marquesita.Models.Identity.Role
+﻿@model Marquesita.Models.Business.Categories
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Categoría";
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Editar rol</h1>
+                <h1 class="m-0 text-dark">Editar categoría</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Role" asp-action="Index">Roles</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categorías</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </div>
@@ -23,19 +24,19 @@
     <div class="container-fluid">
         <div class="card card-warning">
             <div class="card-header">
-                <h3 class="card-title">Rol @Model.Name</h3>
+                <h3 class="card-title">Cateogría @Model.Name</h3>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card-body">
-                        <form asp-controller="Role" asp-action="Edit" method="post">
+                        <form asp-controller="Category" asp-action="Edit" method="post">
                             <div class="form-group">
                                 <label asp-for="Name">Nombre</label>
                                 <input asp-for="Name" class="form-control" />
-                                <input type="hidden" name="Id" value="@ViewBag.RoleId" />
+                                <input type="hidden" name="Id" value="@ViewBag.Id" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
-                            <a class="btn btn-danger" asp-controller="Role" asp-action="Index"><i class="fas fa-arrow-left"></i> Regresar</a>
+                            <a class="btn btn-danger" asp-controller="Category" asp-action="Index"><i class="fas fa-arrow-left"></i> Regresar</a>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Actualizar</button>
                         </form>
                     </div>
@@ -44,3 +45,4 @@
         </div>
     </div>
 </section>
+

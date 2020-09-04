@@ -20,6 +20,8 @@ using MarquesitaDashboards.Validators;
 using FluentValidation;
 using Marquesita.Infrastructure.Repositories;
 using Marquesita.Models.Business;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
+using MarquesitaDashboards.Validators.CategoryValidators;
 
 namespace MarquesitaDashboards
 {
@@ -176,7 +178,7 @@ namespace MarquesitaDashboards
                     policy.RequireClaim("Permission", "Eliminar Productos");
                 });
 
-                // Category Policy
+                // Categories Policy
                 options.AddPolicy("CanViewCategory", policy =>
                 {
                     policy.RequireClaim("Permission", "Ver Categorias");
@@ -222,11 +224,13 @@ namespace MarquesitaDashboards
 
             services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
             services.AddTransient<IValidator<RoleEditViewModel>, RoleEditViewModelValidator>();
+
+            services.AddTransient<IValidator<CategoryViewModel>, CategoryViewModelValidator>();
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)
         {
-            services.AddTransient<IRepository<Category>, CategoryRepository>();
+            services.AddTransient<IRepository<Categories>, CategoryRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
 

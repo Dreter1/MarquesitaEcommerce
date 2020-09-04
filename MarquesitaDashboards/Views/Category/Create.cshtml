@@ -1,0 +1,47 @@
+﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.Category.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Crear Categoría";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Ingreso nueva Categoría</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Categorías</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Datos de la categoría</h3>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <form asp-controller="Category" asp-action="Create" method="post">
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input asp-for="Name" class="form-control" placeholder="Nombre de categoría" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <a class="btn btn-danger" asp-controller="Category" asp-action="Index"><i class="fas fa-arrow-left"></i> Regresar</a>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

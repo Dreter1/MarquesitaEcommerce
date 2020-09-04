@@ -53,7 +53,7 @@ namespace Marquesita.Infrastructure.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Marquesita.Models.Business.Category", b =>
+            modelBuilder.Entity("Marquesita.Models.Business.Categories", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace Marquesita.Infrastructure.Migrations
 
             modelBuilder.Entity("Marquesita.Models.Business.Product", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Category", "Category")
+                    b.HasOne("Marquesita.Models.Business.Categories", "Category")
                         .WithMany("products")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Product_CategoryId")

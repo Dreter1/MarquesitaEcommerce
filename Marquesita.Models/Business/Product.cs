@@ -15,7 +15,7 @@ namespace Marquesita.Models.Business
         public bool IsActive { get; set; }
         public Guid CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public Categories Category { get; set; }
         public List<SaleDetail> saleDetails { get; set; }
         public List<WishList> wishLists { get; set; }
         public List<ShoppingCart> ShopingCartItems { get; set; }

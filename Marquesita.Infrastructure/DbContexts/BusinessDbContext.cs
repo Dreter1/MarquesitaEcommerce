@@ -10,7 +10,7 @@ namespace Marquesita.Infrastructure.DbContexts
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Categories> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
@@ -21,7 +21,7 @@ namespace Marquesita.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>(entity =>
+            modelBuilder.Entity<Categories>(entity =>
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(100);

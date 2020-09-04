@@ -1,4 +1,5 @@
-﻿using Marquesita.Models.Business;
+﻿using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
+using Marquesita.Models.Business;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,10 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetCategoryList();
+        IEnumerable<Categories> GetCategoryList();
+        Categories GetCategoryById(Guid Id);
+        void CreateCategory(Categories category);
+        void DeleteCategory(Categories category);
+        void UpdateCategory(CategoryViewModel model, Categories category);
     }
 }

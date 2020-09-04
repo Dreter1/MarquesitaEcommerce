@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20200828174956_CreatingDbBuissnes")]
-    partial class CreatingDbBuissnes
+    [Migration("20200904022434_creatingBusinessDB")]
+    partial class creatingBusinessDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace Marquesita.Infrastructure.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Marquesita.Models.Business.Category", b =>
+            modelBuilder.Entity("Marquesita.Models.Business.Categories", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace Marquesita.Infrastructure.Migrations
 
             modelBuilder.Entity("Marquesita.Models.Business.Product", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Category", "Category")
+                    b.HasOne("Marquesita.Models.Business.Categories", "Category")
                         .WithMany("products")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Product_CategoryId")

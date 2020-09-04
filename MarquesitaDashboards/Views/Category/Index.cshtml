@@ -41,7 +41,7 @@
                         }
                         else
                         {
-                            <th>Opcion</th>
+                            <th> </th>
                         }
                     </tr>
                 </thead>
@@ -50,39 +50,26 @@
                     {
                         <tr>
                             <td>@categoria.Name</td>
-                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
                             {
                                 <td>
-                                    @if (categoria.Name != "Super Admin")
-                                    {
-                                        <div class="form-row text-center">
-                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
-                                            {
-                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
-                                            }
-                                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
-                                            {
-                                                <div id="DeleteRoleClic_@categoria.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@categoria.Id" onclick="deleteRol(this)">
-                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="form-row text-center">
-                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
-                                        </div>
-                                    }
+                                    <div class="form-row text-center">
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded)
+                                        {
+                                            <span>&nbsp</span><a asp-controller="Category" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                        }
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
+                                        {
+                                            <div id="DeleteCategoryClic_@categoria.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@categoria.Id" onclick="deleteCategory(this)">
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </div>
+                                        }
+                                    </div>
                                 </td>
                             }
                             else
                             {
                                 <td>
-                                    <div class="form-row text-center">
-                                        <a asp-controller="Role" asp-action="Detail" asp-route-Id="@categoria.Id" class="btn btn-info">Detalle</a>
-                                    </div>
                                 </td>
                             }
                         </tr>
