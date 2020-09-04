@@ -240,7 +240,6 @@ namespace MarquesitaDashboards
             services.AddTransient<IRoleManagerService, RoleManagerService>();
             services.AddTransient<IAuthManagerService, AuthManagerService>();
             services.AddTransient<IConstantService, ConstantService>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)
