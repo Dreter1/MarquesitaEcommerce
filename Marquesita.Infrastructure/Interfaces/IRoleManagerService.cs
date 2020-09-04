@@ -1,10 +1,8 @@
-﻿using Marquesita.Infrastructure.ViewModels.Dashboards;
+﻿using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Marquesita.Infrastructure.Interfaces

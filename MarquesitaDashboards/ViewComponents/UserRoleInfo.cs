@@ -1,6 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Dashboards;
-using Marquesita.Models.Identity;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

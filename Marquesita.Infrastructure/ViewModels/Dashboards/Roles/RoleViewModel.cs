@@ -1,23 +1,23 @@
 ﻿using Marquesita.Models.Identity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
-namespace Marquesita.Infrastructure.ViewModels.Dashboards
+namespace Marquesita.Infrastructure.ViewModels.Dashboards.Roles
 {
-    public class RoleEditViewModel
+    public class RoleViewModel
     {
         public string Id { get; }
 
         [DisplayName("Nombre")]
         public string Name { get; set; }
 
-        public static implicit operator Role(RoleEditViewModel obj)
+        [DisplayName("Permisos")]
+        public List<string> Permissions { get; set; }
+
+        public static implicit operator Role(RoleViewModel obj)
         {
             return new Role
             {
-                Id = obj.Id,
                 Name = obj.Name
             };
         }

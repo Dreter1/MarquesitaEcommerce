@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Marquesita.Infrastructure.ViewModels.Dashboards;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace MarquesitaDashboards.Validators
+namespace MarquesitaDashboards.Validators.RoleValidatos
 {
     public class RoleViewModelValidator : AbstractValidator<RoleViewModel>
     {
