@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Marquesita.Infrastructure.ViewModels.Dashboards;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace MarquesitaDashboards.Validators
+namespace MarquesitaDashboards.Validators.UserValidator
 {
     public class UserViewModelValidator : AbstractValidator<UserViewModel>
     {

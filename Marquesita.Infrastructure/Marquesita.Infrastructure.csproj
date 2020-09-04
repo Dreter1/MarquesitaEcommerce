@@ -20,6 +20,7 @@
     <Folder Include="Images\Products\" />
     <Folder Include="Images\Users\Employees\" />
     <Folder Include="Images\Users\Clients\" />
+    <Folder Include="ViewModels\Dashboards\Roles\" />
     <Folder Include="ViewModels\Ecommerce\" />
   </ItemGroup>
 

@@ -1,10 +1,22 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure;
 using Marquesita.Infrastructure.DbContexts;
+using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Repositories;
+using Marquesita.Infrastructure.Services;
+using Marquesita.Infrastructure.ViewModels.Dashboards;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
+using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
+using MarquesitaDashboards.Validators;
+using MarquesitaDashboards.Validators.CategoryValidators;
+using MarquesitaDashboards.Validators.UserValidator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,16 +24,6 @@ using Microsoft.Extensions.Hosting;
 using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
 using System;
-using Microsoft.AspNetCore.Identity;
-using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.Services;
-using Marquesita.Infrastructure.ViewModels.Dashboards;
-using MarquesitaDashboards.Validators;
-using FluentValidation;
-using Marquesita.Infrastructure.Repositories;
-using Marquesita.Models.Business;
-using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
-using MarquesitaDashboards.Validators.CategoryValidators;
 
 namespace MarquesitaDashboards
 {
