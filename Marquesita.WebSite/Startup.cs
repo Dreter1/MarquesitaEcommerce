@@ -218,7 +218,7 @@ namespace MarquesitaDashboards
                 });
 
                 // Client Policy
-                options.AddPolicy("ClientPolicy", policy =>
+                options.AddPolicy("Client", policy =>
                 {
                     policy.RequireClaim("Permission", "Compras");
                 });
