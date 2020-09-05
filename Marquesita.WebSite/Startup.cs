@@ -216,6 +216,12 @@ namespace MarquesitaDashboards
                 {
                     policy.RequireClaim("Permission", "Editar Venta");
                 });
+
+                // Client Policy
+                options.AddPolicy("ClientPolicy", policy =>
+                {
+                    policy.RequireClaim("Permission", "Compras");
+                });
             });
         }
 
