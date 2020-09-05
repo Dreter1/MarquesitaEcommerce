@@ -53,7 +53,7 @@ namespace Marquesita.Infrastructure.Services
         {
             var usersList = _userManager.Users.ToList();
             var employeeList = new List<User>();
-            foreach(var user in usersList)
+            foreach (var user in usersList)
             {
                 var role = await GetUserRole(user);
                 if (role != "Cliente")
@@ -115,7 +115,7 @@ namespace Marquesita.Infrastructure.Services
 
             if (user.ImageRoute != null)
             {
-                if(image != null)
+                if (image != null)
                 {
                     DeleteServerFile(path, user.ImageRoute);
                     var imagen = UploadedServerFile(path, image);
@@ -132,7 +132,7 @@ namespace Marquesita.Infrastructure.Services
             }
             else
             {
-                DeleteServerFile(path,user.ImageRoute);
+                DeleteServerFile(path, user.ImageRoute);
                 var imagen = UploadedServerFile(path, image);
                 user.ImageRoute = imagen;
                 _context.Entry(user).State = EntityState.Modified;
@@ -167,12 +167,11 @@ namespace Marquesita.Infrastructure.Services
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
             }
-
         }
 
         public UserEditViewModel UserToViewModel(User obj)
         {
-            if(obj != null)
+            if (obj != null)
             {
                 return new UserEditViewModel
                 {
@@ -185,7 +184,6 @@ namespace Marquesita.Infrastructure.Services
                     DateOfBirth = obj.DateOfBirth,
                     RegisterDate = obj.RegisterDate
                 };
-
             }
             return null;
         }
@@ -204,7 +202,7 @@ namespace Marquesita.Infrastructure.Services
 
         public async Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword)
         {
-           return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
+            return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
         }
 
         private string UploadedServerFile(string path, IFormFile image)
@@ -239,7 +237,7 @@ namespace Marquesita.Infrastructure.Services
             if (File.Exists(localFilePath))
                 File.Delete(localFilePath);
 
-            if(image != null)
+            if (image != null)
             {
                 string serverFilePath = Path.Combine(path, "Images", "Users", image);
 

@@ -29,6 +29,7 @@ namespace MarquesitaEcommerce
         {
             MvcConfiguration(services);
             services.AddSession();
+            services.AddMemoryCache();
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
@@ -120,10 +121,11 @@ namespace MarquesitaEcommerce
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)
-        { 
-            //services.AddTransient<IUserManagerService, UserManagerService>();
+        {
+            services.AddTransient<IUserManagerService, UserManagerService>();
             //services.AddTransient<IAuthManagerService, AuthManagerService>();
             //services.AddTransient<IConstantService, ConstantService>();
+            //services.AddTransient<IRoleManagerService, RoleManagerService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

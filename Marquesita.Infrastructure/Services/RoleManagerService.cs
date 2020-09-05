@@ -15,6 +15,7 @@ namespace Marquesita.Infrastructure.Services
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly AuthIdentityDbContext _context;
+
         public RoleManagerService(RoleManager<Role> roleManager, AuthIdentityDbContext context)
         {
             _roleManager = roleManager;

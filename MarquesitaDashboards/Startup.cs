@@ -90,8 +90,8 @@ namespace MarquesitaDashboards
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Security.DashboardsCookie";
-                config.LoginPath = "/Auth/SignIn";
-                config.AccessDeniedPath = "/Auth/AccessDenied";
+                config.LoginPath = "/Dashboard/SignIn";
+                config.AccessDeniedPath = "/Dashboard/AccessDenied";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
@@ -236,10 +236,10 @@ namespace MarquesitaDashboards
 
             services.AddTransient<ICategoryService, CategoryService>();
 
-            services.AddTransient<IUserManagerService, UserManagerService>();
-            services.AddTransient<IRoleManagerService, RoleManagerService>();
-            services.AddTransient<IAuthManagerService, AuthManagerService>();
-            services.AddTransient<IConstantService, ConstantService>();
+            services.AddScoped<IUserManagerService, UserManagerService>();
+            services.AddScoped<IRoleManagerService, RoleManagerService>();
+            services.AddScoped<IAuthManagerService, AuthManagerService>();
+            services.AddScoped<IConstantService, ConstantService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)

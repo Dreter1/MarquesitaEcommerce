@@ -6,15 +6,23 @@ using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
 {
-    public class AuthController : Controller
+    public class DashboardController : Controller
     {
         private readonly IAuthManagerService _signsInManager;
         private readonly IUserManagerService _usersManager;
+
         
-        public AuthController(IAuthManagerService signsInManager, IUserManagerService usersManager)
+        public DashboardController(IAuthManagerService signsInManager, IUserManagerService usersManager)
         {
             _signsInManager = signsInManager;
             _usersManager = usersManager;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -28,7 +36,7 @@ namespace MarquesitaDashboards.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("/Dashboard/Index");
             if (ModelState.IsValid)
             {
                 var user = await _usersManager.GetUserByNameAsync(model.Username);

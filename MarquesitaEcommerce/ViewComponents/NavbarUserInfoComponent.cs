@@ -1,4 +1,5 @@
-﻿using Marquesita.Infrastructure.Services;
+﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,9 +7,9 @@ namespace MarquesitaEcommerce.ViewComponents
 {
     public class NavbarUserInfoComponent : ViewComponent
     {
-        private readonly UserManagerService _userManager;
+        private readonly IUserManagerService _userManager;
 
-        public NavbarUserInfoComponent(UserManagerService userManager)
+        public NavbarUserInfoComponent(IUserManagerService userManager)
         {
             _userManager = userManager;
         }
