@@ -7,24 +7,10 @@
 
     <title>@ViewData["Title"] - Marquesita Dashboard</title>
     <!-- Header Component -->
-    @await Component.InvokeAsync("DashboardHeader")
+
     @RenderSection("scripts", required: false)
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-    <div class="wrapper">
-        <!-- Navbar Component -->
-        @await Component.InvokeAsync("NavbarAccountInfo")
-
-        <!-- SideBar Component -->
-        @await Component.InvokeAsync("SidebarAccountInfo")
-
-        <!-- Contenido de paginas -->
-        <div class="content-wrapper">
-            @RenderBody()
-        </div>
-
-        <!-- Pie de Pagina -->
-        @await Component.InvokeAsync("Footer")
-    </div>
+    @RenderBody()
 </body>
 </html>

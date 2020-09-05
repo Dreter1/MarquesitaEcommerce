@@ -20,23 +20,23 @@ namespace MarquesitaDashboards.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Main()
         {
             return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult SignIn()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(LoginViewModel model, string returnUrl)
+        public async Task<IActionResult> Index(LoginViewModel model, string returnUrl)
         {
-            returnUrl ??= Url.Content("/Dashboard/Index");
+            returnUrl ??= Url.Content("/Dashboard/Main");
             if (ModelState.IsValid)
             {
                 var user = await _usersManager.GetUserByNameAsync(model.Username);
@@ -82,7 +82,7 @@ namespace MarquesitaDashboards.Controllers
         public IActionResult LogOut()
         {
             _signsInManager.LogOut();
-            return RedirectToAction("SignIn");
+            return RedirectToAction("Index");
         }
 
         [Authorize]

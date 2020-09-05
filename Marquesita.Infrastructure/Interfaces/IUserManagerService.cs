@@ -26,6 +26,7 @@ namespace Marquesita.Infrastructure.Interfaces
         void RemovingRestoringCredentials(User user);
         UserEditViewModel UserToViewModel(User obj);
         bool EmailExists(string email);
+        bool isColaborator(string role);
         Task<string> NewTokenPassword(User user);
         Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword);
     }

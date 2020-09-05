@@ -90,7 +90,7 @@ namespace MarquesitaDashboards
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Security.DashboardsCookie";
-                config.LoginPath = "/Dashboard/SignIn";
+                config.LoginPath = "/Dashboard";
                 config.AccessDeniedPath = "/Dashboard/AccessDenied";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromMinutes(60);

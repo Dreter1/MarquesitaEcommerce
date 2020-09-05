@@ -23,50 +23,79 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewRoles")]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View(_rolesManager.GetEmployeeRolesList());
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
+            {
+                ViewBag.UserId = user.Id;
+                return View(_rolesManager.GetEmployeeRolesList());
+            }
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddRoles")]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewBag.Permissions = _rolesManager.PermissionList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View();
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
+            {
+                ViewBag.Permissions = _rolesManager.PermissionList();
+                ViewBag.UserId = user.Id;
+                return View();
+            }
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddRoles")]
         public async Task<IActionResult> Create(RoleViewModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
             {
-                var result = await _rolesManager.CreateRoleAsync(model);
 
-                if (result.Succeeded)
-                    await _rolesManager.AssignPermissionsToRole(model);
+                if (ModelState.IsValid)
+                {
+                    var result = await _rolesManager.CreateRoleAsync(model);
 
-                return RedirectToAction("Index");
+                    if (result.Succeeded)
+                        await _rolesManager.AssignPermissionsToRole(model);
+
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.Permissions = _rolesManager.PermissionList();
+                ViewBag.UserId = user.Id;
+                return View();
             }
-
-            ViewBag.Permissions = _rolesManager.PermissionList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View();
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
         [Authorize(Policy = "CanViewRoles")]
         public async Task<IActionResult> DetailAsync(string Id)
         {
-            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (role != null)
+            if (_usersManager.isColaborator(userRole))
             {
-                ViewBag.RoleId = role.Id;
-                ViewBag.RolePermissions = _rolesManager.PermissionListOfRole(role);
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                return View(role);
+                var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+                if (role != null)
+                {
+                    ViewBag.RoleId = role.Id;
+                    ViewBag.RolePermissions = _rolesManager.PermissionListOfRole(role);
+                    ViewBag.UserId = user.Id;
+                    return View(role);
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
         }
@@ -75,15 +104,22 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditRoles")]
         public async Task<IActionResult> Edit(string Id)
         {
-            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (role != null)
+            if (_usersManager.isColaborator(userRole))
             {
-                if (role.Name != "Super Admin")
+                var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+                if (role != null)
                 {
-                    ViewBag.RoleId = role.Id;
-                    ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                    return View(role);
+                    if (role.Name != "Super Admin")
+                    {
+                        ViewBag.RoleId = role.Id;
+                        ViewBag.UserId = user.Id;
+                        return View(role);
+                    }
+                    return RedirectToAction("NotFound404", "Auth");
                 }
                 return RedirectToAction("NotFound404", "Auth");
             }
@@ -94,23 +130,30 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditRoles")]
         public async Task<IActionResult> Edit(RoleEditViewModel model, string Id)
         {
-            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (ModelState.IsValid)
+            if (_usersManager.isColaborator(userRole))
             {
-                if (role != null)
+                var role = await _rolesManager.GetRoleByIdAsync(Id);
+
+                if (ModelState.IsValid)
                 {
-                    if (role.Name != "Super Admin")
+                    if (role != null)
                     {
-                        _rolesManager.UpdateRoles(model, role);
-                        return RedirectToAction("Index");
+                        if (role.Name != "Super Admin")
+                        {
+                            _rolesManager.UpdateRoles(model, role);
+                            return RedirectToAction("Index");
+                        }
+                        return RedirectToAction("NotFound404", "Auth");
                     }
-                    return RedirectToAction("NotFound404", "Auth");
                 }
+                ViewBag.UserId = user.Id;
+                ViewBag.RoleId = Id;
+                return View(role);
             }
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.RoleId = Id;
-            return View(role);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]

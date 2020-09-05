@@ -28,53 +28,81 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.Image = _images.RoutePathRootEmployeeImages();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View(await _usersManager.GetUsersEmployeeList());
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
+            {
+                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.UserId = user.Id;
+                return View(await _usersManager.GetUsersEmployeeList());
+            }
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddUsers")]
         public async Task<IActionResult> CreateAsync()
         {
-            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View();
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
+            {
+                ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
+                ViewBag.UserId = user.Id;
+                return View();
+            }
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddUsers")]
         public async Task<IActionResult> Create(UserViewModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
             {
-                var path = _webHostEnvironment.WebRootPath;
-                var result = await _usersManager.CreateUserAsync(model, model.Password, model.ProfileImage, path);
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    await _usersManager.AddingRoleToUserAsync(model.Username, model.Role);
-                    return RedirectToAction("Index", "User");
+                    var path = _webHostEnvironment.WebRootPath;
+                    var result = await _usersManager.CreateUserAsync(model, model.Password, model.ProfileImage, path);
+                    if (result.Succeeded)
+                    {
+                        await _usersManager.AddingRoleToUserAsync(model.Username, model.Role);
+                        return RedirectToAction("Index", "User");
+                    }
                 }
+                ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
+                ViewBag.UserId = user.Id;
+                return View();
             }
-            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            return View();
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
         [Authorize(Policy = "CanEditUsers")]
         public async Task<IActionResult> EditAsync(string Id)
         {
-            var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (user != null)
+            if (_usersManager.isColaborator(userRole))
             {
-                ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                ViewBag.UserRole = await _usersManager.GetUserRole(user);
-                ViewBag.User = user.Id;
-                return View(user);
+                var userEdit = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+                if (userEdit != null)
+                {
+                    ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                    ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
+                    ViewBag.UserId = user.Id;
+                    ViewBag.UserRole = await _usersManager.GetUserRole(userEdit);
+                    ViewBag.User = userEdit.Id;
+                    return View(userEdit);
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
         }
@@ -83,55 +111,76 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditUsers")]
         public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
         {
-            var user = await _usersManager.GetUserByIdAsync(Id);
-            var path = _webHostEnvironment.WebRootPath;
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (ModelState.IsValid)
+            if (_usersManager.isColaborator(userRole))
             {
-                if (user != null)
-                {
-                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
-                    await _usersManager.UpdatingRoleOfUserAsync(user, model.Role);
+                var userEdit = await _usersManager.GetUserByIdAsync(Id);
+                var path = _webHostEnvironment.WebRootPath;
 
-                    return RedirectToAction("Index", "User");
+                if (ModelState.IsValid)
+                {
+                    if (user != null)
+                    {
+                        _usersManager.UpdatingUser(model, userEdit, model.ProfileImage, path);
+                        await _usersManager.UpdatingRoleOfUserAsync(userEdit, model.Role);
+
+                        return RedirectToAction("Index", "User");
+                    }
                 }
+
+                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
+                ViewBag.UserId = user.Id;
+                ViewBag.UserRole = userRole;
+                ViewBag.User = userEdit.Id;
+
+                return View(model);
             }
 
-            ViewBag.Image = _images.RoutePathRootEmployeeImages();
-            ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.UserRole = await _usersManager.GetUserRole(user);
-            ViewBag.User = user.Id;
-
-            return View(model);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpPost]
         [Authorize(Policy = "CanDeleteUsers")]
         public async Task<IActionResult> RemoveRestoreCredentials(string Id)
         {
-            var user = await _usersManager.GetUserByIdAsync(Id);
-            if (user != null)
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
             {
-                _usersManager.RemovingRestoringCredentials(user);
-                return RedirectToAction("Index");
+                var userRemove = await _usersManager.GetUserByIdAsync(Id);
+                if (userRemove != null)
+                {
+                    _usersManager.RemovingRestoringCredentials(userRemove);
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
+
         }
 
         [HttpGet]
         public async Task<IActionResult> ProfileAsync()
         {
-            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            var user = await _usersManager.GetUserByIdAsync(userId);
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (user != null)
+            if (_usersManager.isColaborator(userRole))
             {
-                ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                ViewBag.UserRole = await _usersManager.GetUserRole(user);
-                ViewBag.UserId = userId;
-                return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
+                var userProfile = await _usersManager.GetUserByNameAsync(User.Identity.Name);
 
+                if (userProfile != null)
+                {
+                    ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                    ViewBag.UserRole = await _usersManager.GetUserRole(userProfile);
+                    ViewBag.UserId = userProfile.Id;
+                    return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
         }
@@ -139,19 +188,26 @@ namespace MarquesitaDashboards.Controllers
         [HttpGet]
         public async Task<IActionResult> EditProfile(string Id)
         {
-            var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (actualId == Id)
+            if (_usersManager.isColaborator(userRole))
             {
-                var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+                var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
 
-                if (user != null)
+                if (actualId == Id)
                 {
-                    ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                    ViewBag.UserId = actualId;
-                    ViewBag.User = user.Id;
-                    return View(user);
+                    var userEditProfile = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+
+                    if (userEditProfile != null)
+                    {
+                        ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                        ViewBag.UserId = actualId;
+                        ViewBag.User = userEditProfile.Id;
+                        return View(userEditProfile);
+                    }
                 }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
         }
@@ -159,64 +215,84 @@ namespace MarquesitaDashboards.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
         {
-            var user = await _usersManager.GetUserByIdAsync(Id);
-            var path = _webHostEnvironment.WebRootPath;
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
 
-            if (ModelState.IsValid)
+            if (_usersManager.isColaborator(userRole))
             {
-                if (user != null)
+                var userProfile = await _usersManager.GetUserByIdAsync(Id);
+                var path = _webHostEnvironment.WebRootPath;
+
+                if (ModelState.IsValid)
                 {
-                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
-                    return RedirectToAction("Profile", "User");
+                    if (userProfile != null)
+                    {
+                        _usersManager.UpdatingUser(model, userProfile, model.ProfileImage, path);
+                        return RedirectToAction("Profile", "User");
+                    }
                 }
+
+                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                ViewBag.UserRole = await _usersManager.GetUserRole(userProfile);
+                ViewBag.User = userProfile.Id;
+
+                return View(model);
             }
-
-            ViewBag.Image = _images.RoutePathRootEmployeeImages();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.UserRole = await _usersManager.GetUserRole(user);
-            ViewBag.User = user.Id;
-
-            return View(model);
+            return RedirectToAction("NotFound404", "Auth");
         }
 
         [HttpGet]
         public async Task<IActionResult> ResetPasswordAsync()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            if (user != null)
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
             {
-                var token = await _usersManager.NewTokenPassword(user);
-                var model = new ResetEmployeePassword { Token = token, Email = user.Email };
-                return View(model);
+                var userPassword = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                if (userPassword != null)
+                {
+                    var token = await _usersManager.NewTokenPassword(userPassword);
+                    var model = new ResetEmployeePassword { Token = token, Email = userPassword.Email };
+                    return View(model);
+                }
+                return RedirectToAction("NotFound404", "Auth");
             }
             return RedirectToAction("NotFound404", "Auth");
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetEmployeePassword resetPasswordModel)
         {
-            if (ModelState.IsValid)
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var userRole = await _usersManager.GetUserRole(user);
+
+            if (_usersManager.isColaborator(userRole))
             {
-                var user = await _usersManager.GetUserByEmailAsync(resetPasswordModel.Email);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    var resetPassResult = await _usersManager.ChangeEmployeePassword(user, resetPasswordModel);
+                    var userPassword = await _usersManager.GetUserByEmailAsync(resetPasswordModel.Email);
 
-                    if (!resetPassResult.Succeeded)
+                    if (userPassword != null)
                     {
-                        foreach (var error in resetPassResult.Errors)
+                        var resetPassResult = await _usersManager.ChangeEmployeePassword(userPassword, resetPasswordModel);
+
+                        if (!resetPassResult.Succeeded)
                         {
-                            ModelState.TryAddModelError(error.Code, error.Description);
+                            foreach (var error in resetPassResult.Errors)
+                            {
+                                ModelState.TryAddModelError(error.Code, error.Description);
+                            }
+                            return View(resetPasswordModel);
                         }
-                        return View(resetPasswordModel);
+                        return RedirectToAction("Profile", "User");
                     }
-                    return RedirectToAction("Profile", "User");
+                    return RedirectToAction("NotFound404", "Auth");
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return View(resetPasswordModel);
             }
-            return View(resetPasswordModel);
+            return RedirectToAction("NotFound404", "Auth");
         }
     }
 }

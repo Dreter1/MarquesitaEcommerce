@@ -188,6 +188,13 @@ namespace Marquesita.Infrastructure.Services
             return null;
         }
 
+        public bool isColaborator(string role)
+        {
+            if (role != "Cliente")
+                return true;
+            return false;
+        }
+
         public bool EmailExists(string email)
         {
             if (_context.Users.Any(u => u.Email == email))
