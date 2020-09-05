@@ -5,7 +5,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a asp-controller="Home" asp-action="Index" class="brand-link">
-        <img src="~/template/dist/img/AdminLTELogo.png" alt="Marquesita Logo" class="brand-image img-circle elevation-3"
+        <img src="~/DashboardTemplate/dist/img/AdminLTELogo.png" alt="Marquesita Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">La Marquesita</span>
     </a>
@@ -23,11 +23,11 @@
                 }
                 else
                 {
-                    <img src="~/template/dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="user Img">
+                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="user Img">
                 }
             </div>
             <div class="info">
-                <a asp-controller="User" asp-action="Profile" class="d-block">@await Component.InvokeAsync("UserRoleInfo", new { userId = Model.Id }) </a>
+                <a asp-controller="User" asp-action="Profile" class="d-block">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = Model.Id }) </a>
             </div>
         </div>
 

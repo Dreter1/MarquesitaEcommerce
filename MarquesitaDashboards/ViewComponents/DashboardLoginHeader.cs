@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.ViewComponents
 {
-    public class Footer : ViewComponent
+    public class DashboardLoginHeader : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

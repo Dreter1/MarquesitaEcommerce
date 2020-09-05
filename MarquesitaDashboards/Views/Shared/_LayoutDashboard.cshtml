@@ -13,10 +13,10 @@
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Navbar Component -->
-        @await Component.InvokeAsync("NavbarAccountInfo")
+        @await Component.InvokeAsync("DashboardNavbarAccountInfo")
 
         <!-- SideBar Component -->
-        @await Component.InvokeAsync("SidebarAccountInfo")
+        @await Component.InvokeAsync("DashboardSidebarAccountInfo")
 
         <!-- Contenido de paginas -->
         <div class="content-wrapper">
@@ -24,7 +24,7 @@
         </div>
 
         <!-- Pie de Pagina -->
-        @await Component.InvokeAsync("Footer")
+        @await Component.InvokeAsync("DashboardFooter")
     </div>
 </body>
 </html>

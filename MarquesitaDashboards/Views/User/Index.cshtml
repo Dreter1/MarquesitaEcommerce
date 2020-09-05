@@ -66,7 +66,7 @@
                             else
                             {
                                 <td>
-                                    <img src="~/template/dist/img/user4-128x128.jpg"
+                                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
                                          class="rounded-circle"
                                          alt="User Img"
                                          height="40" width="40"
@@ -76,7 +76,7 @@
                             <td>@user.UserName</td>
                             <td>@user.FirstName</td>
                             <td>@user.LastName</td>
-                            <td>@await Component.InvokeAsync("UserRoleInfo", new { userId = user.Id })</td>
+                            <td>@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</td>
                             @if (user.IsActive)
                             {
                                 <td>Activo</td>

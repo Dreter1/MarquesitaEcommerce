@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.ViewComponents
 {
-    public class UserRoleInfo : ViewComponent
+    public class DashboardUserRoleInfo : ViewComponent
     {
         private readonly IUserManagerService _userManager;
 
-        public UserRoleInfo(IUserManagerService userManager)
+        public DashboardUserRoleInfo(IUserManagerService userManager)
         {
             _userManager = userManager;
         }
