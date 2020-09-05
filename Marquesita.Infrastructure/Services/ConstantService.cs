@@ -8,8 +8,8 @@ namespace Marquesita.Infrastructure.Services
         const string rutaInfrastructure = @"Marquesita.Infrastructure\Images\";
         const string rutaProyecto = rutaServidorLocal + rutaInfrastructure;
 
-        const string rutaImgColaborador = "~/Images/Users/";
-        const string rutaImgCliente = "~/Images/Users/";
+        const string rutaImgColaborador = "~/Images/Users/Employees/";
+        const string rutaImgCliente = "~/Images/Users/Clients/";
         const string rutaImgProducto = "~/Images/Products/";
 
         public string RoutePathEmployeeImages()

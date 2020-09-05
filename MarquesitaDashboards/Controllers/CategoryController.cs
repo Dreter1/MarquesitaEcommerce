@@ -30,7 +30,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View(_categoryService.GetCategoryList());
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -85,9 +85,9 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                     return View(category);
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -114,7 +114,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.Id = Id;
                 return View(category);
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]

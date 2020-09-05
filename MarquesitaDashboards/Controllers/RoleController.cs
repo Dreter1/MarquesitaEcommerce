@@ -31,7 +31,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View(_rolesManager.GetEmployeeRolesList());
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -74,7 +74,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -95,9 +95,9 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.UserId = user.Id;
                     return View(role);
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -119,11 +119,11 @@ namespace MarquesitaDashboards.Controllers
                         ViewBag.UserId = user.Id;
                         return View(role);
                     }
-                    return RedirectToAction("NotFound404", "Auth");
+                    return RedirectToAction("NotFound404", "Error");
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -146,14 +146,14 @@ namespace MarquesitaDashboards.Controllers
                             _rolesManager.UpdateRoles(model, role);
                             return RedirectToAction("Index");
                         }
-                        return RedirectToAction("NotFound404", "Auth");
+                        return RedirectToAction("NotFound404", "Error");
                     }
                 }
                 ViewBag.UserId = user.Id;
                 ViewBag.RoleId = Id;
                 return View(role);
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]

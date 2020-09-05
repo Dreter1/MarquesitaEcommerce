@@ -84,18 +84,5 @@ namespace MarquesitaDashboards.Controllers
             _signsInManager.LogOut();
             return RedirectToAction("Index");
         }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-        [Authorize]
-        [HttpGet]
-        public IActionResult NotFound404()
-        {
-            return View();
-        }
     }
 }

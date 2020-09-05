@@ -1,0 +1,46 @@
+﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.Roles.RoleViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Error 404</title>
+    <link href="~/css/ErrorStyles.css" rel="stylesheet" />
+</head>
+<body class="bg-white">
+    <div id="layoutError">
+        <div id="layoutError_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="text-center mt-4">
+                                <img class="img-fluid p-4" src="~/Images/Errors/404-error-pana.svg" alt="401 Error" />
+                                <p class="lead">La página que usted esta buscando no existe...</p>
+                                @if (Model.Name == null || Model.Name == "Cliente")
+                                {
+                                    <a class="text-arrow-icon" asp-controller="Home" asp-action="Index">
+                                        <i class="ml-0 mr-1" data-feather="arrow-left"></i>
+                                        Regresar a la tienda
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="text-arrow-icon" asp-controller="Dashboard" asp-action="Main">
+                                        <i class="ml-0 mr-1" data-feather="arrow-left"></i>
+                                        Regresar a Dashboard
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+</body>
+</html>

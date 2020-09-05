@@ -34,7 +34,7 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.UserId = user.Id;
                     return View();
                 }
-                return RedirectToAction("NotFound404", "Dashboard");
+                return RedirectToAction("NotFound404", "Error");
             }
             return View();
         }

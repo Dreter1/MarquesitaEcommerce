@@ -37,7 +37,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View(await _usersManager.GetUsersEmployeeList());
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -53,7 +53,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -79,7 +79,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.UserId = user.Id;
                 return View();
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -102,9 +102,9 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.User = userEdit.Id;
                     return View(userEdit);
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -138,8 +138,7 @@ namespace MarquesitaDashboards.Controllers
 
                 return View(model);
             }
-
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -157,10 +156,9 @@ namespace MarquesitaDashboards.Controllers
                     _usersManager.RemovingRestoringCredentials(userRemove);
                     return RedirectToAction("Index");
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
-
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -180,9 +178,9 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.UserId = userProfile.Id;
                     return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -207,9 +205,9 @@ namespace MarquesitaDashboards.Controllers
                         return View(userEditProfile);
                     }
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -239,7 +237,7 @@ namespace MarquesitaDashboards.Controllers
 
                 return View(model);
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -257,9 +255,9 @@ namespace MarquesitaDashboards.Controllers
                     var model = new ResetEmployeePassword { Token = token, Email = userPassword.Email };
                     return View(model);
                 }
-                return RedirectToAction("NotFound404", "Auth");
+                return RedirectToAction("NotFound404", "Error");
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -288,11 +286,11 @@ namespace MarquesitaDashboards.Controllers
                         }
                         return RedirectToAction("Profile", "User");
                     }
-                    return RedirectToAction("NotFound404", "Auth");
+                    return RedirectToAction("NotFound404", "Error");
                 }
                 return View(resetPasswordModel);
             }
-            return RedirectToAction("NotFound404", "Auth");
+            return RedirectToAction("NotFound404", "Error");
         }
     }
 }
