@@ -1,16 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+    <title>@ViewData["Title"] - La Marquesita</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="La Marquesita, Quesos, Cheese" />
 
-    <title>@ViewData["Title"] - Marquesita Dashboard</title>
-    <!-- Header Component -->
+    @await Component.InvokeAsync("EcommerceHeader")
+ </head>
 
-    @RenderSection("scripts", required: false)
-</head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body>
+    @await Component.InvokeAsync("EcommerceNavbarAccountInfo")
+
     @RenderBody()
+
+    @await Component.InvokeAsync("EcommerceFooter")
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
+
