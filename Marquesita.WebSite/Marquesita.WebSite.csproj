@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>1fc70a76-52c8-44a9-b77c-7af0b1447788</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +34,7 @@
     <Folder Include="wwwroot\Images\Products\" />
     <Folder Include="wwwroot\Images\Users\Employees\" />
     <Folder Include="wwwroot\Images\Users\Clients\" />
+    <Folder Include="wwwroot\EcommerceTemplate\" />
   </ItemGroup>
 
   <ItemGroup>

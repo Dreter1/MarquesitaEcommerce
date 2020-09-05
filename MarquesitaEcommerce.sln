@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marquesita.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marquesita.Models", "Marquesita.Models\Marquesita.Models.csproj", "{0F350CC6-E93D-4580-AFF5-7235B69F838C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marquesita.WebSite", "MarquesitaDashboards\Marquesita.WebSite.csproj", "{AE1DC0F3-2FE4-4721-BACB-8911DF1D1395}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marquesita.WebSite", "Marquesita.WebSite\Marquesita.WebSite.csproj", "{AE1DC0F3-2FE4-4721-BACB-8911DF1D1395}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
