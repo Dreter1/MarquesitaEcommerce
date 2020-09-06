@@ -7,11 +7,13 @@
 <div class="header-bot">
     <div class="header-bot_inner_wthreeinfo_header_mid">
 
-        <div class="col-md-4 logo_agile">
+        <div class="col-md-4 logo-align">
             <h1>
                 <a asp-controller="Home" asp-action="Index">
                     <img src="~/EcommerceTemplate/images/logo3.png" alt=" ">
+
                 </a>
+                
             </h1>
         </div>
 
@@ -42,14 +44,20 @@
                 else
                 {
                     <li class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#myModal1">
+                        <a asp-controller="Home" asp-action="Login">
                             <span class="fa fa-unlock-alt" aria-hidden="true"></span> Iniciar Sesión
                         </a>
+                        @*<a href="#" data-toggle="modal" data-target="#myModal1">
+                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Iniciar Sesión
+                        </a>*@
                     </li>
                     <li class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#myModal2">
+                        <a asp-controller="Home" asp-action="Register">
                             <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Registrarse
                         </a>
+                        @*<a href="#" data-toggle="modal" data-target="#myModal2">
+                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Registrarse
+                        </a>*@
                     </li>
                     <li class="pull-right">
                         <span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
@@ -59,12 +67,22 @@
             </ul>
 
             <div class="agileits_search">
+                @*<h1 class="tittle-w3l">Tienda de Quesos lo mejor en lácteos</h1>*@
+                @*<h2 class="heading-tittle">
+            Tienda de Quesos lo mejor en lácteos
+            <span>T</span>Tienda de
+            <span>Q</span>Quesos lo
+            <span>M</span>Mejor en
+            <span>L</span>Lácteos
+
+        </h2>*@
                 <form action="#" method="post">
                     <input name="Search" type="search" placeholder="How can we help you today?" required="">
                     <button type="submit" class="btn btn-default" aria-label="Left Align">
                         <span class="fa fa-search" aria-hidden="true"> </span>
                     </button>
                 </form>
+
             </div>
 
             <div class="top_nav_right">
