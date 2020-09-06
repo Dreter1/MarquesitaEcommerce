@@ -18,13 +18,6 @@ namespace MarquesitaDashboards.Controllers
             _usersManager = usersManager;
         }
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult Main()
-        {
-            return View();
-        }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
@@ -83,6 +76,25 @@ namespace MarquesitaDashboards.Controllers
         {
             _signsInManager.LogOut();
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> MainAsync()
+        {
+            if (User.Identity.Name != null)
+            {
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(user);
+
+                if (_usersManager.isColaborator(userRole))
+                {
+                    ViewBag.UserId = user.Id;
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            return RedirectToAction("NotFound404", "Error");
         }
     }
 }

@@ -22,70 +22,42 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewCategory")]
         public async Task<IActionResult> IndexAsync()
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var userRole = await _usersManager.GetUserRole(user);
-
-            if (_usersManager.isColaborator(userRole))
-            {
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                return View(_categoryService.GetCategoryList());
-            }
-            return RedirectToAction("NotFound404", "Error");
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            return View(_categoryService.GetCategoryList());
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddCategory")]
         public async Task<IActionResult> CreateAsync()
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var userRole = await _usersManager.GetUserRole(user);
-
-            if (_usersManager.isColaborator(userRole))
-            {
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                return View();
-            }
-            return RedirectToAction("NotFound404", "Error");
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            return View();
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddCategory")]
         public async Task<IActionResult> CreateAsync(CategoryViewModel model)
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var userRole = await _usersManager.GetUserRole(user);
-
-            if (_usersManager.isColaborator(userRole))
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    _categoryService.CreateCategory(model);
-                    return RedirectToAction("Index");
-                }
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                return View();
+                _categoryService.CreateCategory(model);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("NotFound404", "Error");
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            return View();
         }
 
         [HttpGet]
         [Authorize(Policy = "CanEditCategory")]
         public async Task<IActionResult> EditAsync(Guid Id)
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var userRole = await _usersManager.GetUserRole(user);
+            var category = _categoryService.GetCategoryById(Id);
 
-            if (_usersManager.isColaborator(userRole))
+            if (category != null)
             {
-                var category = _categoryService.GetCategoryById(Id);
-
-                if (category != null)
-                {
-                    ViewBag.Id = category.Id;
-                    ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                    return View(category);
-                }
-                return RedirectToAction("NotFound404", "Error");
+                ViewBag.Id = category.Id;
+                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+                return View(category);
             }
             return RedirectToAction("NotFound404", "Error");
         }
@@ -94,27 +66,20 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditCategory")]
         public async Task<IActionResult> EditAsync(CategoryViewModel model, Guid Id)
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var userRole = await _usersManager.GetUserRole(user);
+            var category = _categoryService.GetCategoryById(Id);
 
-            if (_usersManager.isColaborator(userRole))
+            if (ModelState.IsValid)
             {
-                var category = _categoryService.GetCategoryById(Id);
-
-                if (ModelState.IsValid)
+                if (category != null)
                 {
-                    if (category != null)
-                    {
-                        _categoryService.UpdateCategory(model, category);
-                        return RedirectToAction("Index");
-                    }
+                    _categoryService.UpdateCategory(model, category);
+                    return RedirectToAction("Index");
                 }
-
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                ViewBag.Id = Id;
-                return View(category);
             }
-            return RedirectToAction("NotFound404", "Error");
+
+            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.Id = Id;
+            return View(category);
         }
 
         [HttpPost]
