@@ -12,8 +12,7 @@
                 <a asp-controller="Home" asp-action="Index">
                     <img src="~/EcommerceTemplate/images/logo3.png" alt=" ">
 
-                </a>
-                
+                </a>    
             </h1>
         </div>
 
@@ -22,12 +21,12 @@
                 @if (Model.Id != null)
                 {
                     <li class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#myModal1">
+                        <a asp-controller="Home" asp-action="LogOut">
                             <span class="fa fa-unlock-alt" aria-hidden="true"></span> Cerrar Sesión
                         </a>
                     </li>
                     <li class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#myModal2">
+                        <a href="#">
                             <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Mi Perfil
                         </a>
                     </li>
@@ -47,23 +46,16 @@
                         <a asp-controller="Home" asp-action="Login">
                             <span class="fa fa-unlock-alt" aria-hidden="true"></span> Iniciar Sesión
                         </a>
-                        @*<a href="#" data-toggle="modal" data-target="#myModal1">
-                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Iniciar Sesión
-                        </a>*@
                     </li>
                     <li class="pull-right">
                         <a asp-controller="Home" asp-action="Register">
                             <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Registrarse
                         </a>
-                        @*<a href="#" data-toggle="modal" data-target="#myModal2">
-                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Registrarse
-                        </a>*@
                     </li>
                     <li class="pull-right">
                         <span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
                     </li>
                 }
-
             </ul>
 
             <div class="agileits_search">
@@ -100,80 +92,6 @@
             <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body modal-body-sub_agile">
-                <div class="main-mailposi">
-                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                </div>
-                <div class="modal_body_left modal_body_left1">
-                    <h3 class="agileinfo_sign">Sign In </h3>
-                    <p>
-                        Sign In now, Let's start your Grocery Shopping. Don't have an account?
-                        <a href="#" data-toggle="modal" data-target="#myModal2">
-                            Sign Up Now
-                        </a>
-                    </p>
-                    <form action="#" method="post">
-                        <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="User Name" name="Name" required="">
-                        </div>
-                        <div class="styled-input">
-                            <input type="password" placeholder="Password" name="password" required="">
-                        </div>
-                        <input type="submit" value="Sign In">
-                    </form>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body modal-body-sub_agile">
-                <div class="main-mailposi">
-                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                </div>
-                <div class="modal_body_left modal_body_left1">
-                    <h3 class="agileinfo_sign">Sign Up</h3>
-                    <p>
-                        Come join the Grocery Shoppy! Let's set up your Account.
-                    </p>
-                    <form action="#" method="post">
-                        <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="Name" name="Name" required="">
-                        </div>
-                        <div class="styled-input">
-                            <input type="email" placeholder="E-mail" name="Email" required="">
-                        </div>
-                        <div class="styled-input">
-                            <input type="password" placeholder="Password" name="password" id="password1" required="">
-                        </div>
-                        <div class="styled-input">
-                            <input type="password" placeholder="Confirm Password" name="Confirm Password" id="password2" required="">
-                        </div>
-                        <input type="submit" value="Sign Up">
-                    </form>
-                    <p>
-                        <a href="#">By clicking register, I agree to your terms</a>
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

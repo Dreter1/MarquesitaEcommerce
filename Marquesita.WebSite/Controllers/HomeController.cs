@@ -136,6 +136,14 @@ namespace MarquesitaDashboards.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Cliente")]
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            _signsInManager.LogOut();
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
         public async Task<IActionResult> RegisterAsync()
         {

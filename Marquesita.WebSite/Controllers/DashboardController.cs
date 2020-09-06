@@ -78,7 +78,7 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public IActionResult LogOut()
         {
             _signsInManager.LogOut();
