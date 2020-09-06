@@ -8,8 +8,10 @@ using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
+using Marquesita.WebSite.Validators.ClientValidator;
 using MarquesitaDashboards.Validators.CategoryValidators;
 using MarquesitaDashboards.Validators.RoleValidatos;
 using MarquesitaDashboards.Validators.UserValidator;
@@ -232,6 +234,8 @@ namespace MarquesitaDashboards
 
             services.AddTransient<IValidator<RoleViewModel>, RoleViewModelValidator>();
             services.AddTransient<IValidator<RoleEditViewModel>, RoleEditViewModelValidator>();
+
+            services.AddTransient<IValidator<ClientViewModel>, ClientViewModelValidator>();
 
             services.AddTransient<IValidator<CategoryViewModel>, CategoryViewModelValidator>();
         }

@@ -1,11 +1,10 @@
-﻿
+﻿@model Marquesita.Infrastructure.ViewModels.Ecommerce.Clients.ClientViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrate";
 }
 
 <div class="contact-w3l">
     <div class="container">
-        <!-- tittle heading -->
         <h3 class="tittle-w3l">
             Registro
             <span class="heading-style">
@@ -14,83 +13,74 @@
                 <i></i>
             </span>
         </h3>
-        <!-- //tittle heading -->
-        <!-- contact -->
-         <div class="contact agileits">
-                <div class="contact-agileinfo">
-                    <div class="contact-form wthree">
-                        @*<div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>*@
-                        <div class="modal-body modal-body-sub_agile">
-                            <div class="main-mailposi">
-                                <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                            </div>
-                            <div class="modal_body_left modal_body_left1">
-                                @*<h3 class="agileinfo_sign">Sign Up</h3>*@
-                                @*<p>
-                                    ¡Unete a La Marquesita!
-                                </p>*@
-                                <form action="#" method="post">
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">Nombres</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="text"  id="example-text-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">Apellidos</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="text" id="example-text-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-2 col-form-label">Usuario</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="text"  id="example-text-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-email-input" class="col-2 col-form-label">Email</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="email" id="example-email-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-tel-input" class="col-2 col-form-label">Telefono</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="tel" id="example-tel-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-date-input" class="col-2 col-form-label">Fecha de Nacimiento</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="date"  id="example-date-input">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-password-input" class="col-2 col-form-label">Contraseña</label>
-                                        <div class="col-10">
-                                            <input class="form-control" type="password" id="example-password-input">
-                                        </div>
-                                    </div>
-                                    
-                                    <input type="submit" value="Regístrate">
-                                </form>
-                                <p>
-                                    <a href="#">Al hacer clic en registrarse, acepto sus términos</a>
-                                </p>
-                            </div>
 
+        <div class="contact agileits">
+            <div class="contact-agileinfo">
+                <div class="contact-form wthree">
+                    <div class="modal-body modal-body-sub_agile">
+                        <div class="main-mailposi">
+                            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                        </div>
+                        <div class="modal_body_left modal_body_left1">
 
-
-
+                            <form asp-controller="Home" asp-action="Register" method="post">
+                                <h1>Datos de cuenta</h1>
+                                <hr />
+                                <div class="form-row">
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="Username" class="col-2 col-form-label"></label>
+                                        <input asp-for="Username" class="form-control" placeholder="Nombre de usuarios" />
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="Password"></label>
+                                        <input asp-for="Password" class="form-control" placeholder="************" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr />
+                                <h1>Datos Personales</h1>
+                                <hr />
+                                <div class="form-row">
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="FirstName" class="col-2 col-form-label"></label>
+                                        <input asp-for="FirstName" class="form-control" placeholder="Mis Nombres" />
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="LastName"></label>
+                                        <input asp-for="LastName" class="form-control" placeholder="Mis Apellidos" />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="Email" class="col-2 col-form-label"></label>
+                                        <input asp-for="Email" class="form-control" placeholder="micorreo@gmail.com" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-12 col-md-6">
+                                        <label asp-for="Phone"></label>
+                                        <input asp-for="Phone" class="form-control" placeholder="979854698" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label asp-for="DateOfBirth"></label>
+                                        <input asp-for="DateOfBirth" type="date" class="form-control datetimepicker-input" />
+                                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <input type="submit" class="pull-right" value="Regístrate">
+                            </form>
                         </div>
                     </div>
                 </div>
-         </div>
+            </div>
+        </div>
     </div>
 </div>
-        
+
 
 

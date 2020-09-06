@@ -25,6 +25,8 @@ namespace Marquesita.Infrastructure.Interfaces
         Task UpdatingRoleOfUserAsync(User user, string UserRol);
         void RemovingRestoringCredentials(User user);
         UserEditViewModel UserToViewModel(User obj);
+        Task<IdentityResult> CreateClientAsync(User user, string password);
+        Task AddingRoleToClientAsync(string User);
         bool EmailExists(string email);
         bool isColaborator(string role);
         Task<string> NewTokenPassword(User user);

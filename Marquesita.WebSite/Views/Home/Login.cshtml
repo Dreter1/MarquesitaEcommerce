@@ -1,55 +1,57 @@
-﻿
+﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-    
-    <div class="contact-w3l">
-        <div class="container">
-            <h3 class="tittle-w3l">
-                Iniciar Sesión
-                <span class="heading-style">
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                </span>
-            </h3>
-            <div class="contact agileits">
-                <div class="contact-agileinfo">
-                    <div class="contact-form wthree">
-                        @*<div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>*@
-                        <div class="modal-body modal-body-sub_agile">
-                            <div class="main-mailposi">
-                                <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                            </div>
-                            <div class="modal_body_left modal_body_left1">
-                                @*<h3 class="agileinfo_sign">Iniciar Sesión </h3>*@
-                                <p>
-                                    Inicie sesión ahora, comencemos sus compras ¿No tienes una cuenta?
-                                    <a href="#" data-toggle="modal" data-target="#myModal2">
-                                        Registrate Ahora
-                                    </a>
-                                </p>
-                                <form action="#" method="post">
-                                    <div class="styled-input agile-styled-input-top">
-                                        <input type="text" placeholder="Usuario" name="Name" required="">
-                                    </div>
-                                    <div class="styled-input">
-                                        <input type="password" placeholder="Contraseña" name="password" required="">
-                                    </div>
-                                    <input type="submit" value="Iniciar Sesión">
-                                </form>
-                                <div class="clearfix"></div>
-                            </div>
+
+<div class="contact-w3l">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Iniciar Sesión
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <div class="contact agileits">
+            <div class="contact-agileinfo">
+                <div class="contact-form wthree">
+                    <div class="modal-body modal-body-sub_agile">
+                        <div class="main-mailposi">
+                            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                        </div>
+                        <div class="modal_body_left modal_body_left1">
+                            <p>
+                                Inicie sesión ahora, comencemos sus compras ¿No tienes una cuenta?
+                                <a asp-controller="Home" asp-action="Register"><u>Registrate Ahora</u></a>
+                            </p>
+                            @if (ViewBag.LoginError != null)
+                            {
+                                <div class="alert alert-danger-login" role="alert">
+                                    <strong>@ViewBag.LoginError</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            }
+                            <form asp-controller="Home" asp-action="Login" method="post">
+                                <div class="styled-input agile-styled-input-top">
+                                    <input type="text" asp-for="Username" placeholder="Usuario">
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+                                <div class="styled-input">
+                                    <input type="password" asp-for="Password" placeholder="Contraseña">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <input class="pull-right" type="submit" value="Ingresar">
+                            </form>
                             <div class="clearfix"></div>
                         </div>
-
-
+                        <div class="clearfix"></div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+</div>

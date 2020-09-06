@@ -97,7 +97,6 @@ namespace Marquesita.Infrastructure.Services
             user.ImageRoute = imagen;
             return await _userManager.CreateAsync(user, password);
         }
-
         public async Task AddingRoleToUserAsync(string User, string UserRol)
         {
             var user = await _userManager.FindByNameAsync(User);
@@ -186,6 +185,20 @@ namespace Marquesita.Infrastructure.Services
                 };
             }
             return null;
+        }
+
+        public async Task<IdentityResult> CreateClientAsync(User user, string password)
+        {
+            user.Id = Guid.NewGuid().ToString();
+            user.RegisterDate = DateTime.Now;
+            return await _userManager.CreateAsync(user, password);
+        }
+
+        public async Task AddingRoleToClientAsync(string User)
+        {
+            var user = await _userManager.FindByNameAsync(User);
+            var role = await _roleManager.GetRoleByName("Cliente");
+            await _userManager.AddToRoleAsync(user, role.Name);
         }
 
         public bool isColaborator(string role)
