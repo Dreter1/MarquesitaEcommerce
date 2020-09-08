@@ -11,11 +11,13 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IUserManagerService usersManager, IProductService productService)
+        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService)
         {
             _usersManager = usersManager;
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         [AllowAnonymous]
@@ -50,6 +52,7 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            ViewBag.Categorias = _categoryService.GetCategoryList();
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace MarquesitaDashboards.Controllers
                 _productService.CreateProduct(model);
                 return RedirectToAction("Index");
             }
+            ViewBag.Categorias = _categoryService.GetCategoryList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }

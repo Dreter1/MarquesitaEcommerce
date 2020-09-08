@@ -28,7 +28,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddProducts")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
+                    <a asp-controller="Product" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nuevo Producto</a>
                 </div>
                 <br /><br />
             }
