@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Productos";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Lista de productos</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Product" asp-action="List">Productos</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddProducts")).Succeeded)
+            {
+                <div class="fa-pull-right">
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
+                </div>
+                <br /><br />
+            }
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
+                        {
+                            <th>Opciones</th>
+                        }
+                        else
+                        {
+                            <th> </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var producto in Model)
+                    {
+                        <tr>
+                            <td>@producto.Name</td>
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
+                            {
+                                <td>
+                                    <div class="form-row text-center">
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded)
+                                        {
+                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@producto.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                        }
+                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
+                                        {
+                                            <div id="DeleteCategoryClic_@producto.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@producto.Id" onclick="deleteCategory(this)">
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        dataTableScript();
+    });
+</script>
+

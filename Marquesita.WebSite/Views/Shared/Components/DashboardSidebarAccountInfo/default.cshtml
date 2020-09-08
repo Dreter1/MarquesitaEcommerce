@@ -72,7 +72,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewProducts")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a asp-controller="Product" asp-action="Index" class="nav-link">
+                        <a asp-controller="Product" asp-action="List" class="nav-link">
                             <i class="nav-icon fab fa-product-hunt"></i>
                             <p>Productos</p>
                         </a>

@@ -1,4 +1,5 @@
 ﻿using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +33,6 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
 
         [DisplayName("Fecha de Nacimiento")]
         public DateTime DateOfBirth { get; set; }
-        public DateTime RegisterDate { get; set; }
 
 
         public static implicit operator User(ClientViewModel obj)
@@ -45,8 +45,7 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
                 LastName = obj.LastName,
                 Email = obj.Email,
                 Phone = obj.Phone,
-                DateOfBirth = obj.DateOfBirth,
-                RegisterDate = obj.RegisterDate
+                DateOfBirth = obj.DateOfBirth
             };
         }
     }

@@ -243,8 +243,10 @@ namespace MarquesitaDashboards
         private void RepositoriesConfiguration(IServiceCollection services)
         {
             services.AddTransient<IRepository<Categories>, CategoryRepository>();
+            services.AddTransient<IRepository<Product>, ProductRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProductService, ProductService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();
