@@ -28,7 +28,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddRoles")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a asp-controller="Role" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nuevo Rol</a>
+                    <a asp-controller="Role" asp-action="Create" class="btn btn-primary btn-block" title="Nuevo Rol"><i class="fas fa-plus-square"></i></a>
                 </div>
                 <br /><br />
             }
@@ -57,15 +57,15 @@
                                     @if (role.Name != "Super Admin")
                                     {
                                         <div class="form-row text-center">
-                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info" title="Detalle"><i class="fas fa-info-circle"></i></a>
                                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded)
                                             {
-                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                                <span>&nbsp</span><a asp-controller="Role" asp-action="Edit" asp-route-Id="@role.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
                                             }
                                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                                             {
                                                 <div id="DeleteRoleClic_@role.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@role.Id" onclick="deleteRol(this)">
-                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                                 </div>
                                             }
                                         </div>
@@ -73,7 +73,7 @@
                                     else
                                     {
                                         <div class="form-row text-center">
-                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info">Detalle</a>
+                                            <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info" title="Detalle"><i class="fas fa-info-circle"></i></a>
                                         </div>
                                     }
                                 </td>

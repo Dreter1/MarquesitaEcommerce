@@ -28,7 +28,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddCategory")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nueva Categoría</a>
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary btn-block" title="Nueva Categoría"><i class="fas fa-plus-square"></i></a>
                 </div>
                 <br /><br />
             }
@@ -57,12 +57,12 @@
                                     <div class="form-row text-center">
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded)
                                         {
-                                            <span>&nbsp</span><a asp-controller="Category" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                            <span>&nbsp</span><a asp-controller="Category" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
                                         }
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
                                         {
                                             <div id="DeleteCategoryClic_@categoria.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@categoria.Id" onclick="deleteCategory(this)">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         }
                                     </div>

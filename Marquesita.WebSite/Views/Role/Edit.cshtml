@@ -36,8 +36,8 @@
                                 <input type="hidden" name="Id" value="@ViewBag.RoleId" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
-                            <a class="btn btn-danger" asp-controller="Role" asp-action="Index"><i class="fas fa-arrow-left"></i> Regresar</a>
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Actualizar</button>
+                            <a class="btn btn-danger" asp-controller="Role" asp-action="Index" title="Regresar"><i class="fas fa-arrow-left"></i></a>
+                            <button type="submit" class="btn btn-primary" title="Actualizar"><i class="fas fa-sync-alt"></i></button>
                         </form>
                     </div>
                 </div>
