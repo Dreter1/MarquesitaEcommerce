@@ -12,12 +12,14 @@ namespace MarquesitaDashboards.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IConstantService _images;
 
-        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService)
+        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService, IConstantService images)
         {
             _usersManager = usersManager;
             _productService = productService;
             _categoryService = categoryService;
+            _images = images;
         }
 
         [AllowAnonymous]
@@ -31,6 +33,7 @@ namespace MarquesitaDashboards.Controllers
 
                 if (!_usersManager.isColaborator(userRole))
                 {
+                    ViewBag.Image = _images.RoutePathRootProductsImages();
                     ViewBag.UserId = user.Id;
                     return View(_productService.GetProductList());
                 }
@@ -43,6 +46,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewProducts")]
         public async Task<IActionResult> ListAsync()
         {
+            ViewBag.Image = _images.RoutePathRootProductsImages();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(_productService.GetProductList());
         }

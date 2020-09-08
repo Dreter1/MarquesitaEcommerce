@@ -30,7 +30,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddUsers")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a href="~/User/Create" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Nuevo Colaborador</a>
+                    <a href="~/User/Create" class="btn btn-primary btn-block" title="Nuevo Colaborador"><i class="fas fa-user-plus"></i></a>
                 </div>
                 <br /><br />
             }
@@ -76,23 +76,22 @@
                             <td>@user.UserName</td>
                             <td>@user.FirstName</td>
                             <td>@user.LastName</td>
-                            <td>@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</td>
+                            <td><span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span></td>
                             @if (user.IsActive)
                             {
-                                <td>Activo</td>
+                                <td><span class="badge badge-pill badge-success">Activo</span></td>
                             }
                             else
                             {
-                                <td>Inactivo</td>
+                                <td><span class="badge badge-pill badge-danger">Inactivo</span></td>
                             }
-
                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                             {
                                 <td>
                                     <div class="form-row text-center">
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
                                         {
-                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning"><i class="fas fa-user-edit"></i> Editar</a><span>&nbsp</span>
+                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning" title="Editar Usuario"><i class="fas fa-user-edit"></i></a><span>&nbsp</span>
                                         }
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                                         {
@@ -100,14 +99,14 @@
                                             {
                                                 <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
                                                     <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-user-slash"></i> Desactivar</button>
+                                                    <button type="submit" class="btn btn-danger" title="Activar Usuario"><i class="fas fa-user-slash"></i></button>
                                                 </form>
                                             }
                                             else
                                             {
                                                 <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
                                                     <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i> Activar</button>
+                                                    <button type="submit" class="btn btn-success" title="Desactivar Usuario"><i class="fas fa-user-check"></i> </button>
                                                 </form>
                                             }
                                         }
