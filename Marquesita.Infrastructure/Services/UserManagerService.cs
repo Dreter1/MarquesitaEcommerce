@@ -237,26 +237,12 @@ namespace Marquesita.Infrastructure.Services
                 {
                     image.CopyTo(fileStream);
                 }
-
-                var ruta = _file.RoutePathEmployeeImages();
-                string localfilePath = ruta + uniqueFileName;
-
-                using (var fileStream = new FileStream(localfilePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
             }
             return uniqueFileName;
         }
 
         private void DeleteServerFile(string path, string image)
         {
-            string ruta = _file.RoutePathEmployeeImages();
-            string localFilePath = ruta + image;
-
-            if (File.Exists(localFilePath))
-                File.Delete(localFilePath);
-
             if (image != null)
             {
                 string serverFilePath = Path.Combine(path, "Images", "Users", "Employees", image);

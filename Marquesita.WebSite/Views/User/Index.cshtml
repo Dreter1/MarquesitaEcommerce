@@ -76,7 +76,9 @@
                             <td>@user.UserName</td>
                             <td>@user.FirstName</td>
                             <td>@user.LastName</td>
-                            <td><span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span></td>
+                            <td>
+                                <span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span>
+                            </td>
                             @if (user.IsActive)
                             {
                                 <td><span class="badge badge-pill badge-success">Activo</span></td>

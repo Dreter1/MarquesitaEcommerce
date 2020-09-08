@@ -1,6 +1,7 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,13 +14,15 @@ namespace MarquesitaDashboards.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IConstantService _images;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService, IConstantService images)
+        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService, IConstantService images, IWebHostEnvironment webHostEnvironment)
         {
             _usersManager = usersManager;
             _productService = productService;
             _categoryService = categoryService;
             _images = images;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [AllowAnonymous]
@@ -66,8 +69,9 @@ namespace MarquesitaDashboards.Controllers
         {
             if (ModelState.IsValid)
             {
-                _productService.CreateProduct(model);
-                return RedirectToAction("Index");
+                var path = _webHostEnvironment.WebRootPath;
+                _productService.CreateProduct(model, model.ProductImage, path);
+                return RedirectToAction("List");
             }
             ViewBag.Categorias = _categoryService.GetCategoryList();
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
