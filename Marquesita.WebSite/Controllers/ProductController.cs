@@ -20,9 +20,21 @@ namespace MarquesitaDashboards.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(_productService.GetProductList());
+            if (User.Identity.Name != null)
+            {
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(user);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    ViewBag.UserId = user.Id;
+                    return View(_productService.GetProductList());
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            return View();
         }
 
         [HttpGet]
