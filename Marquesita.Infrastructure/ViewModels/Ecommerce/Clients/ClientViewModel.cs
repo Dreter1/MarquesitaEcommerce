@@ -33,7 +33,7 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
 
         [DisplayName("Fecha de Nacimiento")]
         public DateTime DateOfBirth { get; set; }
-
+        public DateTime RegisterDate { get; set; }
 
         public static implicit operator User(ClientViewModel obj)
         {
