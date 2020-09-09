@@ -28,7 +28,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddProducts")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a asp-controller="Product" asp-action="Create" class="btn btn-primary btn-block"><i class="fas fa-plus-square"></i> Nuevo Producto</a>
+                    <a asp-controller="Product" asp-action="Create" class="btn btn-primary btn-block" title="Nuevo Producto"><i class="fas fa-plus-square"></i></a>
                 </div>
                 <br /><br />
             }
@@ -56,47 +56,51 @@
                         <tr>
                             @if (producto.ImageRoute != null)
                             {
-                                <td>
+                                <td class="text-center">
                                     <img src="@ViewBag.Image@producto.ImageRoute"
                                          class="rounded-circle"
-                                         alt="User Img"
-                                         height="40" width="40"
+                                         alt="Product Img"
+                                         height="50" width="50"
                                          asp-append-version="true" />
                                 </td>
                             }
                             else
                             {
-                                <td>
+                                <td class="text-center">
                                     <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
                                          class="rounded-circle"
-                                         alt="User Img"
-                                         height="40" width="40"
+                                         alt="Product Img"
+                                         height="50" width="50"
                                          asp-append-version="true">
                                 </td>
                             }
                             <td>@producto.Name</td>
-                            <td>@producto.Stock</td>
-                            <td>@producto.UnitPrice</td>
+                            <td class="text-center">@producto.Stock</td>
+                            <td class="text-center">@producto.UnitPrice</td>
                             @if (producto.IsActive)
                             {
-                                <td><span class="badge badge-success">Activo</span></td>
+                                <td class="text-center">
+                                    <span class="badge badge-success">Activo</span>
+                                </td>
                             }
                             else
                             {
-                                <td><span class="badge badge-danger">Inactivo</span></td>
+                                <td class="text-center">
+                                    <span class="badge badge-danger">Inactivo</span>
+                                </td>
                             }
                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
                             {
-                                <td>
-                                    <div class="form-row text-center">
+                                <td class="text-center">
+                                    <div class="form-row">
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded)
                                         {
-                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@producto.Id" class="btn btn-warning">Editar</a><span>&nbsp</span>
+                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@producto.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
                                         }
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
                                         {
                                             <div id="DeleteCategoryClic_@producto.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@producto.Id" onclick="deleteCategory(this)">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         }
                                     </div>
