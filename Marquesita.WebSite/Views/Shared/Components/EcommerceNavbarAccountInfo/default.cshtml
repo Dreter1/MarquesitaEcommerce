@@ -26,18 +26,21 @@
                         </a>
                     </li>
                     <li class="pull-right">
-                        <a href="#">
-                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Mi Perfil
+                        <a asp-controller="Client" asp-action="MyProfile">
+                            <span class="fa fa fa-user-o" aria-hidden="true"></span> Mi Perfil
                         </a>
                     </li>
                     <li class="pull-right">
-                        <span class="fa fa-phone" aria-hidden="true"></span> Mis Pedidos
+                        <span class="fa fa-check-square-o" aria-hidden="true"></span> Mis Pedidos
                     </li>
                     <li class="pull-right">
-                        <span class="fa fa-phone" aria-hidden="true"></span> Mi Lista de Deseos
+                        <a asp-controller="WishList" asp-action="Index">
+                            <span class="fa fa-star" aria-hidden="true"></span> Mi Lista de Deseos
+                        </a>
+                        
                     </li>
                     <li class="pull-right">
-                        <span class="fa fa-phone" aria-hidden="true"></span> Bienvenido @Model.FirstName @Model.LastName
+                        <span aria-hidden="true"></span> Bienvenido @Model.FirstName @Model.LastName
                     </li>
                 }
                 else
@@ -79,9 +82,9 @@
 
             <div class="top_nav_right">
                 <div class="wthreecartaits wthreecartaits2 cart cart box_1">
-                    <form action="#" method="post" class="last">
-                        <input type="hidden" name="cmd" value="_cart">
-                        <input type="hidden" name="display" value="1">
+                    <form asp-controller="ShoppingCart" asp-action="Index" method="post" >
+                        @*<input type="hidden" name="cmd" value="_cart">
+                        <input type="hidden" name="display" value="1">*@
                         <button class="w3view-cart" type="submit" name="submit" value="">
                             <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                         </button>

@@ -11,5 +11,13 @@ namespace MarquesitaDashboards.Controllers
         {
             return View();
         }
+        public IActionResult MyOrder()
+        {
+            return View();
+        }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
     }
 }
