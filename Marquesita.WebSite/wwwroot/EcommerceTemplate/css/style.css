@@ -2297,8 +2297,8 @@ table.timetable_sub {
 	margin:0 auto;
 }
 .timetable_sub th {
-    background: #000;
-    color: #fff;
+    background: #eee;
+    color: #000;
     font-size: 16px;
     border-right: 1px solid #ded2d2;
     text-align: center;
