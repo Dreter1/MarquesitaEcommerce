@@ -1,197 +1,110 @@
 ﻿
 @{
-    ViewData["Title"] = "MyProfile";
+    ViewData["Title"] = "Mi Perfil";
 }
 
-    <div class="contact-w3l">
-        <div class="container">
-            <h3 class="tittle-w3l">
-                Mi Perfil
-                <span class="heading-style">
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                </span>
-            </h3>
+<div class="contact-w3l">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Mi Perfil
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
 
-            <div class="contact agileits">
-                <div class="contact-agileinfo">
-                    <div class="contact-form wthree">
-                        <div class="modal-body modal-body-sub_agile">
-                            <div class="main-mailposi">
-                                <span class="fa fa-address-card-o" aria-hidden="true"></span>
-                            </div>
-                            <div class="content">
-                                <div class="row">
-                                    <h1 class="profile-username text-center">Nombre</h1>
-                                    <hr />
+        <div class="contact agileits">
+            <div class="contact-agileinfo">
+                <div class="contact-form wthree">
+                    <div class="modal-body modal-body-sub_agile">
+                        <div class="main-mailposi">
+                            <span class="fa fa-address-card-o" aria-hidden="true"></span>
+                        </div>
+                        <div class="content">
+                            <div class="row">
+                                <h1 class="profile-username text-center">Nombre</h1>
+                                <hr />
 
-                                    <div class="col-lg-4 order-lg-1 text-center">
-                                        <img src="//placehold.it/150" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                <div class="col-lg-4 order-lg-1 text-center">
+                                    <img src="//placehold.it/150" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                </div>
 
-                                        @*<form>
-                <div class="form-group">
-                    <label for="exampleFormControlFile1"></label>
-                    <input type="file" class="form-control-file" id="exampleFormControlFile1" value="Cambiar foto">
-                </div>
-            </form>*@
-
-                                    </div>
-
-                                    <div class="col-lg-8 order-lg-2">
-                                        <div class="tab-content py-4">
-                                            <div class="tab-pane active" id="profile">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Usuario</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>Kshiti123</p>
-                                                    </div>
+                                <div class="col-lg-8 order-lg-2">
+                                    <div class="tab-content py-4">
+                                        <div class="tab-pane active" id="profile">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Usuario</label>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Nombre</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>Kshiti Ghelani</p>
-                                                    </div>
+                                                <div class="col-md-6">
+                                                    <p>Kshiti123</p>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Email</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>kshitighelani@gmail.com</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Phone</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>123 456 7890</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Fecha de Nacimiento</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>Falta</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Direccion</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p>Falta</p>
-                                                    </div>
-                                                </div>
-                                                <!--/row-->
                                             </div>
-
-                                            <div class="tab-pane" id="edit">
-                                                <form role="form">
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="text" value="Jane">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="text" value="Bishop">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="email" value="email@gmail.com">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="text" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="url" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="text" value="" placeholder="Street">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label"></label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" type="text" value="" placeholder="City">
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <input class="form-control" type="text" value="" placeholder="State">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                                        <div class="col-lg-9">
-                                                            <select id="user_time_zone" class="form-control" size="0">
-                                                                <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                                                <option value="Alaska">(GMT-09:00) Alaska</option>
-                                                                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                                                <option value="Arizona">(GMT-07:00) Arizona</option>
-                                                                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                                                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                                                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                                                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="text" value="janeuser">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="password" value="11111122333">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                                        <div class="col-lg-9">
-                                                            <input class="form-control" type="password" value="11111122333">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-3 col-form-label form-control-label"></label>
-                                                        <div class="col-lg-9">
-                                                            <input type="reset" class="btn btn-secondary" value="Cancel">
-                                                            <input type="button" class="btn btn-primary" value="Save Changes">
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Nombre</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Kshiti Ghelani</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Apellidos</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Kshiti Ghelani</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Correo</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>kshitighelani@gmail.com</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Celular</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>123 456 7890</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Fecha de Nacimiento</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Falta</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Fecha de Registro</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Falta</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="pull-right">
-                                        <a asp-controller="Client" asp-action="Edit">
-                                            <input type="submit" value="Editar">
-                                        </a>
-                                    </div>
-
-
                                 </div>
+
+                                <div class="pull-right">
+                                    <a asp-controller="Client" asp-action="Edit">
+                                        <input type="submit" value="Editar">
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <a asp-controller="Client" asp-action="Edit">
+                                        <input type="submit" value="Mis Direcciones">
+                                    </a>
+                                    <span>&nbsp</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -199,3 +112,4 @@
             </div>
         </div>
     </div>
+</div>

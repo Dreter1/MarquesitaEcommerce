@@ -1,6 +1,6 @@
 ﻿@model Marquesita.Infrastructure.ViewModels.Ecommerce.Clients.ClientViewModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Perfil";
 }
 
 <div class="contact-w3l">
@@ -22,93 +22,61 @@
                             <span class="fa fa-address-card-o" aria-hidden="true"></span>
                         </div>
                         <div class="content">
+                            <h1 class="profile-username text-center">Nombre</h1>
+                            <hr />
                             <div class="row">
-                                <h1 class="profile-username text-center">Nombre</h1>
-                                <hr />
-
-                                <div class="col-lg-4 order-lg-1 text-center">
-                                    <img src="//placehold.it/150" class="profile-user-img img-fluid img-circle" alt="User profile picture">
-
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlFile1"></label>
-                                            <input type="file" class="form-control-file" id="exampleFormControlFile1" value="Cambiar foto">
+                                <div class="col-12">
+                                    <form role="form">
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-5 text-center">
+                                                <img src="//placehold.it/150" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                                <label for="exampleFormControlFile1"></label>
+                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" value="Cambiar foto">
+                                            </div>
                                         </div>
-                                    </form>
-
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-7 pull-right">
+                                                <label asp-for="FirstName"></label>
+                                                <input asp-for="FirstName" class="form-control" />
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-7 pull-right">
+                                                <label asp-for="LastName"></label>
+                                                <input asp-for="LastName" class="form-control" />
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-7 pull-right">
+                                                <label asp-for="Email"></label>
+                                                <input asp-for="Email" class="form-control" />
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-7 pull-right">
+                                                <label asp-for="Phone"></label>
+                                                <input asp-for="Phone" class="form-control" />
+                                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12 col-md-7 pull-right">
+                                                <label asp-for="DateOfBirth"></label>
+                                                <input asp-for="DateOfBirth" type="date" class="form-control datetimepicker-input" />
+                                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-12 col-md-7 pull-right">
+                                                <button type="submit" class="btn btn-warning pull-right" title="Actualizar">Guardar Cambios</button><span class="pull-right">&nbsp</span>
+                                                <span class="pull-right">&nbsp</span><a class="btn btn-danger pull-right" asp-controller="Client" asp-action="MyProfile" title="Regresar">Cancelar</a>
+                                            </div>
+                                        </div>
+                                     </form>
                                 </div>
-
-                                <div class="col-lg-8 order-lg-2">
-                                    <div class="tab-content py-4">
-                                        <form role="form">
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Nombres</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="text" value="Jane">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Apellido</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="text" value="Bishop">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="email" value="email@gmail.com">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Direccion</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="text" value="" placeholder="Calle">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control" type="text" value="" placeholder="Ciudad">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <input class="form-control" type="text" value="" placeholder="Provincia">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Usuario</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="text" value="janeuser">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Contraseña</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="password" value="11111122333">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Confirmar Contraseña</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="password" value="11111122333">
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-12">
-                                                    <label asp-for="DateOfBirth"></label>
-                                                    <input asp-for="DateOfBirth" type="date" class="form-control datetimepicker-input" />
-                                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-                                                </div>
-                                            </div>
-                                            <a class="btn btn-danger" asp-controller="Client" asp-action="MyProfile" title="Regresar">Cancelar</a>
-                                            <button type="submit" class="btn btn-warning" title="Actualizar">Guardar Cambios</button>
-                                        </form>
-
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
