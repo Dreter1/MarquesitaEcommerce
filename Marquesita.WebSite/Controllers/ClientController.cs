@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Ecommerce;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarquesitaDashboards.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
+        [Authorize(Policy = "Client")]
         public IActionResult MyProfile()
         {
             return View();
         }
 
+        [Authorize(Policy = "Client")]
         public IActionResult Edit()
         {
             return View();
