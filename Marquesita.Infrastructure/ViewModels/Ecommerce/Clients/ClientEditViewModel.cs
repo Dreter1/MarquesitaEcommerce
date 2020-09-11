@@ -1,12 +1,14 @@
-﻿using Marquesita.Models.Identity;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Marquesita.Models.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
 {
-    public class ClientViewModel
+     public class ClientEditViewModel
     {
         public string Id { get; set; }
 
@@ -27,24 +29,24 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
-        [DisplayName("Fecha de Nacimiento")]
-        public DateTime DateOfBirth { get; set; }
-
         [DisplayName("Foto")]
         public string ImageRoute { get; set; }
 
-        public static implicit operator User(ClientViewModel obj)
+        [DisplayName("Upload")]
+        public IFormFile ProfileImage { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
+        public static implicit operator User(ClientEditViewModel obj)
         {
             return new User
             {
                 Id = obj.Id,
-                UserName = obj.Username,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
                 Email = obj.Email,
-                Phone = obj.Phone,
                 ImageRoute = obj.ImageRoute,
-                DateOfBirth = obj.DateOfBirth
+                Phone = obj.Phone,
             };
         }
     }
