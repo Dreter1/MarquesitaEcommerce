@@ -11,10 +11,13 @@ namespace MarquesitaDashboards.Controllers
         {
             return View();
         }
+
+        [Authorize(Policy = "Client")]
         public IActionResult MyOrder()
         {
             return View();
         }
+        [Authorize(Policy = "Client")]
         public IActionResult Checkout()
         {
             return View();
