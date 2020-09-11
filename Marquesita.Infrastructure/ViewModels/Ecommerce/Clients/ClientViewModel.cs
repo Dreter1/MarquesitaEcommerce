@@ -13,6 +13,10 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Clients
         [DisplayName("Usuario")]
         public string Username { get; set; }
 
+        [DisplayName("Contraseña")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
         [DisplayName("Nombres")]
         public string FirstName { get; set; }
 

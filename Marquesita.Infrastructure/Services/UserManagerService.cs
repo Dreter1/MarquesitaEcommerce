@@ -2,6 +2,7 @@
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -139,6 +140,41 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
+        public void UpdatingClient(ClientEditViewModel model, User user, IFormFile image, string path)
+        {
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.NormalizedEmail = model.Email.ToUpper();
+            user.Phone = model.Phone;
+
+            if (user.ImageRoute != null)
+            {
+                if (image != null)
+                {
+                    DeleteServerFileClient(path, user.ImageRoute);
+                    var imagen = UploadedServerFileClient(path, image);
+                    user.ImageRoute = imagen;
+                    _context.Entry(user).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    user.ImageRoute = user.ImageRoute;
+                    _context.Entry(user).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                DeleteServerFileClient(path, user.ImageRoute);
+                var imagen = UploadedServerFileClient(path, image);
+                user.ImageRoute = imagen;
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
+
         public async Task UpdatingRoleOfUserAsync(User user, string UserRol)
         {
             var role = await _roleManager.GetRoleByName(UserRol);
@@ -182,6 +218,24 @@ namespace Marquesita.Infrastructure.Services
                     ImageRoute = obj.ImageRoute,
                     DateOfBirth = obj.DateOfBirth,
                     RegisterDate = obj.RegisterDate
+                };
+            }
+            return null;
+        }
+        public ClientEditViewModel ClientToViewModel(User obj)
+        {
+            if (obj != null)
+            {
+                return new ClientEditViewModel
+                {
+                    Id = obj.Id,
+                    FirstName = obj.FirstName,
+                    LastName = obj.LastName,
+                    Email = obj.Email,
+                    Phone = obj.Phone,
+                    ImageRoute = obj.ImageRoute,
+                    DateOfBirth = obj.DateOfBirth
+                    
                 };
             }
             return null;
@@ -246,6 +300,33 @@ namespace Marquesita.Infrastructure.Services
             if (image != null)
             {
                 string serverFilePath = Path.Combine(path, "Images", "Users", "Employees", image);
+
+                if (File.Exists(serverFilePath))
+                    File.Delete(serverFilePath);
+            }
+        }
+
+        private string UploadedServerFileClient(string path, IFormFile image)
+        {
+            string uniqueFileName = null;
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(path, "Images", "Users", "Clients");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+        private void DeleteServerFileClient(string path, string image)
+        {
+            if (image != null)
+            {
+                string serverFilePath = Path.Combine(path, "Images", "Users", "Clients", image);
 
                 if (File.Exists(serverFilePath))
                     File.Delete(serverFilePath);

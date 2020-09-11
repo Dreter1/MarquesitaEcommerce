@@ -1,4 +1,4 @@
-﻿
+﻿@model Marquesita.Models.Identity.User
 @{
     ViewData["Title"] = "Mi Perfil";
 }
@@ -23,11 +23,20 @@
                         </div>
                         <div class="content">
                             <div class="row">
-                                <h1 class="profile-username text-center">Nombre</h1>
+                                <h1 class="profile-username text-center">@Model.FirstName @Model.LastName </h1>
                                 <hr />
-
                                 <div class="col-lg-4 order-lg-1 text-center">
-                                    <img src="//placehold.it/150" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                    @if (Model.ImageRoute != null)
+                                    {
+                                        <img src="@ViewBag.Image@Model.ImageRoute"
+                                             class="profile-user-img img-fluid img-circle" style="height: 150px"
+                                             asp-append-version="true" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/EcommerceTemplate/images/User_icon.png" style="height: 150px" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                        
+                                    }
                                 </div>
 
                                 <div class="col-lg-8 order-lg-2">
@@ -38,7 +47,7 @@
                                                     <label>Usuario</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>Kshiti123</p>
+                                                    <p>@Model.UserName</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -46,7 +55,7 @@
                                                     <label>Nombre</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>Kshiti Ghelani</p>
+                                                    <p>@Model.FirstName</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -54,7 +63,7 @@
                                                     <label>Apellidos</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>Kshiti Ghelani</p>
+                                                    <p>@Model.LastName</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -62,7 +71,7 @@
                                                     <label>Correo</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>kshitighelani@gmail.com</p>
+                                                    <p>@Model.Email</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -70,7 +79,7 @@
                                                     <label>Celular</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>123 456 7890</p>
+                                                    <p>@Model.Phone</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -78,7 +87,7 @@
                                                     <label>Fecha de Nacimiento</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>Falta</p>
+                                                    <p>@Model.DateOfBirth</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -86,7 +95,7 @@
                                                     <label>Fecha de Registro</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p>Falta</p>
+                                                    <p>@Model.RegisterDate</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +103,7 @@
                                 </div>
 
                                 <div class="pull-right">
-                                    <a asp-controller="Client" asp-action="Edit">
+                                    <a asp-controller="Client" asp-action="Edit" asp-route-Id="@Model.Id">
                                         <input type="submit" value="Editar">
                                     </a>
                                 </div>

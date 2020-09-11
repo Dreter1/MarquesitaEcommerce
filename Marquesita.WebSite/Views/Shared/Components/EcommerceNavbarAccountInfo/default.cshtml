@@ -31,7 +31,10 @@
                         </a>
                     </li>
                     <li class="pull-right">
-                        <span class="fa fa-check-square-o" aria-hidden="true"></span> Mis Pedidos
+                        <a asp-controller="Sale" asp-action="MyOrder">
+                            <span class="fa fa-check-square-o" aria-hidden="true"></span> Mis Pedidos
+                        </a>
+                       
                     </li>
                     <li class="pull-right">
                         <a asp-controller="WishList" asp-action="Index">
