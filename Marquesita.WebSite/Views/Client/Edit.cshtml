@@ -18,7 +18,7 @@
         <div class="contact agileits">
             <div class="contact-agileinfo">
                 <div class="contact-form wthree">
-                    <div class="modal-body modal-body-sub_agile">   
+                    <div class="modal-body modal-body-sub_agile">
                         <div class="main-mailposi">
                             <span class="fa fa-address-card-o" aria-hidden="true"></span>
                         </div>
@@ -29,35 +29,24 @@
                                 <div class="col-12">
                                     <form role="form" asp-controller="Client" asp-action="Edit" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="Id" value="@Model.Id" />
-                                        @*<div class="form-row">
+                                        <div class="form-row">
                                             <div class="form-group col-12 col-md-5 text-center">
-                                                <img src="~/EcommerceTemplate/images/User_icon.png" style="height: 150px" class="profile-user-img img-fluid img-circle" alt="User profile picture">
-                                                <label for="exampleFormControlFile1"></label>
-                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" value="Cambiar foto">
+                                                @if (Model.ImageRoute != null)
+                                                {
+                                                    <img src="@ViewBag.Image@Model.ImageRoute"
+                                                         class="profile-user-img img-fluid img-circle" id="img" style="height: 150px"
+                                                         asp-append-version="true" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/EcommerceTemplate/images/User_icon.png" id="img" style="height: 150px" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                                                    <label for="exampleFormControlFile1"></label>
+                                                }
+                                                <input asp-for="ProfileImage" id="fichero" accept="image/*" class="form-control-file btn btn-file" value="Cambiar">
+                                                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                                                <p id="texto"> </p>
                                             </div>
-                                        </div>*@
-                                    <div class="form-row">
-                                        <div class="form-group col-12 col-md-5 text-center">
-
-                                            <p id="texto"> </p>
-                                            @if (Model.ImageRoute != null)
-                                            {
-                                                <img src="@ViewBag.Image@Model.ImageRoute"
-                                                     class="profile-user-img img-fluid img-circle" style="height: 150px"
-                                                     asp-append-version="true" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/EcommerceTemplate/images/User_icon.png" style="height: 150px" class="profile-user-img img-fluid img-circle" alt="User profile picture">
-                                                <label for="exampleFormControlFile1"></label>
-                                            }
-                                            @*<label asp-for="ProfileImage" class="control-label">Foto de colaborador </label>*@
-                                            <input asp-for="ProfileImage" id="fichero" accept="image/*" class="form-control-file btn btn-file" value="Cambiar">
-                                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
-                                            
-                                        </div>                              
-
-                                    </div>
+                                        </div>
                                         <div class="form-row">
                                             <div class="form-group col-12 col-md-7 pull-right">
                                                 <label asp-for="FirstName"></label>
@@ -99,7 +88,7 @@
                                                 <span class="pull-right">&nbsp</span><a class="btn btn-danger pull-right" asp-controller="Client" asp-action="MyProfile" title="Regresar">Cancelar</a>
                                             </div>
                                         </div>
-</form>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -109,4 +98,3 @@
         </div>
     </div>
 </div>
-
