@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.ViewModels.Ecommerce;
+//using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+=======
+﻿using Microsoft.AspNetCore.Authorization;
+>>>>>>> 6114e02a1be24af473cf3afc2a17ae3b24023162
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+
+namespace MarquesitaDashboards.Controllers
+{
+    [Authorize]
+    public class ClientController : Controller
+    {
+<<<<<<< HEAD
+
+=======
+        [Authorize(Policy = "Client")]
+>>>>>>> 6114e02a1be24af473cf3afc2a17ae3b24023162
+        public IActionResult MyProfile()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Client")]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+    }
+}
