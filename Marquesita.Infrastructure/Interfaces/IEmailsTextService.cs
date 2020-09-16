@@ -1,7 +1,10 @@
-﻿namespace Marquesita.Infrastructure.Interfaces
+﻿using Marquesita.Infrastructure.Email;
+
+namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IEmailsTextService
     {
-        string ConfirmMailText();
+        string ConfirmMailText(Message message);
+        string RecoveryPasswordText(Message message);
     }
 }

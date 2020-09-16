@@ -60,7 +60,7 @@ namespace MarquesitaDashboards
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
 
         private void MvcConfiguration(IServiceCollection services)

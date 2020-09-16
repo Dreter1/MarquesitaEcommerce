@@ -14,9 +14,9 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IAuthManagerService _signsInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderService _emailSender;
 
-        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IEmailSender emailSender)
+        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IEmailSenderService emailSender)
         {
             _usersManager = usersManager;
             _signsInManager = signsInManager;
@@ -174,8 +174,8 @@ namespace MarquesitaDashboards.Controllers
                     var user = await _usersManager.GetUserByEmailAsync(model.Email);
                     var token = await _usersManager.ConfirmationEmailToken(user);
                     var confirmationLink = Url.Action(nameof(ConfirmEmail), "Home", new { token, email = model.Email }, Request.Scheme);
-                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", confirmationLink, null);
-                    await _emailSender.SendEmailAsync(message);
+                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user,confirmationLink, null);
+                    await _emailSender.SendEmailConfirmationAsync(message);
                     return RedirectToAction("SuccessRegistration", "Home");
                 }
             }
