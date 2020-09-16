@@ -4,14 +4,16 @@ using Marquesita.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
+namespace Marquesita.Infrastructure.Migrations
 {
     [DbContext(typeof(AuthIdentityDbContext))]
-    partial class AuthIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200916160706_creatingIdentityDb")]
+    partial class creatingIdentityDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +65,9 @@ namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,13 +85,12 @@ namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("MailToken")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
@@ -105,9 +109,6 @@ namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ResetPasswordToken")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
+namespace Marquesita.Infrastructure.Migrations
 {
-    public partial class createIdentityDb : Migration
+    public partial class creatingIdentityDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,17 +30,16 @@ namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnabled = table.Column<bool>(nullable: false, defaultValue: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     ImageRoute = table.Column<string>(nullable: true),
-                    MailToken = table.Column<string>(nullable: true),
-                    ResetPasswordToken = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     RegisterDate = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false, defaultValue: true)

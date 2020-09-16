@@ -50,6 +50,11 @@ namespace Marquesita.Infrastructure.Services
             return await _userManager.FindByIdAsync(Id);
         }
 
+        public async Task<IdentityResult> ConfirmEmail(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
         public async Task<List<User>> GetUsersEmployeeList()
         {
             var usersList = _userManager.Users.ToList();
@@ -96,6 +101,7 @@ namespace Marquesita.Infrastructure.Services
             user.Id = Guid.NewGuid().ToString();
             user.RegisterDate = DateTime.Now;
             user.ImageRoute = imagen;
+            user.EmailConfirmed = true;
             return await _userManager.CreateAsync(user, password);
         }
         public async Task AddingRoleToUserAsync(string User, string UserRol)
@@ -272,6 +278,11 @@ namespace Marquesita.Infrastructure.Services
         public async Task<string> NewTokenPassword(User user)
         {
             return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<string> ConfirmationEmailToken(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
         public async Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword)

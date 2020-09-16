@@ -16,6 +16,7 @@ namespace Marquesita.Infrastructure.Interfaces
         Task<User> GetUserByEmailAsync(string Email);
         Task<string> GetUserIdByNameAsync(string Name);
         Task<User> GetUserByIdAsync(string Id);
+        Task<IdentityResult> ConfirmEmail(User user, string token);
         Task<String> GetUserRole(User user);
         Task<List<User>> GetUsersEmployeeList();
         Task<List<User>> GetUsersClientsList();
@@ -33,6 +34,7 @@ namespace Marquesita.Infrastructure.Interfaces
         bool EmailExists(string email);
         bool isColaborator(string role);
         Task<string> NewTokenPassword(User user);
+        Task<string> ConfirmationEmailToken(User user);
         Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword);
     }
 }

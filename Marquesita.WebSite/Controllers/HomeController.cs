@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MarquesitaDashboards.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
+using MarquesitaDashboards.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
 {
@@ -17,11 +14,13 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IAuthManagerService _signsInManager;
+        private readonly IEmailSender _emailSender;
 
-        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager)
+        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IEmailSender emailSender)
         {
             _usersManager = usersManager;
             _signsInManager = signsInManager;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -171,9 +170,30 @@ namespace MarquesitaDashboards.Controllers
                 if (result.Succeeded)
                 {
                     await _usersManager.AddingRoleToClientAsync(model.Username);
-                    return RedirectToAction("Login", "Home");
+
+                    var user = await _usersManager.GetUserByEmailAsync(model.Email);
+                    var token = await _usersManager.ConfirmationEmailToken(user);
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Home", new { token, email = model.Email }, Request.Scheme);
+                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", confirmationLink, null);
+                    await _emailSender.SendEmailAsync(message);
+                    return RedirectToAction("SuccessRegistration", "Home");
                 }
             }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _usersManager.GetUserByEmailAsync(email);
+            if (user == null)
+                return RedirectToAction("NotFound404", "Error");
+            var result = await _usersManager.ConfirmEmail(user, token);
+            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+        }
+        [HttpGet]
+        public IActionResult SuccessRegistration()
+        {
             return View();
         }
 

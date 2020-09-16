@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure;
 using Marquesita.Infrastructure.DbContexts;
+using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Repositories;
 using Marquesita.Infrastructure.Services;
@@ -47,9 +48,19 @@ namespace MarquesitaDashboards
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
+            EmailConfiguration(services);
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
             RepositoriesConfiguration(services);
+        }
+
+        private void EmailConfiguration(IServiceCollection services)
+        {
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         private void MvcConfiguration(IServiceCollection services)
@@ -78,11 +89,13 @@ namespace MarquesitaDashboards
             services.AddIdentity<User, Role>(config =>
             {
                 config.User.RequireUniqueEmail = false;
+                config.SignIn.RequireConfirmedEmail = true;
                 config.Password.RequiredLength = 8;
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
                 config.Password.RequireLowercase = false;
+
             }).AddEntityFrameworkStores<AuthIdentityDbContext>().AddDefaultTokenProviders();
 
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
@@ -252,6 +265,7 @@ namespace MarquesitaDashboards
             services.AddScoped<IRoleManagerService, RoleManagerService>();
             services.AddScoped<IAuthManagerService, AuthManagerService>();
             services.AddScoped<IConstantService, ConstantService>();
+            services.AddTransient<IEmailsTextService, EmailsTextService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)

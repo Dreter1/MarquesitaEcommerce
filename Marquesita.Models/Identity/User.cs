@@ -9,8 +9,6 @@ namespace Marquesita.Models.Identity
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string ImageRoute { get; set; }
-        public string MailToken { get; set; }
-        public string ResetPasswordToken { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime RegisterDate { get; set; }
         public bool IsActive { get; set; }

@@ -28,11 +28,11 @@ namespace Marquesita.Infrastructure.DbContexts
                 b.Property(u => u.DateOfBirth).IsRequired();
                 b.Property(u => u.RegisterDate).IsRequired();
                 b.Property(u => u.IsActive).IsRequired().HasDefaultValue(true);
+                b.Property(u => u.LockoutEnabled).HasDefaultValue(false);
             });
 
             modelBuilder.Entity<User>()
                 .Ignore(t => t.AccessFailedCount)
-                .Ignore(t => t.EmailConfirmed)
                 .Ignore(t => t.PhoneNumber)
                 .Ignore(t => t.PhoneNumberConfirmed)
                 .Ignore(t => t.TwoFactorEnabled);
