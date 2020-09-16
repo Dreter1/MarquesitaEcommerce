@@ -6,9 +6,6 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IConstantService
     {
-        string RoutePathEmployeeImages();
-        string RoutePathClientsImages();
-        string RoutePathProductsImages();
         string RoutePathRootEmployeeImages();
         string RoutePathRootClientsImages();
         string RoutePathRootProductsImages();
