@@ -290,6 +290,11 @@ namespace Marquesita.Infrastructure.Services
             return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
         }
 
+        public async Task<IdentityResult> ChangeClientPassword(User user, ResetPasswordModel newPassword)
+        {
+            return await _userManager.ResetPasswordAsync(user, newPassword.Token, newPassword.Password);
+        }
+
         private string UploadedServerFile(string path, IFormFile image)
         {
             string uniqueFileName = null;

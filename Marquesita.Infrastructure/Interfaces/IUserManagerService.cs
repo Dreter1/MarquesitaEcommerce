@@ -36,5 +36,6 @@ namespace Marquesita.Infrastructure.Interfaces
         Task<string> NewTokenPassword(User user);
         Task<string> ConfirmationEmailToken(User user);
         Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword);
+        Task<IdentityResult> ChangeClientPassword(User user, ResetPasswordModel newPassword);
     }
 }

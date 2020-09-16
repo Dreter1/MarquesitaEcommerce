@@ -173,7 +173,7 @@ namespace MarquesitaDashboards.Controllers
 
                     var user = await _usersManager.GetUserByEmailAsync(model.Email);
                     var token = await _usersManager.ConfirmationEmailToken(user);
-                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Home", new { token, email = model.Email }, Request.Scheme);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
                     var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user,confirmationLink, null);
                     await _emailSender.SendEmailConfirmationAsync(message);
                     return RedirectToAction("SuccessRegistration", "Home");
@@ -185,6 +185,19 @@ namespace MarquesitaDashboards.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
             var user = await _usersManager.GetUserByEmailAsync(email);
             if (user == null)
                 return RedirectToAction("NotFound404", "Error");
@@ -192,8 +205,161 @@ namespace MarquesitaDashboards.Controllers
             return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
         }
         [HttpGet]
-        public IActionResult SuccessRegistration()
+        public async Task<IActionResult> SuccessRegistrationAsync()
         {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ForgotPasswordAsync()
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
+            if (!ModelState.IsValid)
+                return View(forgotPasswordModel);
+
+            var user = await _usersManager.GetUserByEmailAsync(forgotPasswordModel.Email);
+
+            if (user == null)
+                return RedirectToAction("ForgotPasswordConfirmation", "Home");
+
+            var token = await _usersManager.NewTokenPassword(user);
+            var callback = Url.Action("ResetPassword", "Home", new { token, email = user.Email }, Request.Scheme);
+            var message = new Message(new string[] { user.Email }, "Cambiar contraseña", user,callback, null);
+            await _emailSender.SendRecoveryPasswordEmailAsync(message);
+            return RedirectToAction("ForgotPasswordConfirmation", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ForgotPasswordConfirmationAsync()
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPasswordAsync(string token, string email)
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            var model = new ResetPasswordModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
+            if (!ModelState.IsValid)
+                return View(resetPasswordModel);
+            var user = await _usersManager.GetUserByEmailAsync(resetPasswordModel.Email);
+
+            if (user == null)
+                return RedirectToAction("ResetPasswordConfirmation", "Home");
+
+            var resetPassResult = await _usersManager.ChangeClientPassword(user, resetPasswordModel);
+
+            if (!resetPassResult.Succeeded)
+            {
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return View();
+            }
+            return RedirectToAction("ResetPasswordConfirmation", "Home");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ResetPasswordConfirmationAsync()
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View();
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
             return View();
         }
 
