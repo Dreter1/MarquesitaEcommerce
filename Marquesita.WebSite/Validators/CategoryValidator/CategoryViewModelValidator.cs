@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace MarquesitaDashboards.Validators.CategoryValidators
+namespace MarquesitaDashboards.Validators.CategoryValidator
 {
     public class CategoryViewModelValidator : AbstractValidator<CategoryViewModel>
     {
@@ -14,9 +11,10 @@ namespace MarquesitaDashboards.Validators.CategoryValidators
         {
             RuleFor(x => x.Name).NotEmpty().DependentRules(() => {
                 RuleFor(x => x.Name).Must(name => {
-                    var role = context.Categories.Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
-                    return role == null;
+                    var category = context.Categories.Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
+                    return category == null;
                 }).WithMessage("Esta Categoria ya existe, escoja otro nombre");
+                RuleFor(x => x.Name).Matches(@"^[a-zA-Z\s]*$").WithMessage("Solo se puede ingresar letras");
             }).WithMessage("El campo del nombre no puede estar vacio");
         }
     }

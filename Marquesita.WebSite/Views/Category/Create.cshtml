@@ -33,7 +33,7 @@
                         <form asp-controller="Category" asp-action="Create" method="post">
                             <div class="form-group">
                                 <label asp-for="Name"></label>
-                                <input asp-for="Name" class="form-control" placeholder="Nombre de categoría" />
+                                <input asp-for="Name" class="form-control" placeholder="Nombre de categoría" onkeypress="return validarLetras(event)" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <a class="btn btn-danger" asp-controller="Category" asp-action="Index" title="Regresar"><i class="fas fa-arrow-left"></i></a>

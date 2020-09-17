@@ -55,7 +55,6 @@ namespace MarquesitaDashboards.Controllers
 
             if (category != null)
             {
-                ViewBag.Id = category.Id;
                 ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View(category);
             }
@@ -78,7 +77,6 @@ namespace MarquesitaDashboards.Controllers
             }
 
             ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.Id = Id;
             return View(category);
         }
 
