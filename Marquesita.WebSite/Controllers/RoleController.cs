@@ -10,29 +10,25 @@ namespace MarquesitaDashboards.Controllers
     [Authorize]
     public class RoleController : Controller
     {
-        private readonly IUserManagerService _usersManager;
         private readonly IRoleManagerService _rolesManager;
 
-        public RoleController(IUserManagerService usersManager, IRoleManagerService rolesManager)
+        public RoleController(IRoleManagerService rolesManager)
         {
-            _usersManager = usersManager;
             _rolesManager = rolesManager;
         }
 
         [HttpGet]
         [Authorize(Policy = "CanViewRoles")]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             return View(_rolesManager.GetEmployeeRolesList());
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddRoles")]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult Create()
         {
             ViewBag.Permissions = _rolesManager.PermissionList();
-            ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             return View();
         }
 
@@ -52,7 +48,6 @@ namespace MarquesitaDashboards.Controllers
             }
 
             ViewBag.Permissions = _rolesManager.PermissionList();
-            ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             return View();
         }
 
@@ -64,9 +59,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (role != null)
             {
-                ViewBag.RoleId = role.Id;
                 ViewBag.RolePermissions = _rolesManager.PermissionListOfRole(role);
-                ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
                 return View(role);
             }
             return RedirectToAction("NotFound404", "Error");
@@ -82,8 +75,6 @@ namespace MarquesitaDashboards.Controllers
             {
                 if (role.Name != "Super Admin")
                 {
-                    ViewBag.RoleId = role.Id;
-                    ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
                     return View(role);
                 }
                 return RedirectToAction("NotFound404", "Error");
@@ -109,8 +100,6 @@ namespace MarquesitaDashboards.Controllers
                     return RedirectToAction("NotFound404", "Error");
                 }
             }
-            ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            ViewBag.RoleId = Id;
             return View(role);
         }
 

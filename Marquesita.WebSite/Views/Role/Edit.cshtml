@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label asp-for="Name">Nombre</label>
                                 <input asp-for="Name" class="form-control" />
-                                <input type="hidden" name="Id" value="@ViewBag.RoleId" />
+                                <input type="hidden" name="Id" value="@Model.Id" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <a class="btn btn-danger" asp-controller="Role" asp-action="Index" title="Regresar"><i class="fas fa-arrow-left"></i></a>
