@@ -30,7 +30,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Users
         [DisplayName("Foto")]
         public string ImageRoute { get; set; }
 
-        [DisplayName("Upload")]
+        [DisplayName("Foto de colaborador")]
         public IFormFile ProfileImage { get; set; }
 
         public DateTime DateOfBirth { get; set; }

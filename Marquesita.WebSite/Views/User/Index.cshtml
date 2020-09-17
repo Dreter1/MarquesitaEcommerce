@@ -34,93 +34,95 @@
                 </div>
                 <br /><br />
             }
-            <table id="dataTable" class="table table-bordered table-striped">
-                <thead>
+
+        <table id="dataTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Usuario</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Cargo</th>
+                    <th>Estado</th>
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                    {
+                        <th>Opciones</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
                     <tr>
-                        <th></th>
-                        <th>Usuario</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Cargo</th>
-                        <th>Estado</th>
+                        @if (user.ImageRoute != null)
+                        {
+                            <td class="text-center">
+                                <img src="@ViewBag.Image@user.ImageRoute"
+                                     class="rounded-circle"
+                                     alt="User Img"
+                                     height="45" width="45"
+                                     asp-append-version="true" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
+                                     class="rounded-circle"
+                                     alt="User Img"
+                                     height="45" width="45"
+                                     asp-append-version="true">
+                            </td>
+                        }
+                        <td>@user.UserName</td>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td class="text-center">
+                            <span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span>
+                        </td>
+                        @if (user.IsActive)
+                        {
+                            <td class="text-center">
+                                <span class="badge badge-pill badge-success">Activo</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                <span class="badge badge-pill badge-danger">Inactivo</span>
+                            </td>
+                        }
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                         {
-                            <th>Opciones</th>
+                            <td>
+                                <div class="form-row">
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
+                                    {
+                                        <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning" title="Editar Usuario"><i class="fas fa-user-edit"></i></a><span>&nbsp</span>
+                                    }
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
+                                    {
+                                        if (user.IsActive)
+                                        {
+                                            <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="removeUserCredentials(this)">
+                                                <button type="submit" class="btn btn-danger" title="Desactivar Usuario"><i class="fas fa-user-slash"></i></button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="grantUserCredentials(this)">
+                                                <button type="submit" class="btn btn-success" title="Activar Usuario"><i class="fas fa-user-check"></i></button>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </td>
                         }
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var user in Model)
-                    {
-                        <tr>
-                            @if (user.ImageRoute != null)
-                            {
-                                <td class="text-center">
-                                    <img src="@ViewBag.Image@user.ImageRoute"
-                                         class="rounded-circle"
-                                         alt="User Img"
-                                         height="45" width="45"
-                                         asp-append-version="true" />
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="text-center">
-                                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
-                                         class="rounded-circle"
-                                         alt="User Img"
-                                         height="45" width="45"
-                                         asp-append-version="true">
-                                </td>
-                            }
-                            <td>@user.UserName</td>
-                            <td>@user.FirstName</td>
-                            <td>@user.LastName</td>
-                            <td class="text-center">
-                                <span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span>
-                            </td>
-                            @if (user.IsActive)
-                            {
-                                <td class="text-center">
-                                    <span class="badge badge-pill badge-success">Activo</span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="text-center">
-                                    <span class="badge badge-pill badge-danger">Inactivo</span>
-                                </td>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
-                            {
-                                <td>
-                                    <div class="form-row">
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
-                                        {
-                                            <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning" title="Editar Usuario"><i class="fas fa-user-edit"></i></a><span>&nbsp</span>
-                                        }
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
-                                        {
-                                            if (user.IsActive)
-                                            {
-                                                <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="removeUserCredentials(this)">
-                                                    <button type="submit" class="btn btn-danger" title="Desactivar Usuario"><i class="fas fa-user-slash"></i></button>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="grantUserCredentials(this)">
-                                                    <button type="submit" class="btn btn-success" title="Activar Usuario"><i class="fas fa-user-check"></i></button>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
+
         </div>
     </div>
 </section>

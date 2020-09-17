@@ -7,10 +7,16 @@ namespace MarquesitaDashboards.Validators.UserValidator
     {
         public UserEditViewModelValidator()
         {
-            RuleFor(x => x.FirstName).NotEmpty().WithMessage("Nombres no puede estar vacio escriba uno");
-            RuleFor(x => x.LastName).NotEmpty().WithMessage("Apellidos no puede estar vacio escriba uno");
+            RuleFor(x => x.FirstName).NotEmpty().DependentRules(() => {
+                RuleFor(x => x.FirstName).Matches(@"^[a-zA-Z\s]*$").WithMessage("Solo se puede ingresar letras");
+            }).WithMessage("Nombres no puede estar vacio escriba uno");
+
+            RuleFor(x => x.LastName).NotEmpty().DependentRules(() => {
+                RuleFor(x => x.FirstName).Matches(@"^[a-zA-Z\s]*$").WithMessage("Solo se puede ingresar letras");
+            }).WithMessage("Apellidos no puede estar vacio escriba uno");
 
             RuleFor(x => x.Phone).NotEmpty().DependentRules(() => {
+                RuleFor(x => x.Phone).Matches(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]*$").WithMessage("Solo se puede ingresar numeros ejemplo +51 123456789");
                 RuleFor(x => x.Phone).MinimumLength(9).WithMessage("Minimo 9 digitos");
                 RuleFor(x => x.Phone).MaximumLength(12).WithMessage("Maximo 12 digitos");
             }).WithMessage("El campo celular no puede estar vacio");

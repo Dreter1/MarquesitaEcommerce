@@ -15,6 +15,7 @@ namespace MarquesitaDashboards.Validators.RoleValidator
                     var role = roleManager.Roles.Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
                     return role == null;
                 }).WithMessage("Este Rol ya existe, escoja otro");
+                RuleFor(x => x.Name).Matches(@"^[a-zA-Z\s]*$").WithMessage("Solo se puede ingresar letras");
             }).WithMessage("El campo del nombre no puede estar vacio");
         }
     }

@@ -34,12 +34,12 @@
                                 <div class="form-row">
                                     <div class="form-group col-12 col-md-6">
                                         <label asp-for="FirstName"></label>
-                                        <input asp-for="FirstName" class="form-control" />
+                                        <input asp-for="FirstName" class="form-control" onkeypress="return validarLetras(event)" />
                                         <span asp-validation-for="FirstName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group col-12 col-md-6">
                                         <label asp-for="LastName"></label>
-                                        <input asp-for="LastName" class="form-control" />
+                                        <input asp-for="LastName" class="form-control" onkeypress="return validarLetras(event)" />
                                         <span asp-validation-for="LastName" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="ProfileImage" class="control-label">Foto de colaborador </label>
+                                    <label asp-for="ProfileImage" class="control-label"></label>
                                     <input asp-for="ProfileImage" id="fichero" accept="image/*" class="form-control-file btn btn-file">
                                     <span asp-validation-for="ProfileImage" class="text-danger"></span>
                                     <p id="texto"> </p>
