@@ -10,52 +10,46 @@ namespace MarquesitaDashboards.Controllers
     [Authorize]
     public class CategoryController : Controller
     {
-        private readonly IUserManagerService _usersManager;
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(IUserManagerService usersManager, ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService)
         {
-            _usersManager = usersManager;
             _categoryService = categoryService;
         }
 
         [Authorize(Policy = "CanViewCategory")]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(_categoryService.GetCategoryList());
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddCategory")]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult Create()
         {
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddCategory")]
-        public async Task<IActionResult> CreateAsync(CategoryViewModel model)
+        public IActionResult Create(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
                 _categoryService.CreateCategory(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
 
         [HttpGet]
         [Authorize(Policy = "CanEditCategory")]
-        public async Task<IActionResult> EditAsync(Guid Id)
+        public IActionResult Edit(Guid Id)
         {
             var category = _categoryService.GetCategoryById(Id);
 
             if (category != null)
             {
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 return View(category);
             }
             return RedirectToAction("NotFound404", "Error");
@@ -63,7 +57,7 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditCategory")]
-        public async Task<IActionResult> EditAsync(CategoryViewModel model, Guid Id)
+        public IActionResult Edit(CategoryViewModel model, Guid Id)
         {
             var category = _categoryService.GetCategoryById(Id);
 
@@ -76,7 +70,6 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(category);
         }
 
