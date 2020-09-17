@@ -51,13 +51,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var producto in Model)
+                    @foreach (var product in Model)
                     {
                         <tr>
-                            @if (producto.ImageRoute != null)
+                            @if (product.ImageRoute != null)
                             {
                                 <td class="text-center">
-                                    <img src="@ViewBag.Image@producto.ImageRoute"
+                                    <img src="@ViewBag.Image@product.ImageRoute"
                                          class="rounded-circle"
                                          alt="Product Img"
                                          height="50" width="50"
@@ -74,10 +74,10 @@
                                          asp-append-version="true">
                                 </td>
                             }
-                            <td>@producto.Name</td>
-                            <td class="text-center">@producto.Stock</td>
-                            <td class="text-center">@producto.UnitPrice</td>
-                            @if (producto.IsActive)
+                            <td>@product.Name</td>
+                            <td class="text-center">@product.Stock</td>
+                            <td class="text-center">@product.UnitPrice</td>
+                            @if (product.IsActive)
                             {
                                 <td class="text-center">
                                     <span class="badge badge-success">Activo</span>
@@ -95,11 +95,11 @@
                                     <div class="form-row">
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded)
                                         {
-                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@producto.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
+                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@product.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
                                         }
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
                                         {
-                                            <div id="DeleteCategoryClic_@producto.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@producto.Id" onclick="deleteCategory(this)">
+                                            <div id="DeleteProductClic_@product.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@product.Id" onclick="deleteProduct(this)">
                                                 <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         }

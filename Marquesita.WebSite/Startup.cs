@@ -10,11 +10,13 @@ using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
 using Marquesita.WebSite.Validators.ClientValidator;
-using MarquesitaDashboards.Validators.CategoryValidators;
-using MarquesitaDashboards.Validators.RoleValidatos;
+using Marquesita.WebSite.Validators.ProductValidator;
+using MarquesitaDashboards.Validators.CategoryValidator;
+using MarquesitaDashboards.Validators.RoleValidator;
 using MarquesitaDashboards.Validators.UserValidator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -251,6 +253,8 @@ namespace MarquesitaDashboards
             services.AddTransient<IValidator<ClientViewModel>, ClientViewModelValidator>();
 
             services.AddTransient<IValidator<CategoryViewModel>, CategoryViewModelValidator>();
+            services.AddTransient<IValidator<ProductViewModel>, ProductViewModelValidator>();
+            services.AddTransient<IValidator<ProductEditViewModel>, ProductEditViewModelValidator>();
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)

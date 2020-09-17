@@ -12,6 +12,7 @@ namespace Marquesita.Infrastructure.Interfaces
         Product GetProductById(Guid Id);
         void CreateProduct(Product product, IFormFile image, string path);
         void DeleteProduct(Product product);
-        void UpdateProduct(ProductViewModel model, Product Product);
+        void UpdateProduct(ProductEditViewModel model, Product product, IFormFile image, string path);
+        ProductEditViewModel ProductToViewModel(Product obj);
     }
 }

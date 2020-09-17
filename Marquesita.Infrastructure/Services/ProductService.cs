@@ -41,10 +41,36 @@ namespace Marquesita.Infrastructure.Services
             _repository.Remove(product);
         }
 
-        public void UpdateProduct(ProductViewModel model, Product Product)
+        public void UpdateProduct(ProductEditViewModel model, Product product, IFormFile image, string path)
         {
-            Product.Name = model.Name;
-            _repository.Update(Product);
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Stock = model.Stock;
+            product.UnitPrice = model.UnitPrice;
+            product.CategoryId = model.CategoryId;
+            product.IsActive = model.IsActive;
+
+            if (product.ImageRoute != null)
+            {
+                if (image != null)
+                {
+                    DeleteServerFile(path, product.ImageRoute);
+                    var imagen = UploadedServerFile(path, image);
+                    product.ImageRoute = imagen;
+                }
+                else
+                {
+                    product.ImageRoute = product.ImageRoute;
+                }
+            }
+            else
+            {
+                DeleteServerFile(path, product.ImageRoute);
+                var imagen = UploadedServerFile(path, image);
+                product.ImageRoute = imagen;
+            }
+
+            _repository.Update(product);
             _repository.SaveChanges();
         }
 
@@ -73,6 +99,25 @@ namespace Marquesita.Infrastructure.Services
                 if (File.Exists(serverFilePath))
                     File.Delete(serverFilePath);
             }
+        }
+
+        public ProductEditViewModel ProductToViewModel(Product obj)
+        {
+            if (obj != null)
+            {
+                return new ProductEditViewModel
+                {
+                    Id = obj.Id,
+                    Name = obj.Name,
+                    Description = obj.Description,
+                    Stock = obj.Stock,
+                    UnitPrice = obj.UnitPrice,
+                    ImageRoute = obj.ImageRoute,
+                    CategoryId = obj.CategoryId,
+                    IsActive = obj.IsActive
+                };
+            }
+            return null;
         }
     }
 }

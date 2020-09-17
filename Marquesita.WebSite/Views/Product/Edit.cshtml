@@ -1,6 +1,6 @@
-﻿@model Marquesita.Infrastructure.ViewModels.Ecommerce.Products.ProductViewModel
+﻿@model Marquesita.Infrastructure.ViewModels.Ecommerce.Products.ProductEditViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Editar Producto";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 
@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Nuevo producto</h1>
+                <h1 class="m-0 text-dark">Editar producto</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -24,12 +24,13 @@
     <div class="container-fluid">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Información de nuevo producto</h3>
+                <h3 class="card-title">Producto @Model.Name</h3>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card-body">
-                        <form asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
+                        <form asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="Id" value="@Model.Id" />
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label asp-for="Name"></label>
@@ -61,21 +62,52 @@
                                 <input asp-for="ProductImage" id="fichero" accept="image/*" class="form-control-file btn btn-file">
                                 <span asp-validation-for="ProductImage" class="text-danger"></span>
                                 <p id="texto"> </p>
-                                <img id="img" width="150" height="150" />
+                                @if (Model.ImageRoute != null)
+                                {
+                                    <img src="@ViewBag.Image@Model.ImageRoute"
+                                         id="img" width="150" height="150"
+                                         asp-append-version="true" />
+                                }
+                                else
+                                {
+                                    <img id="img" width="150" height="150" />
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IsActive"></label>
+                                <select name="IsActive" id="IsActive" class="form-control">
+                                    @if (Model.IsActive)
+                                    {
+                                        <option selected value="True">Activo</option>
+                                        <option value="False">Desactivo</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="True">Activo</option>
+                                        <option selected value="False">Desactivo</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="IsActive" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="CategoryId"></label>
                                 <select name="CategoryId" id="categoria" class="form-control">
-                                    <option disabled selected>Seleccionar</option>
                                     @foreach (var categoria in ViewBag.Categorias)
                                     {
-                                        <option value="@categoria.Id">@categoria.Name</option>
+                                        if (categoria.Id == Model.CategoryId)
+                                        {
+                                            <option selected value="@categoria.Id">@categoria.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@categoria.Id">@categoria.Name</option>
+                                        }
                                     }
                                 </select>
                                 <span asp-validation-for="CategoryId" class="text-danger"></span>
                             </div>
                             <a class="btn btn-danger" asp-controller="Product" asp-action="List" title="Regresar"><i class="fas fa-arrow-left"></i></a>
-                            <button type="submit" class="btn btn-primary" title="Registrar"><i class="fas fa-save"></i></button>
+                            <button type="submit" class="btn btn-primary" title="Actualizar"><i class="fas fa-sync-alt"></i></button>
                         </form>
                     </div>
                 </div>
