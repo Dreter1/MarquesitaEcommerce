@@ -47,6 +47,7 @@ namespace MarquesitaDashboards.Controllers
             return View();
         }
 
+        [HttpGet]
         public async Task<IActionResult> AboutAsync()
         {
             if (User.Identity.Name != null)
