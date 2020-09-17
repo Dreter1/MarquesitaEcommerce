@@ -100,15 +100,15 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanDeleteUsers")]
-        public async Task<IActionResult> RemoveRestoreCredentials(string Id)
+        public async Task<bool> RemoveRestoreCredentials(string Id)
         {
             var userRemove = await _usersManager.GetUserByIdAsync(Id);
             if (userRemove != null)
             {
                 _usersManager.RemovingRestoringCredentials(userRemove);
-                return RedirectToAction("Index");
+                return true;
             }
-            return RedirectToAction("NotFound404", "Error");
+            return false;
         }
 
         [Authorize]

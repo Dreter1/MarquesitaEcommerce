@@ -103,17 +103,15 @@
                                         {
                                             if (user.IsActive)
                                             {
-                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                    <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-danger" title="Activar Usuario"><i class="fas fa-user-slash"></i></button>
-                                                </form>
+                                                <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="removeUserCredentials(this)">
+                                                    <button type="submit" class="btn btn-danger" title="Desactivar Usuario"><i class="fas fa-user-slash"></i></button>
+                                                </div>
                                             }
                                             else
                                             {
-                                                <form asp-controller="User" asp-action="RemoveRestoreCredentials" method="post">
-                                                    <input type="hidden" name="Id" value="@user.Id" />
-                                                    <button type="submit" class="btn btn-success" title="Desactivar Usuario"><i class="fas fa-user-check"></i> </button>
-                                                </form>
+                                                <div id="DeleteUserClic_@user.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@user.Id" onclick="grantUserCredentials(this)">
+                                                    <button type="submit" class="btn btn-success" title="Activar Usuario"><i class="fas fa-user-check"></i></button>
+                                                </div>
                                             }
                                         }
                                     </div>

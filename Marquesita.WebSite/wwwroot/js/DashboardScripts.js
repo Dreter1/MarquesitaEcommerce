@@ -172,3 +172,99 @@ function deleteProduct(product) {
         }
     });
 }
+
+function removeUserCredentials(user) {
+    var userId = user.dataset.id;
+    console.log(userId);
+    Swal.fire({
+        title: '¿Desea desactivar este usuario?',
+        text: "Si estas seguro presiona desactivar, recuerde que puedes volver activarlo en cualquier momento.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Desactivar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/User/RemoveRestoreCredentials",
+                type: "POST",
+                data: {
+                    Id: userId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'El usuario fue desactivado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/User/Index";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El usuario no se pudo desactivar, vuelva a intentarlo más tarde'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/User/Index";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}
+
+function grantUserCredentials(user) {
+    var userId = user.dataset.id;
+    console.log(userId);
+    Swal.fire({
+        title: '¿Desea activar este usuario?',
+        text: "Si estas seguro presiona activar, recuerde que puedes volver a desactivarlo en cualquier momento.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Activar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/User/RemoveRestoreCredentials",
+                type: "POST",
+                data: {
+                    Id: userId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'El usuario fue activado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/User/Index";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El usuario no se pudo activar, vuelva a intentarlo más tarde'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/User/Index";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}
