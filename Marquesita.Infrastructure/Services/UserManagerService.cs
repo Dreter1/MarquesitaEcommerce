@@ -20,14 +20,12 @@ namespace Marquesita.Infrastructure.Services
         private readonly UserManager<User> _userManager;
         private readonly IRoleManagerService _roleManager;
         private readonly AuthIdentityDbContext _context;
-        private readonly IConstantService _file;
 
-        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager, AuthIdentityDbContext context, IConstantService file)
+        public UserManagerService(UserManager<User> userManager, IRoleManagerService roleManager, AuthIdentityDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
-            _file = file;
         }
 
         public async Task<User> GetUserByNameAsync(string Name)

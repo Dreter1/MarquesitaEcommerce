@@ -28,22 +28,15 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-
             ViewBag.Image = _images.RoutePathRootEmployeeImages();
-            ViewBag.UserId = user.Id;
             return View(await _usersManager.GetUsersEmployeeList());
-
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddUsers")]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult Create()
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-
             ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = user.Id;
             return View();
         }
 
@@ -51,8 +44,6 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddUsers")]
         public async Task<IActionResult> Create(UserViewModel model)
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-
             if (ModelState.IsValid)
             {
                 var path = _webHostEnvironment.WebRootPath;
@@ -64,7 +55,6 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
             ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = user.Id;
             return View();
         }
 
@@ -72,16 +62,14 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditUsers")]
         public async Task<IActionResult> EditAsync(string Id)
         {
-            var userEdit = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
+            var user = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
 
-            if (userEdit != null)
+            if (user != null)
             {
                 ViewBag.Image = _images.RoutePathRootEmployeeImages();
                 ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-                ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-                ViewBag.UserRole = await _usersManager.GetUserRole(userEdit);
-                ViewBag.User = userEdit.Id;
-                return View(userEdit);
+                ViewBag.UserRole = await _usersManager.GetUserRole(user);
+                return View(user);
             }
             return RedirectToAction("NotFound404", "Error");
         }
@@ -90,25 +78,22 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditUsers")]
         public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
         {
-            var userEdit = await _usersManager.GetUserByIdAsync(Id);
-            var userRole = await _usersManager.GetUserRole(userEdit);
-            var path = _webHostEnvironment.WebRootPath;
+            var user = await _usersManager.GetUserByIdAsync(Id);
 
             if (ModelState.IsValid)
             {
-                if (userEdit != null)
+                if (user != null)
                 {
-                    _usersManager.UpdatingUser(model, userEdit, model.ProfileImage, path);
-                    await _usersManager.UpdatingRoleOfUserAsync(userEdit, model.Role);
+                    var path = _webHostEnvironment.WebRootPath;
+                    _usersManager.UpdatingUser(model, user, model.ProfileImage, path);
+                    await _usersManager.UpdatingRoleOfUserAsync(user, model.Role);
                     return RedirectToAction("Index", "User");
                 }
             }
 
             ViewBag.Image = _images.RoutePathRootEmployeeImages();
             ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
-            ViewBag.UserId = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            ViewBag.UserRole = userRole;
-            ViewBag.User = userEdit.Id;
+            ViewBag.UserRole = await _usersManager.GetUserRole(user);
 
             return View(model);
         }
@@ -135,13 +120,10 @@ namespace MarquesitaDashboards.Controllers
 
             if (_usersManager.isColaborator(userRole))
             {
-                var userProfile = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-
-                if (userProfile != null)
+                if (user != null)
                 {
                     ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                    ViewBag.UserRole = await _usersManager.GetUserRole(userProfile);
-                    ViewBag.UserId = userProfile.Id;
+                    ViewBag.UserRole = await _usersManager.GetUserRole(user);
                     return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
                 }
                 return RedirectToAction("NotFound404", "Error");
@@ -158,8 +140,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (_usersManager.isColaborator(userRole))
             {
-                var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-
+                var actualId = user.Id;
                 if (actualId == Id)
                 {
                     var userEditProfile = _usersManager.UserToViewModel(await _usersManager.GetUserByIdAsync(Id));
@@ -167,8 +148,6 @@ namespace MarquesitaDashboards.Controllers
                     if (userEditProfile != null)
                     {
                         ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                        ViewBag.UserId = actualId;
-                        ViewBag.User = userEditProfile.Id;
                         return View(userEditProfile);
                     }
                 }
@@ -186,23 +165,18 @@ namespace MarquesitaDashboards.Controllers
 
             if (_usersManager.isColaborator(userRole))
             {
-                var userProfile = await _usersManager.GetUserByIdAsync(Id);
-                var path = _webHostEnvironment.WebRootPath;
-
                 if (ModelState.IsValid)
                 {
+                    var userProfile = await _usersManager.GetUserByIdAsync(Id);         
                     if (userProfile != null)
                     {
+                        var path = _webHostEnvironment.WebRootPath;
                         _usersManager.UpdatingUser(model, userProfile, model.ProfileImage, path);
                         return RedirectToAction("Profile", "User");
                     }
                 }
 
                 ViewBag.Image = _images.RoutePathRootEmployeeImages();
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-                ViewBag.UserRole = await _usersManager.GetUserRole(userProfile);
-                ViewBag.User = userProfile.Id;
-
                 return View(model);
             }
             return RedirectToAction("NotFound404", "Error");
@@ -217,7 +191,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (_usersManager.isColaborator(userRole))
             {
-                var userPassword = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userPassword = await _usersManager.GetUserByNameAsync(user.UserName);
                 if (userPassword != null)
                 {
                     var token = await _usersManager.NewTokenPassword(userPassword);
