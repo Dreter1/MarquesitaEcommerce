@@ -48,25 +48,23 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanViewProducts")]
-        public async Task<IActionResult> ListAsync()
+        public IActionResult List()
         {
             ViewBag.Image = _images.RoutePathRootProductsImages();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View(_productService.GetProductList());
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddProducts")]
-        public async Task<IActionResult> CreateAsync()
+        public IActionResult Create()
         {
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             ViewBag.Categorias = _categoryService.GetCategoryList();
             return View();
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddProducts")]
-        public async Task<IActionResult> CreateAsync(ProductViewModel model)
+        public IActionResult Create(ProductViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -75,20 +73,18 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("List");
             }
             ViewBag.Categorias = _categoryService.GetCategoryList();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             return View();
         }
 
         [HttpGet]
         [Authorize(Policy = "CanEditProducts")]
-        public async Task<IActionResult> EditAsync(Guid Id)
+        public IActionResult Edit(Guid Id)
         {
             var product = _productService.ProductToViewModel(_productService.GetProductById(Id));
 
             if (product != null)
             {
                 ViewBag.Image = _images.RoutePathRootProductsImages();
-                ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
                 ViewBag.Categorias = _categoryService.GetCategoryList();
                 return View(product);
             }
@@ -97,7 +93,7 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditProducts")]
-        public async Task<IActionResult> EditAsync(ProductEditViewModel model, Guid Id)
+        public IActionResult Edit(ProductEditViewModel model, Guid Id)
         {
             var product = _productService.GetProductById(Id);
             var path = _webHostEnvironment.WebRootPath;
@@ -111,7 +107,6 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
             ViewBag.Image = _images.RoutePathRootProductsImages();
             ViewBag.Categorias = _categoryService.GetCategoryList();
             return View(model);
