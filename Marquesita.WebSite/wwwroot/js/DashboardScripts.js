@@ -78,8 +78,8 @@ function deleteRol(rol) {
 }
 
 function deleteCategory(category) {
-    var roleId = category.dataset.id;
-    console.log(roleId);
+    var categoryId = category.dataset.id;
+    console.log(categoryId);
     Swal.fire({
         title: '¿Desea eliminar la Categoria?',
         text: "Si estas seguro presiona eliminar, recuerde que los productos que tengan esta categoria, tambien serán borrados!, tenga en cuenta eso",
@@ -95,7 +95,7 @@ function deleteCategory(category) {
                 url: "/Category/Delete",
                 type: "POST",
                 data: {
-                    Id: roleId,
+                    Id: categoryId,
                 },
                 dataType: "JSON",
                 success: function (response) {
@@ -117,6 +117,54 @@ function deleteCategory(category) {
                     }).then((result) => {
                         if (result.value) {
                             location.href = "/Category/Index";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}
+
+function deleteProduct(product) {
+    var productId = product.dataset.id;
+    console.log(productId);
+    Swal.fire({
+        title: '¿Desea eliminar este producto?',
+        text: "Si estas seguro presiona eliminar, recuerde que al eliminarlo no habra vuelta atras.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/Product/Delete",
+                type: "POST",
+                data: {
+                    Id: productId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'El producto fue eliminado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Product/List";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El producto no se pudo eliminar, vuelva a intentarlo más tarde'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Product/List";
                         }
                     })
                 }
