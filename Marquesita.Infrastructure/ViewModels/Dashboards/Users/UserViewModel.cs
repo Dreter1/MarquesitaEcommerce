@@ -38,7 +38,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Users
         public DateTime DateOfBirth { get; set; }
         public DateTime RegisterDate { get; set; }
 
-        [DisplayName("Foto")]
+        [DisplayName("Foto de colaborador")]
         public IFormFile ProfileImage { get; set; }
 
         public static implicit operator User(UserViewModel obj)

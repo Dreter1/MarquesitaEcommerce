@@ -27,7 +27,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Users
         [DisplayName("Cargo")]
         public string Role { get; set; }
 
-        [DisplayName("Foto")]
+        [DisplayName("Foto de colaborador")]
         public string ImageRoute { get; set; }
 
         [DisplayName("Foto de colaborador")]
