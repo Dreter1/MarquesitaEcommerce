@@ -49,7 +49,6 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Date).IsRequired();
                 entity.Property(p => p.UserId).IsRequired();
-                entity.Property(p => p.AddressId).IsRequired();
                 entity.Property(p => p.TotalAmount).IsRequired();
                 entity.Property(p => p.SaleStatus).IsRequired();
                 entity.Property(p => p.PaymentType).IsRequired();
@@ -58,8 +57,7 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.HasOne(a => a.address)
                 .WithMany(s => s.sales)
                 .HasForeignKey(fk => fk.AddressId)
-                .HasConstraintName("FK_Sale_AddresId")
-                .IsRequired();
+                .HasConstraintName("FK_Sale_AddresId");
             });
 
             modelBuilder.Entity<SaleDetail>(entity =>

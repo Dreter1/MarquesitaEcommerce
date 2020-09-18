@@ -139,11 +139,14 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AddressId")
+                    b.Property<Guid?>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte>("PaymentType")
                         .HasColumnType("tinyint");
@@ -263,9 +266,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     b.HasOne("Marquesita.Models.Business.Address", "address")
                         .WithMany("sales")
                         .HasForeignKey("AddressId")
-                        .HasConstraintName("FK_Sale_AddresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("FK_Sale_AddresId");
                 });
 
             modelBuilder.Entity("Marquesita.Models.Business.SaleDetail", b =>

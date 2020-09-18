@@ -13,7 +13,8 @@ namespace Marquesita.Models.Business
         public byte SaleStatus { get; set; }
 
         public Guid UserId { get; set; }
-        public Guid AddressId { get; set; }
+        public Guid? EmployeeId { get; set; }
+        public Guid? AddressId { get; set; }
         
         public List<SaleDetail> saleDetails { get; set; }
         public Address address { get; set; }

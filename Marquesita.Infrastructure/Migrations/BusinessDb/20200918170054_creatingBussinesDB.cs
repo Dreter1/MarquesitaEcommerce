@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
-    public partial class creatingBussinesDb : Migration
+    public partial class creatingBussinesDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     TypeOfSale = table.Column<byte>(nullable: false),
                     SaleStatus = table.Column<byte>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    AddressId = table.Column<Guid>(nullable: false)
+                    EmployeeId = table.Column<Guid>(nullable: true),
+                    AddressId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,7 +58,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
