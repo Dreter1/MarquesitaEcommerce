@@ -36,7 +36,7 @@ namespace Marquesita.WebSite.Validators.ClientValidator
             RuleFor(x => x.Phone).NotEmpty().DependentRules(() => {
                 RuleFor(x => x.Phone).MinimumLength(9).WithMessage("Minimo 9 digitos");
                 RuleFor(x => x.Phone).MaximumLength(12).WithMessage("Maximo 12 digitos");
-                RuleFor(x => x.FirstName).Matches(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]*$").WithMessage("Solo se puede ingresar numeros ejemplo +51 123456789");
+                RuleFor(x => x.Phone).Matches(@"^(\(?\+?[0-9]*\)?)?[0-9_\ \(\)]*$").WithMessage("Solo se puede ingresar numeros ejemplo +51 123456789");
             }).WithMessage("El campo celular no puede estar vacio");
 
             RuleFor(x => x.Email).NotEmpty().DependentRules(() =>
