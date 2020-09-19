@@ -57,7 +57,7 @@ namespace Marquesita.Infrastructure.Services
 
         public async Task SendRecoveryPasswordEmailAsync(Message message)
         {
-            var mailMessage = CreateEmailConfirmationMessage(message);
+            var mailMessage = CreateRecoveryPasswordEmailMessage(message);
 
             await SendAsync(mailMessage);
         }
