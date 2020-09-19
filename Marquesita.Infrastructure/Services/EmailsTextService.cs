@@ -56,12 +56,13 @@ namespace Marquesita.Infrastructure.Services
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 0px 30px 20px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-                            <p style='margin: 0;'>Si tiene alguna pregunta, solo responda a este correo electrónico; siempre estaremos encantados de ayudarle.</p>
+                            <p style='margin: 0;'>Si tiene alguna pregunta, envíe un correo electrónico haciendo <a href='mailto: contacto.lamarquesita@gmail.com'>clic aquí</a> ó escribanos directo a: contacto.lamarquesita@gmail.com, siempre estaremos encantados de ayudarle.</p>
+                            <p style='margin: 0;'>* Por favor no responder a este correo, gracias</p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-                            <p style='margin: 0;'>Saludos,<br>La Marquesita Team</p>
+                            <p style='margin: 0;'>Saludos,<br>La Marquesita</p>
                         </td>
                     </tr>
                 </table>
@@ -120,12 +121,13 @@ namespace Marquesita.Infrastructure.Services
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 0px 30px 20px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-                            <p style='margin: 0;'>Si tiene alguna pregunta, solo responda a este correo electrónico; siempre estaremos encantados de ayudarle.</p>
+                            <p style='margin: 0;'>Si tiene alguna pregunta, envíe un correo electrónico haciendo <a href='mailto: contacto.lamarquesita@gmail.com'>clic aquí</a> ó escribanos directo a: contacto.lamarquesita@gmail.com, siempre estaremos encantados de ayudarle.</p>
+                            <p style='margin: 0;'>* Por favor no responder a este correo, gracias</p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-                            <p style='margin: 0;'>Saludos,<br>La Marquesita Team</p>
+                            <p style='margin: 0;'>Saludos,<br>La Marquesita</p>
                         </td>
                     </tr>
                 </table>
