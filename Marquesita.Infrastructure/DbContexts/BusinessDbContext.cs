@@ -38,7 +38,7 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.CategoryId).IsRequired();
 
                 entity.HasOne(c => c.Category)
-                .WithMany(p => p.products)
+                .WithMany(p => p.Products)
                 .HasForeignKey(fk => fk.CategoryId)
                 .HasConstraintName("FK_Product_CategoryId")
                 .IsRequired();
@@ -54,8 +54,8 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.PaymentType).IsRequired();
                 entity.Property(p => p.TypeOfSale).IsRequired();
 
-                entity.HasOne(a => a.address)
-                .WithMany(s => s.sales)
+                entity.HasOne(a => a.Address)
+                .WithMany(s => s.Sales)
                 .HasForeignKey(fk => fk.AddressId)
                 .HasConstraintName("FK_Sale_AddresId");
             });
@@ -69,14 +69,14 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.ProductId).IsRequired();
                 entity.Property(p => p.SaleId).IsRequired();
 
-                entity.HasOne(s => s.sale)
-                .WithMany(sd => sd.saleDetails)
+                entity.HasOne(s => s.Sale)
+                .WithMany(sd => sd.SaleDetails)
                 .HasForeignKey(fk => fk.SaleId)
                 .HasConstraintName("FK_SaleDetail_SaleId")
                 .IsRequired();
                 
-                entity.HasOne(s => s.product)
-                .WithMany(sd => sd.saleDetails)
+                entity.HasOne(s => s.Product)
+                .WithMany(sd => sd.SaleDetails)
                 .HasForeignKey(fk => fk.ProductId)
                 .HasConstraintName("FK_SaleDetail_ProductId")
                 .IsRequired();
@@ -88,8 +88,8 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.ProductId).IsRequired();
                 entity.Property(p => p.UserId).IsRequired();
 
-                entity.HasOne(p => p.product)
-                .WithMany(wl => wl.wishLists)
+                entity.HasOne(p => p.Product)
+                .WithMany(wl => wl.WishLists)
                 .HasForeignKey(fk => fk.ProductId)
                 .HasConstraintName("FK_WishList_ProductId")
                 .IsRequired();
@@ -102,7 +102,7 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.UserId).IsRequired();
                 entity.Property(p => p.Quantity).IsRequired();
 
-                entity.HasOne(p => p.products)
+                entity.HasOne(p => p.Products)
                 .WithMany(sc => sc.ShopingCartItems)
                 .HasForeignKey(fk => fk.ProductId)
                 .HasConstraintName("FK_ShoppingCart_ProductId")
@@ -126,8 +126,8 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.UserId).IsRequired();
                 entity.Property(p => p.ProductId).IsRequired();
 
-                entity.HasOne(p => p.product)
-                .WithMany(c => c.comments)
+                entity.HasOne(p => p.Product)
+                .WithMany(c => c.Comments)
                 .HasForeignKey(fk => fk.ProductId)
                 .HasConstraintName("FK_Comment_ProductId")
                 .IsRequired();

@@ -16,7 +16,7 @@ namespace Marquesita.Models.Business
         public Guid? EmployeeId { get; set; }
         public Guid? AddressId { get; set; }
         
-        public List<SaleDetail> saleDetails { get; set; }
-        public Address address { get; set; }
+        public List<SaleDetail> SaleDetails { get; set; }
+        public Address Address { get; set; }
     }
 }

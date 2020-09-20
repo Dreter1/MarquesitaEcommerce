@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20200918170054_creatingBussinesDB")]
-    partial class creatingBussinesDB
+    [Migration("20200920184416_creatingBussinesDb")]
+    partial class creatingBussinesDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -245,8 +245,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
             modelBuilder.Entity("Marquesita.Models.Business.Comments", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Product", "product")
-                        .WithMany("comments")
+                    b.HasOne("Marquesita.Models.Business.Product", "Product")
+                        .WithMany("Comments")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_Comment_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -256,7 +256,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
             modelBuilder.Entity("Marquesita.Models.Business.Product", b =>
                 {
                     b.HasOne("Marquesita.Models.Business.Categories", "Category")
-                        .WithMany("products")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Product_CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -265,23 +265,23 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
             modelBuilder.Entity("Marquesita.Models.Business.Sale", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Address", "address")
-                        .WithMany("sales")
+                    b.HasOne("Marquesita.Models.Business.Address", "Address")
+                        .WithMany("Sales")
                         .HasForeignKey("AddressId")
                         .HasConstraintName("FK_Sale_AddresId");
                 });
 
             modelBuilder.Entity("Marquesita.Models.Business.SaleDetail", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Product", "product")
-                        .WithMany("saleDetails")
+                    b.HasOne("Marquesita.Models.Business.Product", "Product")
+                        .WithMany("SaleDetails")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_SaleDetail_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Marquesita.Models.Business.Sale", "sale")
-                        .WithMany("saleDetails")
+                    b.HasOne("Marquesita.Models.Business.Sale", "Sale")
+                        .WithMany("SaleDetails")
                         .HasForeignKey("SaleId")
                         .HasConstraintName("FK_SaleDetail_SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,7 +290,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
             modelBuilder.Entity("Marquesita.Models.Business.ShoppingCart", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Product", "products")
+                    b.HasOne("Marquesita.Models.Business.Product", "Products")
                         .WithMany("ShopingCartItems")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_ShoppingCart_ProductId")
@@ -300,8 +300,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
             modelBuilder.Entity("Marquesita.Models.Business.WishList", b =>
                 {
-                    b.HasOne("Marquesita.Models.Business.Product", "product")
-                        .WithMany("wishLists")
+                    b.HasOne("Marquesita.Models.Business.Product", "Product")
+                        .WithMany("WishLists")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_WishList_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)

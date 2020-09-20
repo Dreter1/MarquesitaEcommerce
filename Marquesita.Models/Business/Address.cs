@@ -13,6 +13,6 @@ namespace Marquesita.Models.Business
         public string PostalCode { get; set; }
         public Guid UserId { get; set; }
 
-        public List<Sale> sales { get; set; }
+        public List<Sale> Sales { get; set; }
     }
 }

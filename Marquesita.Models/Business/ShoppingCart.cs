@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Marquesita.Models.Business
 {
@@ -12,6 +10,6 @@ namespace Marquesita.Models.Business
         public Guid ProductId { get; set; }
         public Guid UserId { get; set; }
 
-        public Product products { get; set; }
+        public Product Products { get; set; }
     }
 }

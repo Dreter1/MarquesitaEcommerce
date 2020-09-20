@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Marquesita.Models.Business
 {
@@ -16,9 +15,9 @@ namespace Marquesita.Models.Business
         public Guid CategoryId { get; set; }
 
         public Categories Category { get; set; }
-        public List<SaleDetail> saleDetails { get; set; }
-        public List<WishList> wishLists { get; set; }
+        public List<SaleDetail> SaleDetails { get; set; }
+        public List<WishList> WishLists { get; set; }
         public List<ShoppingCart> ShopingCartItems { get; set; }
-        public List<Comments> comments { get; set; }
+        public List<Comments> Comments { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace Marquesita.Models.Business
         public Guid ProductId { get; set; }
         public Guid UserId { get; set; }
 
-        public Product product { get; set; }
+        public Product Product { get; set; }
     }
 }
