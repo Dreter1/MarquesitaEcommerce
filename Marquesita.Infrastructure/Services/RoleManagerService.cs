@@ -95,6 +95,19 @@ namespace Marquesita.Infrastructure.Services
             _context.SaveChanges();
         }
 
+        public RoleEditViewModel RoleToViewModel(Role obj)
+        {
+            if (obj != null)
+            {
+                return new RoleEditViewModel
+                {
+                    Id = obj.Id,
+                    Name = obj.Name,
+                };
+            }
+            return null;
+        }
+
         public List<string> PermissionList()
         {
             return new List<string>() {

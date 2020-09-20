@@ -5,7 +5,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Roles
 {
     public class RoleEditViewModel
     {
-        public string Id { get; }
+        public string Id { get; set; }
 
         [DisplayName("Nombre")]
         public string Name { get; set; }

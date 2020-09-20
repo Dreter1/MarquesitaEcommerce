@@ -76,9 +76,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditUsers")]
-        public async Task<IActionResult> Edit(UserEditViewModel model, string Id)
+        public async Task<IActionResult> Edit(UserEditViewModel model)
         {
-            var user = await _usersManager.GetUserByIdAsync(Id);
+            var user = await _usersManager.GetUserByIdAsync(model.Id);
 
             if (ModelState.IsValid)
             {
@@ -158,7 +158,7 @@ namespace MarquesitaDashboards.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> EditProfile(UserEditViewModel model, string Id)
+        public async Task<IActionResult> EditProfile(UserEditViewModel model)
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             var userRole = await _usersManager.GetUserRole(user);
@@ -167,7 +167,7 @@ namespace MarquesitaDashboards.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userProfile = await _usersManager.GetUserByIdAsync(Id);         
+                    var userProfile = await _usersManager.GetUserByIdAsync(model.Id);         
                     if (userProfile != null)
                     {
                         var path = _webHostEnvironment.WebRootPath;

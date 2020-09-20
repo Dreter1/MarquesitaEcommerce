@@ -69,7 +69,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanEditRoles")]
         public async Task<IActionResult> Edit(string Id)
         {
-            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            var role = _rolesManager.RoleToViewModel(await _rolesManager.GetRoleByIdAsync(Id));
 
             if (role != null)
             {
@@ -84,9 +84,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditRoles")]
-        public async Task<IActionResult> Edit(RoleEditViewModel model, string Id)
+        public async Task<IActionResult> Edit(RoleEditViewModel model)
         {
-            var role = await _rolesManager.GetRoleByIdAsync(Id);
+            var role = await _rolesManager.GetRoleByIdAsync(model.Id);
 
             if (ModelState.IsValid)
             {

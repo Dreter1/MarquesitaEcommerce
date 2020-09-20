@@ -1,4 +1,4 @@
-﻿@model Marquesita.Models.Identity.Role
+﻿@model Marquesita.Infrastructure.ViewModels.Dashboards.Roles.RoleEditViewModel
 @{
     ViewData["Title"] = "Editar Rol";
     Layout = "_LayoutDashboard";
@@ -33,7 +33,6 @@
                             <div class="form-group">
                                 <label asp-for="Name">Nombre</label>
                                 <input asp-for="Name" class="form-control" onkeypress="return validarLetras(event)" />
-                                <input type="hidden" name="Id" value="@Model.Id" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <a class="btn btn-danger" asp-controller="Role" asp-action="Index" title="Regresar"><i class="fas fa-arrow-left"></i></a>

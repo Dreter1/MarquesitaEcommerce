@@ -57,9 +57,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditCategory")]
-        public IActionResult Edit(CategoryViewModel model, Guid Id)
+        public IActionResult Edit(CategoryViewModel model)
         {
-            var category = _categoryService.GetCategoryById(Id);
+            var category = _categoryService.GetCategoryById(model.Id);
 
             if (ModelState.IsValid)
             {

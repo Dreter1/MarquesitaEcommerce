@@ -93,9 +93,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanEditProducts")]
-        public IActionResult Edit(ProductEditViewModel model, Guid Id)
+        public IActionResult Edit(ProductEditViewModel model)
         {
-            var product = _productService.GetProductById(Id);
+            var product = _productService.GetProductById(model.Id);
             var path = _webHostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
