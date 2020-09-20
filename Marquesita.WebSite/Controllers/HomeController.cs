@@ -94,7 +94,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -155,7 +155,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -174,6 +174,8 @@ namespace MarquesitaDashboards.Controllers
 
                     var user = await _usersManager.GetUserByEmailAsync(model.Email);
                     var token = await _usersManager.ConfirmationEmailToken(user);
+                    TempData["userEmail"] = model.Email;
+                    TempData["userToken"] = token;
                     var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
                     var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user,confirmationLink, null);
                     await _emailSender.SendEmailConfirmationAsync(message);
@@ -194,7 +196,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -203,8 +205,40 @@ namespace MarquesitaDashboards.Controllers
             if (user == null)
                 return RedirectToAction("NotFound404", "Error");
             var result = await _usersManager.ConfirmEmail(user, token);
-            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+
+            if (result.Succeeded)
+            {
+                return View("ConfirmEmail", "Home");
+            }
+            else {
+                return RedirectToAction("NotFound404", "Error");
+            }
+
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ResendConfirmationEmail(string token, string email)
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View("Index", "Home");
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
+            var user = await _usersManager.GetUserByEmailAsync(email);
+            var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token , email }, Request.Scheme);
+            var message = new Message(new string[] { email }, "Confirma tu correo para La Marquesita", user, confirmationLink, null);
+            await _emailSender.SendEmailConfirmationAsync(message);
+            return RedirectToAction("SuccessRegistration", "Home");
+        }
+
         [HttpGet]
         public async Task<IActionResult> SuccessRegistrationAsync()
         {
@@ -216,7 +250,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -234,7 +268,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -253,7 +287,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -267,8 +301,33 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("ForgotPasswordConfirmation", "Home");
 
             var token = await _usersManager.NewTokenPassword(user);
+            TempData["userEmail"] = user.Email;
+            TempData["userToken"] = token;
             var callback = Url.Action("ResetPassword", "Home", new { token, email = user.Email }, Request.Scheme);
             var message = new Message(new string[] { user.Email }, "Cambiar contraseña", user,callback, null);
+            await _emailSender.SendRecoveryPasswordEmailAsync(message);
+            return RedirectToAction("ForgotPasswordConfirmation", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResendResetPasswordEmail(string token, string email)
+        {
+            if (User.Identity.Name != null)
+            {
+                var userLog = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(userLog);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    _signsInManager.LogOut();
+                    return View("Index", "Home");
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
+            var user = await _usersManager.GetUserByEmailAsync(email);
+            var callback = Url.Action("ResetPassword", "Home", new { token, email }, Request.Scheme);
+            var message = new Message(new string[] { email }, "Cambiar contraseña", user, callback, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
             return RedirectToAction("ForgotPasswordConfirmation", "Home");
         }
@@ -284,7 +343,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -302,7 +361,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -322,7 +381,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
@@ -357,7 +416,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     _signsInManager.LogOut();
-                    return View();
+                    return View("Index", "Home");
                 }
                 return RedirectToAction("NotFound404", "Error");
             }

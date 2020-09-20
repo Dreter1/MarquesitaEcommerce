@@ -23,6 +23,7 @@
                         <div class="modal_body_left modal_body_left1">
                             <h2>
                                 Por favor revise su correo electrónico para verificar su cuenta.
+                                <a asp-controller="Home" asp-action="ResendConfirmationEmail" asp-route-token="@TempData.Peek("userToken")" asp-route-email="@TempData.Peek("userEmail")">Reenviar Correo de validación</a>
                             </h2>
 
                             <div class="clearfix"></div>

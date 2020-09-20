@@ -70,7 +70,9 @@ namespace MarquesitaDashboards
             services.AddMvc().AddRazorOptions(options =>
             {
                 options.ViewLocationFormats.Add("/{0}.cshtml");
-            }).AddFluentValidation();
+            })
+                .AddFluentValidation()
+                .AddSessionStateTempDataProvider(); ;
         }
 
         private void DbConnectionsConfiguration(IServiceCollection services)
