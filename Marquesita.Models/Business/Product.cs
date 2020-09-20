@@ -16,6 +16,7 @@ namespace Marquesita.Models.Business
 
         public Categories Category { get; set; }
         public List<SaleDetail> SaleDetails { get; set; }
+        public List<SaleDetailTemp> SaleDetailsTemp { get; set; }
         public List<WishList> WishLists { get; set; }
         public List<ShoppingCart> ShopingCartItems { get; set; }
         public List<Comments> Comments { get; set; }

@@ -346,5 +346,10 @@ namespace Marquesita.Infrastructure.Services
                     File.Delete(serverFilePath);
             }
         }
+
+        public async Task<bool> IsUserInRoleAsync(User user, string roleName)
+        {
+            return await _userManager.IsInRoleAsync(user, roleName);
+        }
     }
 }

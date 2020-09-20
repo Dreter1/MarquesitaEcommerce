@@ -135,6 +135,27 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "SaleDetailsTemp",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<double>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SaleDetailsTemp", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SaleDetailTemp_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
                 columns: table => new
                 {
@@ -194,6 +215,11 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SaleDetailsTemp_ProductId",
+                table: "SaleDetailsTemp",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sales_AddressId",
                 table: "Sales",
                 column: "AddressId");
@@ -216,6 +242,9 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
             migrationBuilder.DropTable(
                 name: "SaleDetails");
+
+            migrationBuilder.DropTable(
+                name: "SaleDetailsTemp");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");

@@ -200,6 +200,31 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     b.ToTable("SaleDetails");
                 });
 
+            modelBuilder.Entity("Marquesita.Models.Business.SaleDetailTemp", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SaleDetailsTemp");
+                });
+
             modelBuilder.Entity("Marquesita.Models.Business.ShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
@@ -282,6 +307,16 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                         .WithMany("SaleDetails")
                         .HasForeignKey("SaleId")
                         .HasConstraintName("FK_SaleDetail_SaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Marquesita.Models.Business.SaleDetailTemp", b =>
+                {
+                    b.HasOne("Marquesita.Models.Business.Product", "Product")
+                        .WithMany("SaleDetailsTemp")
+                        .HasForeignKey("ProductId")
+                        .HasConstraintName("FK_SaleDetailTemp_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

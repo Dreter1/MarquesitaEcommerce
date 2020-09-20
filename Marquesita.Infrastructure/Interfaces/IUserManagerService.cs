@@ -37,5 +37,6 @@ namespace Marquesita.Infrastructure.Interfaces
         Task<string> ConfirmationEmailToken(User user);
         Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword);
         Task<IdentityResult> ChangeClientPassword(User user, ResetPasswordModel newPassword);
+        Task<bool> IsUserInRoleAsync(User user, string roleName);
     }
 }

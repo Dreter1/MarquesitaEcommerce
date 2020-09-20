@@ -14,6 +14,7 @@ namespace Marquesita.Infrastructure.DbContexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
+        public DbSet<SaleDetailTemp> SaleDetailsTemp { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -74,11 +75,26 @@ namespace Marquesita.Infrastructure.DbContexts
                 .HasForeignKey(fk => fk.SaleId)
                 .HasConstraintName("FK_SaleDetail_SaleId")
                 .IsRequired();
-                
+
                 entity.HasOne(s => s.Product)
                 .WithMany(sd => sd.SaleDetails)
                 .HasForeignKey(fk => fk.ProductId)
                 .HasConstraintName("FK_SaleDetail_ProductId")
+                .IsRequired();
+            });
+
+            modelBuilder.Entity<SaleDetailTemp>(entity =>
+            {
+                entity.HasKey(pk => pk.Id);
+                entity.Property(p => p.Quantity).IsRequired();
+                entity.Property(p => p.Price).IsRequired();
+                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.ProductId).IsRequired();
+
+                entity.HasOne(s => s.Product)
+                .WithMany(sd => sd.SaleDetailsTemp)
+                .HasForeignKey(fk => fk.ProductId)
+                .HasConstraintName("FK_SaleDetailTemp_ProductId")
                 .IsRequired();
             });
 

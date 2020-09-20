@@ -1,10 +1,8 @@
-﻿using Marquesita.Infrastructure.DbContexts;
-using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
 using Marquesita.Models.Business;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Marquesita.Infrastructure.Services
 {
