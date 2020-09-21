@@ -14,5 +14,6 @@ namespace Marquesita.Models.Business
 
         public Sale Sale { get; set; }
         public Product Product { get; set; }
+
     }
 }

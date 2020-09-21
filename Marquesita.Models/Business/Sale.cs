@@ -18,5 +18,6 @@ namespace Marquesita.Models.Business
         
         public List<SaleDetail> SaleDetails { get; set; }
         public Address Address { get; set; }
+
     }
 }

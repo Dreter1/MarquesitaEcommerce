@@ -1,4 +1,5 @@
-﻿
+﻿@*@model IEnumerable<Marquesita.Models.Business.Sale>*@
+
 @{
     ViewData["Title"] = "Index";
     Layout = "_LayoutDashboard";
@@ -21,6 +22,45 @@
 </div>
 
 
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th> Cliente </th>
+            <th> Fecha </th>
+            <th> Tipo de pago </th>
+            <th> Tipo de venta </th>
+            <th> Estado </th>
+            <th> Monto Total </th>
+            <th> Vendedor </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+        <tr>
+            <th>
+                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
+            </th>
+
+            <td>@sale.Date</td>
+            <td>@sale.PaymentType</td>
+            <td>@sale.TypeOfSale</td>
+            <td>@sale.SaleStatus</td>
+            <td>@sale.TotalAmount</td>
+            <td>@await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })</td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 
 
 
