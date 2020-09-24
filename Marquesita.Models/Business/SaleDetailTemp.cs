@@ -10,14 +10,16 @@ namespace Marquesita.Models.Business
 
 		public decimal Price { get; set; }
 
-		public double Quantity { get; set; }
+		public int Quantity { get; set; }
 
-		public decimal Subtotal { get; set; }
-
+		//public decimal Subtotal { get; set; }
+		//public byte PaymentType { get; set; }
 		public Guid UserId { get; set; }
 		public Guid ProductId { get; set; }
-
+		
 		public Product Product { get; set; }
+
+		public decimal Subtotal { get { return this.Price * (decimal)this.Quantity; } }
 	}
 
 }

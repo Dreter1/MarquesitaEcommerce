@@ -11,6 +11,7 @@ using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
 using Marquesita.WebSite.Validators.ClientValidator;
@@ -257,6 +258,8 @@ namespace MarquesitaDashboards
             services.AddTransient<IValidator<CategoryViewModel>, CategoryViewModelValidator>();
             services.AddTransient<IValidator<ProductViewModel>, ProductViewModelValidator>();
             services.AddTransient<IValidator<ProductEditViewModel>, ProductEditViewModelValidator>();
+
+
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)
@@ -264,6 +267,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IRepository<Categories>, CategoryRepository>();
             services.AddTransient<IRepository<Product>, ProductRepository>();
             services.AddTransient<IRepository<Sale>, SaleRepository>();
+            services.AddTransient<IRepository<SaleDetailTemp>, SaleDetailTempRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();

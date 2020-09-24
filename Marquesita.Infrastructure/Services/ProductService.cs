@@ -1,20 +1,25 @@
-﻿using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.DbContexts;
+using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
 using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Marquesita.Infrastructure.Services
 {
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repository;
+        private readonly BusinessDbContext _context;
 
-        public ProductService(IRepository<Product> repository)
+        public ProductService(IRepository<Product> repository, BusinessDbContext context)
         {
             _repository = repository;
+            _context = context;
         }
 
         public IEnumerable<Product> GetProductList()
@@ -119,5 +124,23 @@ namespace Marquesita.Infrastructure.Services
             }
             return null;
         }
+
+        public IEnumerable<SelectListItem> GetComboProducts()
+        {
+            var list = _context.Products.Select(p => new SelectListItem
+            {   
+                Text = p.Name,
+                Value = p.Id.ToString()
+            }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Selecciona un Producto)",
+                Value = "0"
+            });
+
+            return list;
+        }
+
     }
 }

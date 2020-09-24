@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Marquesita.Models.Business.Sale>*@
+﻿@*@model IEnumerable<Marquesita.Infrastructure.ViewModels.Ecommerce.Sales.SaleViewModel>*@
 
 @{
     ViewData["Title"] = "Index";
@@ -22,45 +22,77 @@
 </div>
 
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th> Cliente </th>
-            <th> Fecha </th>
-            <th> Tipo de pago </th>
-            <th> Tipo de venta </th>
-            <th> Estado </th>
-            <th> Monto Total </th>
-            <th> Vendedor </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var sale in Model)
-        {
-        <tr>
-            <th>
-                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
-            </th>
 
-            <td>@sale.Date</td>
-            <td>@sale.PaymentType</td>
-            <td>@sale.TypeOfSale</td>
-            <td>@sale.SaleStatus</td>
-            <td>@sale.TotalAmount</td>
-            <td>@await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })</td>
-           
-            <td>
-                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
-                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+
+
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            <div class="fa-pull-right">
+                <a href="~/Sale/Create" class="btn btn-primary btn-block" title="Nueva Venta">Nueva Venta</a>
+            </div>
+            <br />
+            <br />
+            @*<p>
+            <a asp-action="Create" class="btn btn-primary">Create New</a>
+        </p>*@
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th> Cliente </th>
+                        <th> Fecha </th>
+                        <th> Tipo de pago </th>
+                        <th> Tipo de venta </th>
+                        <th> Estado </th>
+                        <th> Monto Total </th>
+                        <th> Vendedor </th>
+                        <th> # Numero de compras</th>
+                        <th> Cantidad</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sale in Model)
+                    {
+                        <tr>
+                            <th>
+                                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
+                                @*@sale.UserId*@
+                            </th>
+
+                            <td>@sale.Date</td>
+                            <td>@sale.PaymentType</td>
+                            <td>@sale.TypeOfSale</td>
+                            <td>@sale.SaleStatus</td>
+                            <td>@sale.Value</td>
+                            <td>
+                                @*@sale.EmployeeId*@
+                                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })
+                            </td>
+                            <td>@sale.Lines</td>
+                            <td>@sale.Quantity</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        dataTableScript();
+    });
+</script>
+
+
 
 
 

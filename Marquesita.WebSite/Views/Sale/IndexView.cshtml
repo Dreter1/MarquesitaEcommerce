@@ -1,0 +1,41 @@
+﻿@model Marquesita.Models.Business.Sale
+@{
+    ViewData["Title"] = "IndexView";
+    Layout = "";
+}
+
+
+
+<form asp-controller="Sale" asp-action="ConfirmOrder">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-12">
+            <label for="PaymentType">Tipo de Pago</label>
+            <select class="form-control">
+                <option disabled selected>Seleccionar</option>
+                <option value="1">Efectivo</option>
+                <option value="2">Transferencia</option>
+            </select>
+            <span asp-validation-for="PaymentType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-12">
+            <label for="Client">Cliente</label>
+            <select name="Client" id="Client" class="form-control">
+                <option disabled selected>Seleccionar</option>
+                @foreach (var client in ViewBag.Client)
+                {
+                    <option value="@client.Id">@client.FirstName</option>
+                }
+            </select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
