@@ -4,6 +4,7 @@ using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,5 +39,6 @@ namespace Marquesita.Infrastructure.Interfaces
         Task<IdentityResult> ChangeEmployeePassword(User user, ResetEmployeePassword newPassword);
         Task<IdentityResult> ChangeClientPassword(User user, ResetPasswordModel newPassword);
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+        
     }
 }

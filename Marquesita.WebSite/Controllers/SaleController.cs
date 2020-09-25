@@ -4,6 +4,7 @@ using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,35 +31,18 @@ namespace MarquesitaDashboards.Controllers
             return View(model);
         }
 
-        //[Authorize(Policy = "CanViewSales")]
-        //public IActionResult IndexView()
-        //{
-        //    //var model = await _saleService.GetOrdersAsync(User.Identity.Name);
-        //    return View(_saleService.GetSaleList());
-        //}
 
         [Authorize(Policy = "CanAddSales")]
         public IActionResult Create()
         {
-
             ViewBag.Client = _usersManager.GetUsersClientsList();
             ViewBag.Employee = _usersManager.GetUsersEmployeeList();
             ViewBag.Sale = _saleService.GetSaleList();
-            //ViewBag.SaleDatailTemp = 
-            var model = _saleService.GetDetailTempsAsync();
-            return View(model);
+            ViewBag.SaleDatailTemp = _saleService.GetSaleList();
+            
+            return View();
         }
 
-        //[HttpPost]
-        //[Authorize(Policy = "CanAddSales")]
-        //public IActionResult Create(vcvcv)
-        //{
-        //    var model = _saleService.GetDetailTempsAsync();
-        //    ViewBag.Client = _usersManager.GetUsersClientsList();
-        //    ViewBag.Employee = _usersManager.GetUsersEmployeeList();
-        //    ViewBag.Sale = _saleService.GetSaleList();
-        //    return View(model);
-        //}
         [Authorize(Policy = "CanAddSales")]
         public IActionResult AddProduct()
         {
@@ -115,18 +99,21 @@ namespace MarquesitaDashboards.Controllers
             await _saleService.ModifyOrderDetailTempQuantityAsync(id, -1);
             return RedirectToAction("Create");
         }
+
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> ConfirmOrder(Guid id)
         {
-            //await _saleService.UpdateStockAsync(id);
             var response = await _saleService.ConfirmOrderAsync(User.Identity.Name);
             if (response)
             {
+                //await _saleService.UpdateStockAsync(id);
                 return RedirectToAction("Index");
             }
+            
             ViewBag.Client = _usersManager.GetUsersClientsList();
             ViewBag.Employee = _usersManager.GetUsersEmployeeList();
             ViewBag.Sale = _saleService.GetSaleList();
+            
             return RedirectToAction("Create");
         }
 

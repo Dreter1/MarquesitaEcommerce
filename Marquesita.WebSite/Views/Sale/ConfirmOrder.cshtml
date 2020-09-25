@@ -1,13 +1,11 @@
 ﻿@model Marquesita.Models.Business.Sale
 @{
-    ViewData["Title"] = "IndexView";
+    ViewData["Title"] = "ConfirmOrder";
     Layout = "";
 }
 
-
-
 <form asp-controller="Sale" asp-action="ConfirmOrder">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
     <div class="form-row">
         <div class="form-group col-12">
             <label for="PaymentType">Tipo de Pago</label>
@@ -32,10 +30,10 @@
             <span asp-validation-for="UserId" class="text-danger"></span>
         </div>
     </div>
+    <p>
+        @*<a asp-action="AddProduct" class="btn btn-success">Agregar Producto</a>*@
+        <a asp-controller="Sale" asp-action="ConfirmOrder" class="btn btn-primary">Confirmar Pedido</a>
+    </p>
 
 </form>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 

@@ -6,6 +6,7 @@ using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -351,5 +352,7 @@ namespace Marquesita.Infrastructure.Services
         {
             return await _userManager.IsInRoleAsync(user, roleName);
         }
+
+       
     }
 }

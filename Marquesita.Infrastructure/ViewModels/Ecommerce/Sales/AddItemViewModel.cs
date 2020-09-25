@@ -16,5 +16,6 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
         public int Quantity { get; set; }
 
         public IEnumerable<SelectListItem> Products { get; set; }
+
     }
 }

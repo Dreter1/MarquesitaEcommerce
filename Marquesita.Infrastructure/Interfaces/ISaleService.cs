@@ -11,7 +11,7 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface ISaleService
     {
-        IEnumerable<Sale> GetSaleList();
+        IEnumerable<SaleDetailTemp> GetSaleList();
         Task<IQueryable<Sale>> GetOrdersAsync(string userName);
         Task<Sale> GetOrdersAsync(int id);
         IQueryable<SaleDetailTemp> GetDetailTempsAsync();
@@ -20,5 +20,6 @@ namespace Marquesita.Infrastructure.Interfaces
         Task DeleteDetailTempAsync(Guid id);
         Task<bool> ConfirmOrderAsync(string userName);
         Task UpdateStockAsync(Guid id);
+       
     }
 }

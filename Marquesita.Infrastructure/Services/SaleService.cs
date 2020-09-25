@@ -22,6 +22,8 @@ namespace Marquesita.Infrastructure.Services
         private readonly IProductService _productService;
         private readonly IRepository<SaleDetailTemp> _SaleDetailTempRepository;
         private readonly BusinessDbContext _context;
+       
+
         private readonly IUserManagerService _userManagerService;
 
         public SaleService(IRepository<Sale> Salerepository, IRepository<SaleDetailTemp> SaleDetailTempRepository, BusinessDbContext context, IUserManagerService userManagerService, IProductService productService)
@@ -32,6 +34,7 @@ namespace Marquesita.Infrastructure.Services
             _context = context;
             _userManagerService = userManagerService;
             _productService = productService;
+         
 
         }
 
@@ -52,9 +55,9 @@ namespace Marquesita.Infrastructure.Services
         {
             return await _context.Sales.FindAsync(id);
         }
-        public IEnumerable<Sale> GetSaleList()
+        public IEnumerable<SaleDetailTemp> GetSaleList()
         {
-            return _Salerepository.All();
+            return _SaleDetailTempRepository.All();
         }
 
         public IQueryable<SaleDetailTemp> GetDetailTempsAsync()
@@ -90,23 +93,10 @@ namespace Marquesita.Infrastructure.Services
                     Price = product.UnitPrice,
                     Quantity = model.Quantity,
                     ProductId = model.Productid,
-                   //Subtotal = (Decimal) product.UnitPrice * model.Quantity,
+                    //Subtotal = (Decimal) product.UnitPrice * model.Quantity,
                     UserId = Guid.Parse(user),
                 };
 
-                
-                //var disminuir = await _context.Products.Where(o => o.Id == model.Productid).FirstAsync();
-                //if (disminuir.Stock >= orderDetailTemp.Quantity)
-                //{
-                //    disminuir.Stock = disminuir.Stock - orderDetailTemp.Quantity;
-                //    _context.SaleDetailsTemp.Add(orderDetailTemp);
-                //    await _context.SaveChangesAsync();
-                //}
-                //else
-                //{
-                //    //"El stock esta agotado";
-                //    return;
-                //}
                 _context.SaleDetailsTemp.Add(orderDetailTemp);
             }
             else
@@ -118,6 +108,7 @@ namespace Marquesita.Infrastructure.Services
 
             await _context.SaveChangesAsync();
         }
+
        
         public async Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity)
         {
@@ -214,6 +205,8 @@ namespace Marquesita.Infrastructure.Services
                 return;
             }
         }
+       
+
     }
 }
 
