@@ -1,13 +1,8 @@
 ﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
 using Marquesita.Models.Business;
-using Marquesita.Models.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Stripe.Issuing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +29,6 @@ namespace Marquesita.Infrastructure.Services
             _context = context;
             _userManagerService = userManagerService;
             _productService = productService;
-         
-
         }
 
         public async Task<IQueryable<Sale>> GetOrdersAsync(string userName)
@@ -93,10 +86,8 @@ namespace Marquesita.Infrastructure.Services
                     Price = product.UnitPrice,
                     Quantity = model.Quantity,
                     ProductId = model.Productid,
-                    //Subtotal = (Decimal) product.UnitPrice * model.Quantity,
                     UserId = Guid.Parse(user),
                 };
-
                 _context.SaleDetailsTemp.Add(orderDetailTemp);
             }
             else
@@ -104,16 +95,12 @@ namespace Marquesita.Infrastructure.Services
                 orderDetailTemp.Quantity += model.Quantity;
                 _context.SaleDetailsTemp.Update(orderDetailTemp);
             }
-           
-
             await _context.SaveChangesAsync();
         }
-
-       
+    
         public async Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity)
         {
             var orderDetailTemp = await _context.SaleDetailsTemp.FindAsync(id);
-           
 
             if (orderDetailTemp == null)
             {
@@ -126,8 +113,6 @@ namespace Marquesita.Infrastructure.Services
                 _context.SaleDetailsTemp.Update(orderDetailTemp);
                 await _context.SaveChangesAsync();
             }
-
-           
         }
 
         public async Task DeleteDetailTempAsync(Guid id)

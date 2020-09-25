@@ -1,4 +1,5 @@
-﻿@*@model IEnumerable<Marquesita.Infrastructure.ViewModels.Ecommerce.Sales.SaleViewModel>*@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Index";
@@ -21,21 +22,17 @@
     </div>
 </div>
 
-
-
-
-
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
-            <div class="fa-pull-right">
-                <a href="~/Sale/Create" class="btn btn-primary btn-block" title="Nueva Venta">Nueva Venta</a>
-            </div>
-            <br />
-            <br />
-            @*<p>
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
-        </p>*@
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddSales")).Succeeded)
+            {
+                <div class="fa-pull-right">
+                    <a href="~/Sale/Create" class="btn btn-primary btn-block" title="Nueva Venta"><i class="fas fa-plus-square"></i></a>
+                </div>
+                <br /><br />
+            }
+
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -48,7 +45,6 @@
                         <th> Vendedor </th>
                         <th> # Numero de compras</th>
                         <th> Cantidad</th>
-
                         <th></th>
                     </tr>
                 </thead>
@@ -58,7 +54,6 @@
                         <tr>
                             <th>
                                 @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
-                                @*@sale.UserId*@
                             </th>
 
                             <td>@sale.Date</td>
@@ -67,7 +62,6 @@
                             <td>@sale.SaleStatus</td>
                             <td>@sale.Value</td>
                             <td>
-                                @*@sale.EmployeeId*@
                                 @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })
                             </td>
                             <td>@sale.Lines</td>

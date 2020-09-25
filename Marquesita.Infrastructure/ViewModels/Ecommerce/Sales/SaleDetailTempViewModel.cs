@@ -1,9 +1,7 @@
 ﻿using Marquesita.Models.Business;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
 {
@@ -22,7 +20,7 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
 		
 		[DisplayName("Cliente")]
 		public Guid UserId { get; set; }
-		//public byte PaymentType { get; set; }
+
 		[DisplayName("Producto")]
 		public Guid ProductId { get; set; }
 
@@ -31,12 +29,10 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
 			return new SaleDetailTemp
 			{
 				Id = obj.Id,
+				Price = obj.Price,
 				Quantity = obj.Quantity,
 				UserId=obj.UserId,
-				ProductId=obj.ProductId,
-				//PaymentType=obj.PaymentType
-
-			
+				ProductId=obj.ProductId			
 			};
 		}
 

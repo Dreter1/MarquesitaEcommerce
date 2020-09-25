@@ -38,7 +38,7 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
         public int Lines { get { return this.SaleDetails == null ? 0 : this.SaleDetails.Count(); } }
 
         [DisplayFormat(DataFormatString = "{0:N2}")]
-        public double Quantity { get { return this.SaleDetails == null ? 0 : this.SaleDetails.Sum(i => i.Quantity); } }
+        public int Quantity { get { return this.SaleDetails == null ? 0 : this.SaleDetails.Sum(i => i.Quantity); } }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal Value { get { return this.SaleDetails == null ? 0 : this.SaleDetails.Sum(i => i.UnitPrice); } }

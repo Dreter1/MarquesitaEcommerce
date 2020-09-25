@@ -15,7 +15,5 @@ namespace Marquesita.Infrastructure.Interfaces
         void DeleteProduct(Product product);
         void UpdateProduct(ProductEditViewModel model, Product product, IFormFile image, string path);
         ProductEditViewModel ProductToViewModel(Product obj);
-
-        IEnumerable<SelectListItem> GetComboProducts();
     }
 }

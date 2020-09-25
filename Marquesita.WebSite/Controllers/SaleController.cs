@@ -1,11 +1,8 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
-using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
@@ -31,7 +28,6 @@ namespace MarquesitaDashboards.Controllers
             return View(model);
         }
 
-
         [Authorize(Policy = "CanAddSales")]
         public IActionResult Create()
         {
@@ -46,25 +42,20 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddSales")]
         public IActionResult AddProduct()
         {
-            var model = new AddItemViewModel
-            {
-                Quantity = 1,
-                Products = _productService.GetComboProducts()
-            };
             ViewBag.Product = _productService.GetProductList();
-            return View(model);
+            return PartialView();
         }
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> AddProduct(AddItemViewModel model)
         {
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _saleService.AddItemToOrderAsync(model, User.Identity.Name);
                 return RedirectToAction("Create");
             }
             ViewBag.Product = _productService.GetProductList();
-            return View(model);
+            return PartialView(model);
         }
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> DeleteItem(Guid id)
