@@ -133,6 +133,7 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.Property(p => p.Region).IsRequired();
                 entity.Property(p => p.City).IsRequired();
                 entity.Property(p => p.PostalCode).IsRequired();
+                entity.Property(p => p.UserId).IsRequired();
             });
 
             modelBuilder.Entity<Comments>(entity =>

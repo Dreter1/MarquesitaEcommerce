@@ -17,7 +17,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     Region = table.Column<string>(nullable: false),
                     City = table.Column<string>(nullable: false),
                     PostalCode = table.Column<string>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,7 +162,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     Id = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +181,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
