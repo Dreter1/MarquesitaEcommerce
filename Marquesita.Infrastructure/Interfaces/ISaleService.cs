@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
 using System;

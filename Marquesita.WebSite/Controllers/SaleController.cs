@@ -1,5 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

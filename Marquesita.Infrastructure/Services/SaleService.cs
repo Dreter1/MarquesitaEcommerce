@@ -33,6 +33,11 @@ namespace Marquesita.Infrastructure.Services
             return await _context.Sales.FindAsync(id);
         }
 
+        public IEnumerable<Sale> GetSaleList()
+        {
+            return _Salerepository.All();
+        }
+
         public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
             var id = Guid.Parse(userId);
