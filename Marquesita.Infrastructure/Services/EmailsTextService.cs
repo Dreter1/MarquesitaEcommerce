@@ -37,6 +37,7 @@ namespace Marquesita.Infrastructure.Services
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 20px 30px 40px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
                             <p style='margin: 0;'>Estimado {1} {2}, le damos la bienvenida a La Marquesita. Primero, debes confirmar tu cuenta, para que pueda hacer compras y demás. Simplemente presione el botón de abajo.</p>
+                            <p style='margin: 0;'>Su usario es: {3}, para que pueda ingresar a la tienda virtual, si se creo su cuenta por tienda, recupere su contraseña por la web</p>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +69,7 @@ namespace Marquesita.Infrastructure.Services
                 </table>
             </td>
         </tr>
-</table>", message.Content, message.User.FirstName, message.User.LastName);
+</table>", message.Content, message.User.FirstName, message.User.LastName, message.User.UserName);
             return emailText;
         }
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20200920191613_creatingBussinesDb")]
-    partial class creatingBussinesDb
+    [Migration("20200926183124_creatingDbBussines")]
+    partial class creatingDbBussines
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,23 +147,27 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("PaymentType")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("SaleStatus")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("SaleStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<byte>("TypeOfSale")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("TypeOfSale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -214,8 +218,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

@@ -4744,10 +4744,10 @@ S2.define('select2/i18n/en',[],function () {
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'No se encontraron resultados';
     },
     searching: function () {
-      return 'Searching…';
+      return 'Buscando…';
     },
     removeAllItems: function () {
       return 'Remove all items';

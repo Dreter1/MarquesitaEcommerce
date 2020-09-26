@@ -11,15 +11,17 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface ISaleService
     {
-        IEnumerable<SaleDetailTemp> GetSaleList();
-        Task<IQueryable<Sale>> GetOrdersAsync(string userName);
+        IEnumerable<Sale> GetSaleList();
+        IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId);
         Task<Sale> GetOrdersAsync(int id);
-        IQueryable<SaleDetailTemp> GetDetailTempsAsync();
-        Task AddItemToOrderAsync(AddItemViewModel model, string userName);
+        Task AddItemToClientOrderSaleAsync(AddItemViewModel model);
         Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity);
         Task DeleteDetailTempAsync(Guid id);
         Task<bool> ConfirmOrderAsync(string userName);
         Task UpdateStockAsync(Guid id);
-       
+        List<string> GetPaymentList();
+        List<string> GetSaleStatusList();
+
+
     }
 }

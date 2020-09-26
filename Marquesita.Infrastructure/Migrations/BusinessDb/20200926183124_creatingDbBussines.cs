@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
-    public partial class creatingBussinesDb : Migration
+    public partial class creatingDbBussines : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,11 +43,11 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     Id = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     TotalAmount = table.Column<decimal>(nullable: false),
-                    PaymentType = table.Column<byte>(nullable: false),
-                    TypeOfSale = table.Column<byte>(nullable: false),
-                    SaleStatus = table.Column<byte>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    EmployeeId = table.Column<Guid>(nullable: true),
+                    PaymentType = table.Column<string>(nullable: false),
+                    TypeOfSale = table.Column<string>(nullable: false),
+                    SaleStatus = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    EmployeeId = table.Column<string>(nullable: true),
                     AddressId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -140,7 +140,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    Quantity = table.Column<double>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false)
                 },

@@ -28,7 +28,7 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddSales")).Succeeded)
             {
                 <div class="fa-pull-right">
-                    <a href="~/Sale/Create" class="btn btn-primary btn-block" title="Nueva Venta"><i class="fas fa-plus-square"></i></a>
+                    <a asp-controller="Sale" asp-action="AddClientSale" class="btn btn-primary btn-block" title="Nueva Venta"><i class="fas fa-plus-square"></i></a>
                 </div>
                 <br /><br />
             }
@@ -41,36 +41,32 @@
                         <th> Tipo de pago </th>
                         <th> Tipo de venta </th>
                         <th> Estado </th>
-                        <th> Monto Total </th>
                         <th> Vendedor </th>
-                        <th> # Numero de compras</th>
-                        <th> Cantidad</th>
+                        <th> Monto Total </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var sale in Model)
                     {
-                        <tr>
-                            <th>
-                                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
-                            </th>
+                    <tr>
+                        <th>
+                            @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
+                        </th>
 
-                            <td>@sale.Date</td>
-                            <td>@sale.PaymentType</td>
-                            <td>@sale.TypeOfSale</td>
-                            <td>@sale.SaleStatus</td>
-                            <td>@sale.Value</td>
-                            <td>
-                                @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })
-                            </td>
-                            <td>@sale.Lines</td>
-                            <td>@sale.Quantity</td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
-                                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
-                            </td>
-                        </tr>
+                        <td>@sale.Date</td>
+                        <td>@sale.PaymentType</td>
+                        <td>@sale.TypeOfSale</td>
+                        <td>@sale.SaleStatus</td>
+                        <td>
+                            @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })
+                        </td>
+                        <td>@sale.TotalAmount</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
+                            <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

@@ -268,3 +268,12 @@ function grantUserCredentials(user) {
         }
     });
 }
+
+function getPorductList() {
+    var userId = $("#userId").val();
+    console.log(userId);
+    var url = "/Sale/AddProductSale?userId=" + userId;
+    $.get(url, function (e) {
+        $("#vistaPro").html(e);
+    });
+}

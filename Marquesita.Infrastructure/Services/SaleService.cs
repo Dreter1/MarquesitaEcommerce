@@ -14,71 +14,47 @@ namespace Marquesita.Infrastructure.Services
     {
 
         private readonly IRepository<Sale> _Salerepository;
-        private readonly IProductService _productService;
-        private readonly IRepository<SaleDetailTemp> _SaleDetailTempRepository;
+        private readonly IRepository<SaleDetailTemp> _saleDetailTempRepository;
         private readonly BusinessDbContext _context;
        
 
         private readonly IUserManagerService _userManagerService;
 
-        public SaleService(IRepository<Sale> Salerepository, IRepository<SaleDetailTemp> SaleDetailTempRepository, BusinessDbContext context, IUserManagerService userManagerService, IProductService productService)
+        public SaleService(IRepository<Sale> Salerepository, IRepository<SaleDetailTemp> SaleDetailTempRepository, BusinessDbContext context, IUserManagerService userManagerService)
         {
 
             _Salerepository = Salerepository;
-            _SaleDetailTempRepository = SaleDetailTempRepository;
+            _saleDetailTempRepository = SaleDetailTempRepository;
             _context = context;
             _userManagerService = userManagerService;
-            _productService = productService;
-        }
-
-        public async Task<IQueryable<Sale>> GetOrdersAsync(string userName)
-        {
-            var user = await _userManagerService.GetUserIdByNameAsync(userName);
-            if (user == null)
-            {
-                return null;
-            }
-
-            return _context.Sales
-                .Include(o => o.SaleDetails)
-                .ThenInclude(i => i.Product)
-                .OrderByDescending(o => o.Date);
         }
         public async Task<Sale> GetOrdersAsync(int id)
         {
             return await _context.Sales.FindAsync(id);
         }
-        public IEnumerable<SaleDetailTemp> GetSaleList()
+
+        public IEnumerable<Sale> GetSaleList()
         {
-            return _SaleDetailTempRepository.All();
+            return _Salerepository.All();
         }
 
-        public IQueryable<SaleDetailTemp> GetDetailTempsAsync()
+        public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
-          
-            return _context.SaleDetailsTemp
-                .Include(o => o.Product)
-                .OrderBy(o => o.Product.Name);
+            var id = Guid.Parse(userId);
+            var clientSaleDetailtTemp = _context.SaleDetailsTemp.Where(x => x.UserId == id).ToList();
+            return clientSaleDetailtTemp;
         }
 
-        public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
+        public async Task AddItemToClientOrderSaleAsync(AddItemViewModel model)
         {
-
-            var user = await _userManagerService.GetUserIdByNameAsync(userName);
-            if (user == null)
-            {
-                return;
-            }
+            var orderDetailTemp = _context.SaleDetailsTemp.Where(x => x.UserId == model.UserId && x.ProductId == model.Productid).FirstOrDefault();
             var product = await _context.Products.FindAsync(model.Productid);
+
             if (product == null)
             {
                 return;
             }
-           
-            var orderDetailTemp = await _context.SaleDetailsTemp
-               .Where(odt => odt.Product == product)
-                .FirstOrDefaultAsync();
-           
+
             if (orderDetailTemp == null)
             {
                 orderDetailTemp = new SaleDetailTemp
@@ -86,92 +62,116 @@ namespace Marquesita.Infrastructure.Services
                     Price = product.UnitPrice,
                     Quantity = model.Quantity,
                     ProductId = model.Productid,
-                    UserId = Guid.Parse(user),
+                    UserId = model.UserId
                 };
-                _context.SaleDetailsTemp.Add(orderDetailTemp);
+                _saleDetailTempRepository.Add(orderDetailTemp);
             }
             else
             {
                 orderDetailTemp.Quantity += model.Quantity;
-                _context.SaleDetailsTemp.Update(orderDetailTemp);
+                _saleDetailTempRepository.Update(orderDetailTemp);
             }
-            await _context.SaveChangesAsync();
+            _saleDetailTempRepository.SaveChanges();
         }
-    
+
         public async Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity)
         {
             var orderDetailTemp = await _context.SaleDetailsTemp.FindAsync(id);
 
-            if (orderDetailTemp == null)
+            if (orderDetailTemp != null)
             {
-                return;
+                orderDetailTemp.Quantity += quantity;
+                if (orderDetailTemp.Quantity > 0)
+                {
+                    _saleDetailTempRepository.Update(orderDetailTemp);
+                    _saleDetailTempRepository.SaveChanges();
+                }
             }
-
-            orderDetailTemp.Quantity += quantity;
-            if (orderDetailTemp.Quantity > 0)
-            {
-                _context.SaleDetailsTemp.Update(orderDetailTemp);
-                await _context.SaveChangesAsync();
-            }
+            return;
         }
 
         public async Task DeleteDetailTempAsync(Guid id)
         {
             var orderDetailTemp = await _context.SaleDetailsTemp.FindAsync(id);
-            if (orderDetailTemp == null)
+            if (orderDetailTemp != null)
             {
-                return;
+                _saleDetailTempRepository.Remove(orderDetailTemp);
+                _saleDetailTempRepository.SaveChanges();
             }
-
-            _context.SaleDetailsTemp.Remove(orderDetailTemp);
-            await _context.SaveChangesAsync();
+            return;
         }
 
         public async Task<bool> ConfirmOrderAsync(string userName)
         {
             var user = await _userManagerService.GetUserIdByNameAsync(userName);
-            var employee = await _userManagerService.GetUserIdByNameAsync(userName);
-           
-            if (user == null)
-            {
-                return false;
-            }
-
-            var orderTmps = await _context.SaleDetailsTemp
-                .Include(o => o.Product)/*.Include(o => o.UserId)*/
-                .Where(o => o.UserId.ToString() == user)
-                .ToListAsync();
-            //var TotalSale = await _Salerepository.
-
-            if (orderTmps == null || orderTmps.Count == 0)
-            {
-                return false;
-            }
-
-            var details = orderTmps.Select(o => new SaleDetail
-            {
-                UnitPrice = o.Price,
-                ProductId = o.ProductId,
-                Quantity = o.Quantity,
-                Subtotal=o.Subtotal
-
-            }).ToList();
-
-            var order = new Sale
-            {
-                Date = DateTime.UtcNow,
-                UserId = Guid.Parse(user), //guarda usuario
-                EmployeeId= Guid.Parse(employee),
-                //TotalAmount = ,
-                SaleDetails = details,
-            };
-
-            _context.Sales.Add(order);
-            _context.SaleDetailsTemp.RemoveRange(orderTmps);
-            await _context.SaveChangesAsync();
-
-            
             return true;
+            //    var user = await _userManagerService.GetUserIdByNameAsync(userName);
+            //    var employee = await _userManagerService.GetUserIdByNameAsync(userName);
+
+            //    if (user == null)
+            //    {
+            //        return false;
+            //    }
+
+            //    var orderTmps = await _context.SaleDetailsTemp
+            //        .Include(o => o.Product)/*.Include(o => o.UserId)*/
+            //        .Where(o => o.UserId.ToString() == user)
+            //        .ToListAsync();
+            //    //var TotalSale = await _Salerepository.
+
+            //    if (orderTmps == null || orderTmps.Count == 0)
+            //    {
+            //        return false;
+            //    }
+
+            //    /*
+            //     Primero la venta
+
+            //    var order = new Sale
+            //    {
+            //        Date = DateTime.UtcNow,
+            //        UserId = Guid.Parse(user), //guarda usuario
+            //        EmployeeId= Guid.Parse(employee),
+            //    };
+
+            //    var orderId = order.Id;
+
+            //    var details = orderTmps.Select(o => new SaleDetail
+            //    {
+            //        UnitPrice = o.Price,
+            //        ProductId = o.ProductId,
+            //        Quantity = o.Quantity,
+            //        Subtotal=o.Subtotal
+
+            //    }).ToList();
+
+
+            //     */
+
+            //    var details = orderTmps.Select(o => new SaleDetail
+            //    {
+            //        UnitPrice = o.Price,
+            //        ProductId = o.ProductId,
+            //        Quantity = o.Quantity,
+            //        Subtotal=o.Subtotal
+
+            //    }).ToList();
+
+            //    var order = new Sale
+            //    {
+            //        Date = DateTime.UtcNow,
+            //        UserId = Guid.Parse(user), //guarda usuario
+            //        EmployeeId= Guid.Parse(employee),
+            //        //TotalAmount = ,
+            //        SaleDetails = details,
+            //    };
+
+            //    _context.Sales.Add(order);
+            //    _context.SaleDetailsTemp.RemoveRange(orderTmps);
+            //    await _context.SaveChangesAsync();
+
+
+            //    return true;
         }
 
         public async Task UpdateStockAsync(Guid id) {
@@ -190,8 +190,24 @@ namespace Marquesita.Infrastructure.Services
                 return;
             }
         }
-       
 
+        public List<string> GetPaymentList()
+        {
+            return new List<string>() {
+                "Efectivo",
+                "Tarjeta debito/credito",
+                "Efectivo y Tarjeta",
+            };
+        }
+
+        public List<string> GetSaleStatusList()
+        {
+            return new List<string>() {
+                "En proceso",
+                "Confirmada",
+                "Cancelada",
+            };
+        }
     }
 }
 

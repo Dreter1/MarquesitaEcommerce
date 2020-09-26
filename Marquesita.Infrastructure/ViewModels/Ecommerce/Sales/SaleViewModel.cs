@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
 {
@@ -13,19 +12,19 @@ namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
         public Guid Id { get; set; }
 
         [DisplayName("Tipo de Pago")]
-        public byte PaymentType { get; set; }
+        public string PaymentType { get; set; }
 
         [DisplayName("Tipo de Venta")]
-        public byte TypeOfSale { get; set; }
+        public string TypeOfSale { get; set; }
 
         [DisplayName("Estado")]
-        public byte SaleStatus { get; set; }
+        public string SaleStatus { get; set; }
 
         [DisplayName("Cliente")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         [DisplayName("Empleado")]
-        public Guid? EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         [DisplayName("Dirección")]
         public Guid? AddressId { get; set; }

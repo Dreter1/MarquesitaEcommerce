@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Nueva Venta";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Ventas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Sale" asp-action="Index">Ventas</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Crear Venta</h3>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <form asp-controller="Sale" asp-action="AddProductClientSale" method="get">
+                            <div class="form-group">
+                                <label></label>
+                                <div class="select2-blue">
+                                    <select name="userId" class="form-control select2bs4" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                        @foreach (var user in Model)
+                                        {
+                                            <option value="@user.Id">@user.FirstName @user.LastName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" title="Registrar"><i class="fas fa-save"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    })
+</script>
+

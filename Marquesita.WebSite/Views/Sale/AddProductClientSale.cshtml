@@ -1,0 +1,95 @@
+﻿@model Marquesita.Models.Business.Sale
+@{
+    ViewData["Title"] = "Nueva Venta";
+    Layout = "_LayoutDashboard";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Ventas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Sale" asp-action="Index">Ventas</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<input hidden id="userId" name="userId" value="@ViewBag.User.Id" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Realizar Venta</h3>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-body">
+                        <div>
+                            <h1>Cliente: @ViewBag.User.FirstName @ViewBag.User.LastName</h1>
+                        </div>
+                        <div class="col-12" id="vistaPro">
+                        </div>
+                        <table id="dataTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{Decimal total = 0; }
+                                @foreach (var detail in ViewBag.SaleDatailTemp)
+                                {
+                                    total += (Decimal)(detail.Quantity * detail.Price);
+                                    <tr>
+                                        <th>
+                                            @await Component.InvokeAsync("DashboardProductInfo", new { ProductId = detail.ProductId })
+                                        </th>
+                                        <td> @detail.Price  </td>
+                                        <td> @detail.Quantity </td>
+                                        <td> @detail.Subtotal </td>
+                                        <td>
+                                            <a asp-controller="Sale" asp-action="Increase" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-warning" title="Incrementra"><i class="fa fa-plus"></i></a>
+                                            <a asp-controller="Sale" asp-action="Decrease" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-info" title="Disminuir"><i class="fa fa-minus"></i></a>
+                                            <a asp-controller="Sale" asp-action="DeleteItem" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        <h3 class="float-sm-right">Subtotal: S/. @total</h3>
+                        <br />
+                        <br />
+                        <div class="fa-pull-left">
+                            <a asp-controller="Sale" asp-action="AddClientSale" class="btn btn-primary">Regresar</a>
+                        </div>
+                        <div class="fa-pull-right">
+                            <a asp-controller="Sale" asp-action="CreateSale" asp-route-userId="@ViewBag.User.Id" class="btn btn-primary">Confirmar Pedido</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        getPorductList();
+    });
+</script>
+
+
+
