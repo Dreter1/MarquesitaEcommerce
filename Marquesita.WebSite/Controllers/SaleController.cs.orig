@@ -1,6 +1,10 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
+<<<<<<< HEAD
 using Marquesita.Models.Business;
+=======
+using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,14 +30,31 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewSales")]
         public IActionResult Index()
         {
+<<<<<<< HEAD
             return View(_saleService.GetSaleList());
+=======
+            var model = await _saleService.GetOrdersAsync(this.User.Identity.Name);
+
+            return View(model);
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
         }
 
         [HttpGet]
         [Authorize(Policy = "CanAddSales")]
+<<<<<<< HEAD
         public async Task<IActionResult> AddClientSaleAsync()
         {
             return View(await _usersManager.GetUsersClientsList());
+=======
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.Client = await _usersManager.GetUsersClientsList();
+            ViewBag.Employee = await _usersManager.GetUsersEmployeeList();
+            ViewBag.Sale = _saleService.GetSaleList();
+            ViewBag.SaleDatailTemp = _saleService.GetSaleList();
+           
+            return View();
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
         }
 
         [HttpGet]

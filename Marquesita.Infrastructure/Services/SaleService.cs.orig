@@ -33,6 +33,12 @@ namespace Marquesita.Infrastructure.Services
             return await _context.Sales.FindAsync(id);
         }
 
+        public IEnumerable<Sale> GetSaleList()
+        {
+            return _Salerepository.All();
+        }
+
+<<<<<<< HEAD
         public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
             var id = Guid.Parse(userId);
@@ -41,6 +47,9 @@ namespace Marquesita.Infrastructure.Services
         }
 
         public async Task AddItemToClientOrderSaleAsync(AddItemViewModel model)
+=======
+        public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
         {
             var orderDetailTemp = _context.SaleDetailsTemp.Where(x => x.UserId == model.UserId && x.ProductId == model.Productid).FirstOrDefault();
             var product = await _context.Products.FindAsync(model.Productid);
@@ -75,12 +84,23 @@ namespace Marquesita.Infrastructure.Services
 
             if (orderDetailTemp != null)
             {
+<<<<<<< HEAD
                 orderDetailTemp.Quantity += quantity;
                 if (orderDetailTemp.Quantity > 0)
                 {
                     _saleDetailTempRepository.Update(orderDetailTemp);
                     _saleDetailTempRepository.SaveChanges();
                 }
+=======
+                return;
+            }
+
+            orderDetailTemp.Quantity += quantity;
+            if (orderDetailTemp.Quantity > 0)
+            {
+                 _context.SaleDetailsTemp.Update(orderDetailTemp);
+                await _context.SaveChangesAsync();
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
             }
             return;
         }

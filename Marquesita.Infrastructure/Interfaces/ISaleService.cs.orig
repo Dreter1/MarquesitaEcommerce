@@ -14,7 +14,12 @@ namespace Marquesita.Infrastructure.Interfaces
         IEnumerable<Sale> GetSaleList();
         IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId);
         Task<Sale> GetOrdersAsync(int id);
+<<<<<<< HEAD
         Task AddItemToClientOrderSaleAsync(AddItemViewModel model);
+=======
+       
+        Task AddItemToOrderAsync(AddItemViewModel model, string userName);
+>>>>>>> 5ac6742dd28cd9c8ab30559c17e8216088af24f2
         Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity);
         Task DeleteDetailTempAsync(Guid id);
         Task<bool> ConfirmOrderAsync(string userName);

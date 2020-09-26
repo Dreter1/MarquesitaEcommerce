@@ -78,7 +78,7 @@ namespace MarquesitaDashboards
 
         private void DbConnectionsConfiguration(IServiceCollection services)
         {
-            services.AddDbContext<BusinessDbContext>(opt =>
+            services.AddDbContext<BusinessDbContext>(opt => 
             opt.UseSqlServer(Configuration.GetConnectionString("BusinessDB"),
             b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
             );
