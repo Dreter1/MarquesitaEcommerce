@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Folder Include="DbContexts\" />
-    <Folder Include="ViewModels\Dashboards\Sales\" />
+    <Folder Include="ViewModels\Ecommerce\Sales\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,17 +26,18 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> Index()
         {
             var model = await _saleService.GetOrdersAsync(this.User.Identity.Name);
+
             return View(model);
         }
 
         [Authorize(Policy = "CanAddSales")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Client = _usersManager.GetUsersClientsList();
-            ViewBag.Employee = _usersManager.GetUsersEmployeeList();
+            ViewBag.Client = await _usersManager.GetUsersClientsList();
+            ViewBag.Employee = await _usersManager.GetUsersEmployeeList();
             ViewBag.Sale = _saleService.GetSaleList();
             ViewBag.SaleDatailTemp = _saleService.GetSaleList();
-            
+           
             return View();
         }
 
@@ -101,8 +103,8 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("Index");
             }
             
-            ViewBag.Client = _usersManager.GetUsersClientsList();
-            ViewBag.Employee = _usersManager.GetUsersEmployeeList();
+            ViewBag.Client = await _usersManager.GetUsersClientsList();
+            ViewBag.Employee =await  _usersManager.GetUsersEmployeeList();
             ViewBag.Sale = _saleService.GetSaleList();
             
             return RedirectToAction("Create");

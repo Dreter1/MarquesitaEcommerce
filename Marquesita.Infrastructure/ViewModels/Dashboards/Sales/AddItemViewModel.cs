@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
+namespace Marquesita.Infrastructure.ViewModels.Dashboards.Sales
 {
     public class AddItemViewModel
     {

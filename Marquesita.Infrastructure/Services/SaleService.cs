@@ -1,6 +1,6 @@
 ﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
+using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,14 +53,6 @@ namespace Marquesita.Infrastructure.Services
             return _SaleDetailTempRepository.All();
         }
 
-        public IQueryable<SaleDetailTemp> GetDetailTempsAsync()
-        {
-          
-            return _context.SaleDetailsTemp
-                .Include(o => o.Product)
-                .OrderBy(o => o.Product.Name);
-        }
-
         public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
         {
 
@@ -110,7 +102,7 @@ namespace Marquesita.Infrastructure.Services
             orderDetailTemp.Quantity += quantity;
             if (orderDetailTemp.Quantity > 0)
             {
-                _context.SaleDetailsTemp.Update(orderDetailTemp);
+                 _context.SaleDetailsTemp.Update(orderDetailTemp);
                 await _context.SaveChangesAsync();
             }
         }

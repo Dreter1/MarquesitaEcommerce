@@ -1,4 +1,4 @@
-﻿using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
+﻿using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
 using System;
@@ -14,7 +14,7 @@ namespace Marquesita.Infrastructure.Interfaces
         IEnumerable<SaleDetailTemp> GetSaleList();
         Task<IQueryable<Sale>> GetOrdersAsync(string userName);
         Task<Sale> GetOrdersAsync(int id);
-        IQueryable<SaleDetailTemp> GetDetailTempsAsync();
+       
         Task AddItemToOrderAsync(AddItemViewModel model, string userName);
         Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity);
         Task DeleteDetailTempAsync(Guid id);
