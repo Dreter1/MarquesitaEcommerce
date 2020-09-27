@@ -14,7 +14,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Sales
         [Range(0.0001, double.MaxValue, ErrorMessage = "La cantidad no puede ser negativa")]
         public int Quantity { get; set; }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
     }
 }

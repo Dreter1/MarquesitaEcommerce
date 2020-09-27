@@ -14,25 +14,25 @@ namespace Marquesita.Infrastructure.Services
     public class SaleService : ISaleService
     {
 
-        private readonly IRepository<Sale> _Salerepository;
+        private readonly IRepository<Sale> _saleRepository;
         private readonly IRepository<SaleDetailTemp> _saleDetailTempRepository;
         private readonly IRepository<SaleDetail> _saleDetailRepository;
-        private readonly BusinessDbContext _context;
+        private readonly IRepository<Product> _productRepository;
         private readonly IProductService _productService;
+        private readonly BusinessDbContext _context;
 
-
-
-        private readonly IUserManagerService _userManagerService;
-
-        public SaleService(IRepository<Sale> Salerepository, IRepository<SaleDetailTemp> SaleDetailTempRepository, BusinessDbContext context, IProductService productService, IRepository<SaleDetail> saleDetailRepository, IUserManagerService userManagerService)
-        {
-
-            _Salerepository = Salerepository;
+        public SaleService(IRepository<Sale> Salerepository,
+            IRepository<SaleDetailTemp> SaleDetailTempRepository,
+            IRepository<SaleDetail> saleDetailRepository,
+            IRepository<Product> productRepository,
+            IProductService productService,
+            BusinessDbContext context) {
+            _saleRepository = Salerepository;
             _saleDetailTempRepository = SaleDetailTempRepository;
-            _context = context;
-            _productService = productService;
             _saleDetailRepository = saleDetailRepository;
-            _userManagerService = userManagerService;
+            _productRepository = productRepository;
+            _productService = productService;
+            _context = context;
         }
         public async Task<Sale> GetOrdersAsync(int id)
         {
@@ -41,13 +41,12 @@ namespace Marquesita.Infrastructure.Services
 
         public IEnumerable<Sale> GetSaleList()
         {
-            return _Salerepository.All();
+            return _saleRepository.All();
         }
 
         public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
-            var id = Guid.Parse(userId);
-            var clientSaleDetailtTemp = _context.SaleDetailsTemp.Where(x => x.UserId == id).ToList();
+            var clientSaleDetailtTemp = _context.SaleDetailsTemp.Where(x => x.UserId == userId).ToList();
             return clientSaleDetailtTemp;
         }
 
@@ -107,94 +106,83 @@ namespace Marquesita.Infrastructure.Services
             return;
         }
 
-        public async Task<bool> ConfirmOrderAsync(string userName)
+        public void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp)
         {
-            var user = await _userManagerService.GetUserIdByNameAsync(userName);
-            return true;
-            //var user = await _userManagerService.GetUserIdByNameAsync(userName);
-            //var employee = await _userManagerService.GetUserIdByNameAsync(userName);
+            var order = new Sale
+            {
+                UserId = sale.UserId,
+                TotalAmount = sale.TotalAmount,
+                EmployeeId = user.Id,
+                Date = DateTime.UtcNow,
+                PaymentType = sale.PaymentType,
+                SaleStatus = "En proceso",
+                TypeOfSale = "En Tienda"
 
-            //if (user == null)
-            //{
-            //    return false;
-            //}
+            };
+            _saleRepository.Add(order);
+            _saleRepository.SaveChanges();
 
-            //var orderTmps = await _context.SaleDetailsTemp
-            //    .Include(o => o.Product)/*.Include(o => o.UserId)*/
-            //    .Where(o => o.UserId.ToString() == user)
-            //    .ToListAsync();
-            ////var TotalSale = await _Salerepository.
+            foreach (var detail in saledetailtemp)
+            {
+                Product productoBd = _productService.GetProductById(detail.ProductId);
+                SaleDetail detalle = new SaleDetail
+                {
+                    ProductId = productoBd.Id,
+                    SaleId = order.Id,
+                    UnitPrice = productoBd.UnitPrice,
+                    Quantity = detail.Quantity,
+                    Subtotal = productoBd.UnitPrice * detail.Quantity,
+                };
 
-            //if (orderTmps == null || orderTmps.Count == 0)
-            //{
-            //    return false;
-            //}
+                sale.TotalAmount += detalle.Subtotal;
+                _saleDetailRepository.Add(detalle);
 
-            ///*
-            // Primero la venta
-
-            //var order = new Sale
-            //{
-            //    Date = DateTime.UtcNow,
-            //    UserId = Guid.Parse(user), //guarda usuario
-            //    EmployeeId= Guid.Parse(employee),
-            //};
-
-            //var orderId = order.Id;
-
-            //var details = orderTmps.Select(o => new SaleDetail
-            //{
-            //    UnitPrice = o.Price,
-            //    ProductId = o.ProductId,
-            //    Quantity = o.Quantity,
-            //    Subtotal=o.Subtotal
-
-            //}).ToList();
-
-
-            // */
-
-            //var details = orderTmps.Select(o => new SaleDetail
-            //{
-            //    UnitPrice = o.Price,
-            //    ProductId = o.ProductId,
-            //    Quantity = o.Quantity,
-            //    Subtotal = o.Subtotal
-
-            //}).ToList();
-
-            //var order = new Sale
-            //{
-            //    Date = DateTime.UtcNow,
-            //    UserId = Guid.Parse(user), //guarda usuario
-            //    EmployeeId = Guid.Parse(employee),
-            //    //TotalAmount = ,
-            //    SaleDetails = details,
-            //};
-
-            //_context.Sales.Add(order);
-            //_context.SaleDetailsTemp.RemoveRange(orderTmps);
-            //await _context.SaveChangesAsync();
-
-
-            //return true;
+                RemoveSaleDetailsTemp(detail.ProductId, sale.UserId);
+                _saleDetailRepository.SaveChanges();
+            }
         }
 
-        public async Task UpdateStockAsync(Guid id) {
-
-            var orderDetailTemp = await _context.SaleDetails.FindAsync(id);
-            var disminuir = await _context.Products.Where(o => o.Id == orderDetailTemp.ProductId).FirstAsync();
-            if (disminuir.Stock >= orderDetailTemp.Quantity)
+        public void RemoveSaleDetailsTemp(Guid IdProducto, string userId)
+        {
+            var saleDetailTemp = _context.SaleDetailsTemp.Where(x => x.ProductId == IdProducto && x.UserId == userId).FirstOrDefault();
+            if (saleDetailTemp != null)
             {
-                disminuir.Stock = disminuir.Stock - orderDetailTemp.Quantity;
-                _context.SaleDetails.Add(orderDetailTemp);
-                await _context.SaveChangesAsync();
+                _saleDetailTempRepository.Remove(saleDetailTemp);
+                _saleDetailTempRepository.SaveChanges();
             }
-            //else
-            //{
-            //    //"El stock esta agotado";
-            //    return;
-            //}
+        }
+
+        public bool IsProductStocked(AddItemViewModel product)
+        {
+            var productoBd = _productService.GetProductById(product.Productid);
+            if (productoBd.Stock < product.Quantity)
+                return false;
+            return true;
+        }
+
+        public bool StockAvailable(IEnumerable<SaleDetailTemp> productos)
+        {
+            Product productoBd;
+
+            foreach (var producto in productos)
+            {
+                productoBd = _productService.GetProductById(producto.ProductId);
+                if (productoBd.Stock < producto.Quantity)
+                    return false;
+            }
+            return true;
+        }
+
+        public void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp)
+        {
+            Product productoBd;
+            foreach (var saledetailT in saledetailTemp)
+            {
+                productoBd = _context.Products.Where(o => o.Id == saledetailT.ProductId).FirstOrDefault();
+                productoBd.Stock -= saledetailT.Quantity;
+                _productRepository.Update(productoBd);
+                _productRepository.SaveChanges();
+            }
         }
 
         public List<string> GetPaymentList()
@@ -214,96 +202,6 @@ namespace Marquesita.Infrastructure.Services
                 "Cancelada",
             };
         }
-        public async Task SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp)
-        {
-           
-            var order = new Sale
-            {
-                UserId = sale.UserId,
-                TotalAmount = sale.TotalAmount,
-                EmployeeId = user.Id,
-                Date = DateTime.UtcNow,
-                PaymentType = sale.PaymentType,
-                SaleStatus = "En proceso",
-                TypeOfSale = "En Tienda"
-                
-            };
-            _Salerepository.Add(order);
-            _Salerepository.SaveChanges();
-            foreach (var detail in saledetailtemp)
-            {
-                Product productoBd = _productService.GetProductById(detail.ProductId);
-                SaleDetail detalle = new SaleDetail
-                {
-                    ProductId = productoBd.Id,
-                    SaleId=order.Id,
-                    UnitPrice= productoBd.UnitPrice,
-                    Quantity = detail.Quantity,
-                    Subtotal = productoBd.UnitPrice * detail.Quantity,
-
-                };
-
-                sale.TotalAmount += detalle.Subtotal;
-                _saleDetailRepository.Add(detalle);
-                
-                await RemoveSaleDetailsTemp(detail.ProductId);
-                //await StockAvailable(saledetailtemp);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task RemoveSaleDetailsTemp(Guid? IdProducto)
-        {
-            var orderTmps = await _context.SaleDetailsTemp
-                    .Include(o => o.Product)
-                    .Where(o => o.ProductId == IdProducto )
-                    .ToListAsync();
-
-            if (orderTmps != null || orderTmps.Count != 0)
-            {
-                var details = orderTmps.Select(o => new SaleDetail
-                {
-                    UnitPrice = o.Price,
-                    ProductId = o.ProductId,
-                    Quantity = o.Quantity,
-                    Subtotal = o.Subtotal,
-                    
-
-                }).ToList();
-                _context.SaleDetailsTemp.RemoveRange(orderTmps);
-                await _context.SaveChangesAsync();
-            }
-            
-
-        }
-
-        public bool StockAvailable(IEnumerable<SaleDetailTemp> productos)
-        {
-            Product productoBd;
-
-            foreach (var producto in productos)
-            {
-                productoBd= _productService.GetProductById(producto.ProductId);
-                if (productoBd.Stock < producto.Quantity)
-                   
-                return false;
-            }
-            return true;
-        }
-
-        public async Task UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp)
-        {
-            Product productoBd;
-            foreach (var saledetailT in saledetailTemp)
-            {
-                productoBd = await _context.Products.Where(o => o.Id == saledetailT.ProductId).FirstOrDefaultAsync();
-                productoBd.Stock = productoBd.Stock - saledetailT.Quantity;
-                _context.SaveChanges();
-            }
-            
-        }
-
-
     }
 }
 

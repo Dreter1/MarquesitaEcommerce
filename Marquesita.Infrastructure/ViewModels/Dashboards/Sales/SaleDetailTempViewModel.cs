@@ -19,7 +19,7 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Sales
 		public decimal Subtotal { get { return this.Price * (decimal)this.Quantity; } }
 		
 		[DisplayName("Cliente")]
-		public Guid UserId { get; set; }
+		public string UserId { get; set; }
 
 		[DisplayName("Producto")]
 		public Guid ProductId { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20200926192008_creatingDbBussines")]
+    [Migration("20200927232800_creatingDbBussines")]
     partial class creatingDbBussines
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,8 +222,9 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

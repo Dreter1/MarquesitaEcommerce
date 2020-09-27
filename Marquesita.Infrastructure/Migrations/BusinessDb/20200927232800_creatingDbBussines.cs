@@ -141,7 +141,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     Id = table.Column<Guid>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

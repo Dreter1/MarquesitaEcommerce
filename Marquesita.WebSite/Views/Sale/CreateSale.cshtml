@@ -20,6 +20,20 @@
     </div>
 </section>
 <input hidden id="userId" name="userId" value="@ViewBag.User.Id" />
+@if (TempData.Peek("stockError") != null)
+{
+    <div class="content">
+        <div class="container-fluid">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>@TempData.Peek("stockError")</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+}
 <section class="content">
     <div class="container-fluid">
         <div class="card card-primary">
@@ -30,6 +44,7 @@
                 <div class="col-12">
                     <div class="card-body">
                         <form asp-controller="Sale" asp-action="CreateSale" method="post">
+                            @ViewBag.StockNotAvalible
                             <div>
                                 <h1>Cliente: @ViewBag.User.FirstName @ViewBag.User.LastName</h1>
                             </div>

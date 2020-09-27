@@ -54,6 +54,21 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanAddSales")]
+        public async Task<IActionResult> GetSaleDetailTempList(string userId)
+        {
+            var user = await _usersManager.GetUserByIdAsync(userId);
+
+            if (user != null)
+            {
+                ViewBag.User = user;
+                ViewBag.SaleDatailTemp = _saleService.GetClientSaleTempList(user.Id);
+                return PartialView();
+            }
+            return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanAddSales")]
         public IActionResult AddProductSale(string userId)
         {
             if (userId != null)
@@ -69,13 +84,19 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> AddProductSale(AddItemViewModel model)
         {
+            TempData["error"] = null;
             if (ModelState.IsValid)
             {
-                await _saleService.AddItemToClientOrderSaleAsync(model);
+                if (_saleService.IsProductStocked(model)) {
+                    await _saleService.AddItemToClientOrderSaleAsync(model);
+                    return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
+                }
+                TempData["stockError"] = "No hay la cantidad que usted solicita";
                 return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
             }
-            ViewBag.Product = _productService.GetProductList();
-            return PartialView(model);
+            TempData["error"] = "Porfavor ingrese una cantidad";
+            return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
+
         }
 
         [HttpGet]
@@ -122,7 +143,7 @@ namespace MarquesitaDashboards.Controllers
             {
                 ViewBag.User = user;
                 ViewBag.Product = _productService.GetProductList();
-                ViewBag.SaleDatailTemp = _saleService.GetClientSaleTempList(user.Id);
+                ViewBag.SaleDatailTemp = _saleService.GetClientSaleTempList(user.Id.ToString());
                 ViewBag.PaymentList = _saleService.GetPaymentList();
                 return View();
             }
@@ -134,37 +155,16 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> CreateSaleAsync(Sale sale)
         {
             var employee = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            IEnumerable<SaleDetailTemp> tempList = _saleService.GetClientSaleTempList(sale.UserId);
+            var tempList = _saleService.GetClientSaleTempList(sale.UserId);
 
             if (_saleService.StockAvailable(tempList))
             {
-                ViewBag.Product = _productService.GetProductList();
-                await _saleService.UpdateStock(tempList);
-                await _saleService.SaveSale(employee, sale, tempList);
-                return RedirectToAction("Index", "Sale", new { userId = sale.UserId });
+                _saleService.UpdateStock(tempList);
+                _saleService.SaveSale(employee, sale, tempList);
+                return RedirectToAction("Index", "Sale");
             }
-            //ViewBag.PaymentList = _saleService.GetPaymentList();
-            //ViewBag.Product = _productService.GetProductList();
-            ViewBag.NoHayStockDisponible = "No contamos con el stock que solicita, vuelva a intentarlo";
-            return RedirectToAction("CreateSale");
-
-        }
-
-        [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> ConfirmOrder(Guid id)
-        {
-            var response = await _saleService.ConfirmOrderAsync(User.Identity.Name);
-            if (response)
-            {
-                //await _saleService.UpdateStockAsync(id);
-                return RedirectToAction("Index");
-            }
-            
-            ViewBag.Client = await _usersManager.GetUsersClientsList();
-            ViewBag.Employee =await  _usersManager.GetUsersEmployeeList();
-            ViewBag.Sale = _saleService.GetSaleList();
-            
-            return RedirectToAction("Create");
+            TempData["stockError"] = "No contamos con el stock que solicita, vuelva a intentarlo";
+            return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId});
         }
 
         [Authorize(Policy = "CanEditSales")]

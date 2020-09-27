@@ -1,0 +1,37 @@
+﻿<table id="dataTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nombre del Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{Decimal total = 0; }
+        @foreach (var detail in ViewBag.SaleDatailTemp)
+        {
+            total += (Decimal)(detail.Quantity * detail.Price);
+            <tr>
+                <th>
+                    @await Component.InvokeAsync("DashboardProductInfo", new { ProductId = detail.ProductId })
+                </th>
+                <td> @detail.Price  </td>
+                <td> @detail.Quantity </td>
+                <td> @detail.Subtotal </td>
+                <td>
+                    <a asp-controller="Sale" asp-action="Increase" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-warning" title="Incrementra"><i class="fa fa-plus"></i></a>
+                    <a asp-controller="Sale" asp-action="Decrease" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-info" title="Disminuir"><i class="fa fa-minus"></i></a>
+                    <a asp-controller="Sale" asp-action="DeleteItem" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<br />
+<br />
+<h3 class="float-sm-right">Subtotal: S/. @total</h3>
+<br />
+<br />

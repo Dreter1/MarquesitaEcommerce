@@ -277,3 +277,12 @@ function getPorductList() {
         $("#vistaPro").html(e);
     });
 }
+
+function getDetailTempList() {
+    var userId = $("#userId").val();
+    console.log(userId);
+    var url = "/Sale/GetSaleDetailTempList?userId=" + userId;
+    $.get(url, function (e) {
+        $("#vistaTempItems").html(e);
+    });
+}
