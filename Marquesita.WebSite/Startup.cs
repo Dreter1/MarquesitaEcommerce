@@ -268,6 +268,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IRepository<Product>, ProductRepository>();
             services.AddTransient<IRepository<Sale>, SaleRepository>();
             services.AddTransient<IRepository<SaleDetailTemp>, SaleDetailTempRepository>();
+            services.AddTransient<IRepository<SaleDetail>, SaleDetailRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();

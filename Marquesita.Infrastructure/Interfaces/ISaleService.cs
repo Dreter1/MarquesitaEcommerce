@@ -22,7 +22,10 @@ namespace Marquesita.Infrastructure.Interfaces
         Task UpdateStockAsync(Guid id);
         List<string> GetPaymentList();
         List<string> GetSaleStatusList();
-
+        Task SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> detail);
+        Task RemoveSaleDetailsTemp(Guid? IdProducto);
+        bool StockAvailable(IEnumerable<SaleDetailTemp> productos);
+        Task UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp);
 
     }
 }

@@ -51,7 +51,7 @@
                     {
                     <tr>
                         <th>
-                            @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.UserId })
+                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
                         </th>
 
                         <td>@sale.Date</td>
@@ -59,7 +59,7 @@
                         <td>@sale.TypeOfSale</td>
                         <td>@sale.SaleStatus</td>
                         <td>
-                            @await Component.InvokeAsync("DashboardEmployeeInfo", new { userId = sale.EmployeeId })
+                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
                         </td>
                         <td>@sale.TotalAmount</td>
                         <td>

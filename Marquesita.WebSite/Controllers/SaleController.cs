@@ -4,6 +4,7 @@ using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
@@ -133,9 +134,20 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> CreateSaleAsync(Sale sale)
         {
             var employee = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var tempList = _saleService.GetClientSaleTempList(sale.UserId);
-            // meotodo(sale: Sale, employee: User, templist: List<SaleDetailTemp>)
-            return View();
+            IEnumerable<SaleDetailTemp> tempList = _saleService.GetClientSaleTempList(sale.UserId);
+
+            if (_saleService.StockAvailable(tempList))
+            {
+                ViewBag.Product = _productService.GetProductList();
+                await _saleService.UpdateStock(tempList);
+                await _saleService.SaveSale(employee, sale, tempList);
+                return RedirectToAction("Index", "Sale", new { userId = sale.UserId });
+            }
+            //ViewBag.PaymentList = _saleService.GetPaymentList();
+            //ViewBag.Product = _productService.GetProductList();
+            ViewBag.NoHayStockDisponible = "No contamos con el stock que solicita, vuelva a intentarlo";
+            return RedirectToAction("CreateSale");
+
         }
 
         [Authorize(Policy = "CanAddSales")]
