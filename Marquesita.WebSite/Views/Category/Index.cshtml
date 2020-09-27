@@ -35,10 +35,10 @@
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+                        <th class="text-center">Nombre</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
                         {
-                            <th>Opciones</th>
+                            <th class="text-center">Opciones</th>
                         }
                         else
                         {
@@ -50,11 +50,11 @@
                     @foreach (var categoria in Model)
                     {
                         <tr>
-                            <td>@categoria.Name</td>
+                            <td class="text-center">@categoria.Name</td>
                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteCategory")).Succeeded)
                             {
-                                <td>
-                                    <div class="form-row text-center">
+                                <td class="text-center">
+                                    <div class="form-row justify-content-center">
                                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditCategory")).Succeeded)
                                         {
                                             <span>&nbsp</span><a asp-controller="Category" asp-action="Edit" asp-route-Id="@categoria.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>

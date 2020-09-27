@@ -36,13 +36,13 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Nombre</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
-                        <th>Estado</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Estado</th>
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
                         {
-                            <th>Opciones</th>
+                            <th class="text-center">Opciones</th>
                         }
                         else
                         {
@@ -53,65 +53,77 @@
                 <tbody>
                     @foreach (var product in Model)
                     {
-                        <tr>
-                            @if (product.ImageRoute != null)
-                            {
-                                <td class="text-center">
-                                    <img src="@ViewBag.Image@product.ImageRoute"
-                                         class="rounded-circle"
-                                         alt="Product Img"
-                                         height="50" width="50"
-                                         asp-append-version="true" />
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="text-center">
-                                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
-                                         class="rounded-circle"
-                                         alt="Product Img"
-                                         height="50" width="50"
-                                         asp-append-version="true">
-                                </td>
-                            }
-                            <td>@product.Name</td>
-                            <td class="text-center">@product.Stock UN</td>
-                            <td class="text-center">S/. @product.UnitPrice</td>
-                            @if (product.IsActive)
-                            {
-                                <td class="text-center">
-                                    <span class="badge badge-success">Activo</span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="text-center">
-                                    <span class="badge badge-danger">Inactivo</span>
-                                </td>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
-                            {
-                                <td class="text-center">
-                                    <div class="form-row">
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded)
-                                        {
-                                            <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@product.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
-                                        }
-                                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
-                                        {
-                                            <div id="DeleteProductClic_@product.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@product.Id" onclick="deleteProduct(this)">
-                                                <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                                            </div>
-                                        }
-                                    </div>
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                </td>
-                            }
-                        </tr>
+                    <tr>
+                        @if (product.ImageRoute != null)
+                        {
+                            <td class="text-center">
+                                <img src="@ViewBag.Image@product.ImageRoute"
+                                     class="rounded-circle"
+                                     alt="Product Img"
+                                     height="50" width="50"
+                                     asp-append-version="true" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg"
+                                     class="rounded-circle"
+                                     alt="Product Img"
+                                     height="50" width="50"
+                                     asp-append-version="true">
+                            </td>
+                        }
+                        <td class="text-center">@product.Name</td>
+                        @if (product.Stock >= 100)
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-success">@product.Stock</span></td>
+                        }
+                        else if (product.Stock >= 50 && product.Stock < 100)
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-warning">@product.Stock</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-danger">@product.Stock</span></td>
+                        }
+
+                        <td class="text-center">S/. @product.UnitPrice</td>
+                        @if (product.IsActive)
+                        {
+                            <td class="text-center">
+                                <span class="badge badge-success">Activo</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                <span class="badge badge-danger">Inactivo</span>
+                            </td>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
+                        {
+                            <td class="text-center">
+                                <div class="form-row justify-content-center">
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditProducts")).Succeeded)
+                                    {
+                                        <span>&nbsp</span><a asp-controller="Product" asp-action="Edit" asp-route-Id="@product.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
+                                    }
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteProducts")).Succeeded)
+                                    {
+                                        <div id="DeleteProductClic_@product.Id" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2" data-id="@product.Id" onclick="deleteProduct(this)">
+                                            <button type="submit" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                            </td>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>

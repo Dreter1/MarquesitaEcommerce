@@ -39,14 +39,14 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Usuario</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Cargo</th>
-                    <th>Estado</th>
+                    <th class="text-center">Usuario</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Apellidos</th>
+                    <th class="text-center">Cargo</th>
+                    <th class="text-center">Estado</th>
                     @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                     {
-                        <th>Opciones</th>
+                        <th class="text-center">Opciones</th>
                     }
                 </tr>
             </thead>
@@ -74,9 +74,9 @@
                                      asp-append-version="true">
                             </td>
                         }
-                        <td>@user.UserName</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
+                        <td class="text-center">@user.UserName</td>
+                        <td class="text-center">@user.FirstName</td>
+                        <td class="text-center">@user.LastName</td>
                         <td class="text-center">
                             <span class="badge badge-pill badge-info">@await Component.InvokeAsync("DashboardUserRoleInfo", new { userId = user.Id })</span>
                         </td>
@@ -95,7 +95,7 @@
                         @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteUsers")).Succeeded)
                         {
                             <td>
-                                <div class="form-row">
+                                <div class="form-row justify-content-center">
                                     @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditUsers")).Succeeded)
                                     {
                                         <a asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id" class="btn btn-warning" title="Editar Usuario"><i class="fas fa-user-edit"></i></a><span>&nbsp</span>
