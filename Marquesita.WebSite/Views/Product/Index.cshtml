@@ -3,4 +3,69 @@
     ViewData["Title"] = "Productos";
 }
 
+<div class="page-head_agile_info_w3l">
 
+</div>
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a asp-controller="Product" asp-action="Index">Productos</a>
+                    <i>|</i>
+                </li>
+                <li>Inicio</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="ads-grid">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Productos
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <div class="side-bar col-md-3">
+            <div class="search-hotel">
+                <h3 class="agileits-sear-head">Search Here..</h3>
+                <form action="#" method="post">
+                    <input type="search" placeholder="Product name..." name="search" required="">
+                    <input type="submit" value=" ">
+                </form>
+            </div>
+            <div class="left-side">
+                <h3 class="agileits-sear-head">Categorias</h3>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="checked">
+                        <span class="span">Vegetarian</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="checked">
+                        <span class="span">Non-Vegetarian</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="agileinfo-ads-display col-md-9 w3l-rightpro" id="ProducList">
+            <div class="wrapper">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getProductPanelList();
+    });
+</script>

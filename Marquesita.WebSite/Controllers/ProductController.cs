@@ -37,13 +37,32 @@ namespace MarquesitaDashboards.Controllers
 
                 if (!_usersManager.isColaborator(userRole))
                 {
-                    ViewBag.Image = _images.RoutePathRootProductsImages();
-                    ViewBag.UserId = user.Id;
-                    return View(_productService.GetProductList());
+                    return View();
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetProductList()
+        {
+            if (User.Identity.Name != null)
+            {
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(user);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    ViewBag.Image = _images.RoutePathRootProductsImages();
+                    ViewBag.UserId = user.Id;
+                    return PartialView(_productService.GetProductList());
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            ViewBag.Image = _images.RoutePathRootProductsImages();
+            return PartialView(_productService.GetProductList());
         }
 
         [HttpGet]
