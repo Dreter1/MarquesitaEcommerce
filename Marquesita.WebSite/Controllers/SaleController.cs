@@ -116,26 +116,26 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> Decrease(Guid id, string userId)
+        public async Task<Boolean> Decrease(Guid id, string userId)
         {
             if (id != null)
             {
                 await _saleService.ModifyOrderDetailTempQuantityAsync(id, -1);
-                return RedirectToAction("AddProductClientSale", "Sale", new { userId });
+                return true;
             }
-            return RedirectToAction("NotFound404", "Error");
+            return false;
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> DeleteItem(Guid id, string userId)
+        public async Task<Boolean> DeleteItem(Guid id, string userId)
         {
             if (id != null)
             {
                 await _saleService.DeleteDetailTempAsync(id);
-                return RedirectToAction("AddProductClientSale", "Sale", new { userId });
+                return true;
             }
-            return RedirectToAction("NotFound404", "Error");
+            return false;
         }
 
         [HttpGet]

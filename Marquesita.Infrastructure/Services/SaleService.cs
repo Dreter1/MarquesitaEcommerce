@@ -38,18 +38,15 @@ namespace Marquesita.Infrastructure.Services
         {
             return await _context.Sales.FindAsync(id);
         }
-
         public IEnumerable<Sale> GetSaleList()
         {
             return _saleRepository.All();
         }
-
         public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
             var clientSaleDetailtTemp = _context.SaleDetailsTemp.Where(x => x.UserId == userId).ToList();
             return clientSaleDetailtTemp;
         }
-
         public async Task AddItemToClientOrderSaleAsync(AddItemViewModel model)
         {
             var orderDetailTemp = _context.SaleDetailsTemp.Where(x => x.UserId == model.UserId && x.ProductId == model.Productid).FirstOrDefault();
@@ -78,7 +75,6 @@ namespace Marquesita.Infrastructure.Services
             }
             _saleDetailTempRepository.SaveChanges();
         }
-
         public async Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity)
         {
             var orderDetailTemp = await _context.SaleDetailsTemp.FindAsync(id);
@@ -141,7 +137,6 @@ namespace Marquesita.Infrastructure.Services
                 _saleDetailRepository.SaveChanges();
             }
         }
-
         public void RemoveSaleDetailsTemp(Guid IdProducto, string userId)
         {
             var saleDetailTemp = _context.SaleDetailsTemp.Where(x => x.ProductId == IdProducto && x.UserId == userId).FirstOrDefault();
@@ -159,11 +154,9 @@ namespace Marquesita.Infrastructure.Services
                 return false;
             return true;
         }
-
         public bool StockAvailable(IEnumerable<SaleDetailTemp> productos)
         {
             Product productoBd;
-
             foreach (var producto in productos)
             {
                 productoBd = _productService.GetProductById(producto.ProductId);
@@ -172,7 +165,6 @@ namespace Marquesita.Infrastructure.Services
             }
             return true;
         }
-
         public void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp)
         {
             Product productoBd;
@@ -184,7 +176,6 @@ namespace Marquesita.Infrastructure.Services
                 _productRepository.SaveChanges();
             }
         }
-
         public List<string> GetPaymentList()
         {
             return new List<string>() {
@@ -193,7 +184,6 @@ namespace Marquesita.Infrastructure.Services
                 "Efectivo y Tarjeta",
             };
         }
-
         public List<string> GetSaleStatusList()
         {
             return new List<string>() {

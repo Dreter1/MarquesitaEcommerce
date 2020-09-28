@@ -305,3 +305,21 @@ function incrementProductSaleTemp(product) {
         getDetailTempList();
     });
 }
+
+function decreaseProductSaleTemp(product) {
+    var id = product.dataset.id;
+    var userId = $("#userId").val();
+    var url = "/Sale/Decrease?id=" + id + "&userId=" + userId;
+    $.post(url, function () {
+        getDetailTempList();
+    });
+}
+
+function deleteItemProductSaleTemp(product) {
+    var id = product.dataset.id;
+    var userId = $("#userId").val();
+    var url = "/Sale/DeleteItem?id=" + id + "&userId=" + userId;
+    $.post(url, function () {
+        getDetailTempList();
+    });
+}

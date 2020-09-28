@@ -21,9 +21,9 @@
                 <td> @detail.Quantity </td>
                 <td> @detail.Subtotal </td>
                 <td>
-                    <a data-id="@detail.Id" onclick="incrementProductSaleTemp(this)" class="btn btn-warning" title="Incrementar"><i class="fa fa-plus"></i></a>
-                    <a asp-controller="Sale" asp-action="Decrease" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-info" title="Disminuir"><i class="fa fa-minus"></i></a>
-                    <a asp-controller="Sale" asp-action="DeleteItem" asp-route-id="@detail.Id" asp-route-userId="@ViewBag.User.Id" class="btn btn-danger">Delete</a>
+                    <button data-id="@detail.Id" onclick="incrementProductSaleTemp(this)" class="btn btn-warning" title="Incrementar"><i class="fa fa-plus"></i></button>
+                    <button data-id="@detail.Id" onclick="decreaseProductSaleTemp(this)" class="btn btn-info" title="Disminuir"><i class="fa fa-minus"></i></button>
+                    <button data-id="@detail.Id" onclick="deleteItemProductSaleTemp(this)" class="btn btn-danger">Delete</button>
                 </td>
             </tr>
 
