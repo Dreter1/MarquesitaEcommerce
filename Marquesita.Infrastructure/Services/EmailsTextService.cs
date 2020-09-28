@@ -36,8 +36,8 @@ namespace Marquesita.Infrastructure.Services
                 <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                     <tr>
                         <td bgcolor='#ffffff' align='left' style='padding: 20px 30px 40px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-                            <p style='margin: 0;'>Estimado {1} {2}, le damos la bienvenida a La Marquesita. Primero, debes confirmar tu cuenta, para que pueda hacer compras y demás. Simplemente presione el botón de abajo.</p>
-                            <p style='margin: 0;'>Su usario es: {3}, para que pueda ingresar a la tienda virtual, si se creo su cuenta por tienda, recupere su contraseña por la web</p>
+                            <p style='margin: 0;'>Estimado/a {1} {2}, le damos la bienvenida a La Marquesita. Primero, debes confirmar tu cuenta, para que pueda hacer compras y demás. Simplemente presione el botón de abajo.</p>
+                            <p style='margin: 0;'>Su usuario es: {3}, para que pueda ingresar a la tienda virtual, se ha creado su cuenta por tienda, para que pueda cambiar su contraseña haga <a href='https://localhost:44376/Home/ForgotPassword'><strong>Click aqui</strong><a/></p>
                         </td>
                     </tr>
                     <tr>

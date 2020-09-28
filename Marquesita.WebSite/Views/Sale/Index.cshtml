@@ -21,7 +21,18 @@
         </div>
     </div>
 </div>
-
+@if (ViewBag.SaleSuccess != null)
+{
+    <div class="content">
+        <div class="container-fluid">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check"></i> ¡Listo!</h5>
+                @ViewBag.SaleSuccess
+            </div>
+        </div>
+    </div>
+}
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
@@ -49,24 +60,24 @@
                 <tbody>
                     @foreach (var sale in Model)
                     {
-                    <tr>
-                        <th>
-                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
-                        </th>
+                        <tr>
+                            <th>
+                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
+                            </th>
 
-                        <td>@sale.Date</td>
-                        <td>@sale.PaymentType</td>
-                        <td>@sale.TypeOfSale</td>
-                        <td>@sale.SaleStatus</td>
-                        <td>
-                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
-                        </td>
-                        <td>@sale.TotalAmount</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
-                            <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
-                        </td>
-                    </tr>
+                            <td>@sale.Date</td>
+                            <td>@sale.PaymentType</td>
+                            <td>@sale.TypeOfSale</td>
+                            <td>@sale.SaleStatus</td>
+                            <td>
+                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
+                            </td>
+                            <td>@sale.TotalAmount</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

@@ -4,7 +4,7 @@ using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
@@ -27,6 +27,8 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewSales")]
         public IActionResult Index()
         {
+            ViewBag.SaleSuccess = TempData["saleSuccess"];
+            TempData["saleSuccess"] = null;
             return View(_saleService.GetSaleList());
         }
 
@@ -71,7 +73,6 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddSales")]
         public IActionResult AddProductSale(string userId)
         {
-            TempData["error"] = null;
             if (userId != null)
             {
                 ViewBag.UserId = userId;
@@ -86,8 +87,13 @@ namespace MarquesitaDashboards.Controllers
         public async Task<Boolean> AddProductSale(Guid Productid, int Quantity, string UserId)
         {
             TempData["error"] = null;
-            var model = new AddItemViewModel(Productid, Quantity, UserId);
-            if (ModelState.IsValid)
+            TempData["stockError"] = null;
+            var model = new AddItemViewModel{
+                Productid = Productid,
+                Quantity = Quantity,
+                UserId = UserId
+            };
+            if (_saleService.IsGreaterThan0(model.Quantity))
             {
                 if (_saleService.IsProductStocked(model))
                 {
@@ -99,12 +105,11 @@ namespace MarquesitaDashboards.Controllers
             }
             TempData["error"] = "Porfavor ingrese una cantidad";
             return false;
-
         }
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<Boolean> Increase(Guid id, string userId)
+        public async Task<Boolean> Increase(Guid id)
         {
             if (id != null)
             {
@@ -116,7 +121,7 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<Boolean> Decrease(Guid id, string userId)
+        public async Task<Boolean> Decrease(Guid id)
         {
             if (id != null)
             {
@@ -128,7 +133,7 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<Boolean> DeleteItem(Guid id, string userId)
+        public async Task<Boolean> DeleteItem(Guid id)
         {
             if (id != null)
             {
@@ -159,17 +164,24 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> CreateSaleAsync(Sale sale)
         {
+            TempData["error"] = null;
+            TempData["stockError"] = null;
             var employee = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             var tempList = _saleService.GetClientSaleTempList(sale.UserId);
 
-            if (_saleService.StockAvailable(tempList))
-            {
-                _saleService.UpdateStock(tempList);
-                _saleService.SaveSale(employee, sale, tempList);
-                return RedirectToAction("Index", "Sale");
+            if (Enumerable.Count(tempList) > 0) {
+                if (_saleService.StockAvailable(tempList))
+                {
+                    _saleService.UpdateStock(tempList);
+                    _saleService.SaveSale(employee, sale, tempList);
+                    TempData["saleSuccess"] = "Se realizo la venta con exito";
+                    return RedirectToAction("Index", "Sale");
+                }
+                TempData["stockError"] = "No contamos con el stock que solicita, vuelva a intentarlo";
+                return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId });
             }
-            TempData["stockError"] = "No contamos con el stock que solicita, vuelva a intentarlo";
-            return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId});
+            TempData["error"] = "No puede realizar una venta sin productos";
+            return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId });
         }
 
         [Authorize(Policy = "CanEditSales")]

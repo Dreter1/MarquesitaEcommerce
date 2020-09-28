@@ -35,3 +35,12 @@
 <h3 class="float-sm-right">Subtotal: S/. @total</h3>
 <br />
 <br />
+<div class="fa-pull-left">
+    <a asp-controller="Sale" asp-action="AddClientSale" class="btn btn-danger"><i class="fas fa-arrow-left"></i></a>
+</div>
+@if (Enumerable.Count(ViewBag.SaleDatailTemp) > 0)
+{
+    <div class="fa-pull-right">
+        <a asp-controller="Sale" asp-action="CreateSale" asp-route-userId="@ViewBag.User.Id" class="btn btn-success"><i class="fas fa-arrow-right"></i></a>
+    </div>
+}

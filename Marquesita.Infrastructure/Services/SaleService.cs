@@ -3,7 +3,6 @@ using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,37 +103,40 @@ namespace Marquesita.Infrastructure.Services
 
         public void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp)
         {
-            var order = new Sale
+            if (saledetailtemp.Count() > 0)
             {
-                UserId = sale.UserId,
-                TotalAmount = sale.TotalAmount,
-                EmployeeId = user.Id,
-                Date = DateTime.UtcNow,
-                PaymentType = sale.PaymentType,
-                SaleStatus = "En proceso",
-                TypeOfSale = "En Tienda"
-
-            };
-            _saleRepository.Add(order);
-            _saleRepository.SaveChanges();
-
-            foreach (var detail in saledetailtemp)
-            {
-                Product productoBd = _productService.GetProductById(detail.ProductId);
-                SaleDetail detalle = new SaleDetail
+                var order = new Sale
                 {
-                    ProductId = productoBd.Id,
-                    SaleId = order.Id,
-                    UnitPrice = productoBd.UnitPrice,
-                    Quantity = detail.Quantity,
-                    Subtotal = productoBd.UnitPrice * detail.Quantity,
+                    UserId = sale.UserId,
+                    TotalAmount = sale.TotalAmount,
+                    EmployeeId = user.Id,
+                    Date = DateTime.UtcNow,
+                    PaymentType = sale.PaymentType,
+                    SaleStatus = "En proceso",
+                    TypeOfSale = "En Tienda"
+
                 };
+                _saleRepository.Add(order);
+                _saleRepository.SaveChanges();
 
-                sale.TotalAmount += detalle.Subtotal;
-                _saleDetailRepository.Add(detalle);
+                foreach (var detail in saledetailtemp)
+                {
+                    Product productoBd = _productService.GetProductById(detail.ProductId);
+                    SaleDetail detalle = new SaleDetail
+                    {
+                        ProductId = productoBd.Id,
+                        SaleId = order.Id,
+                        UnitPrice = productoBd.UnitPrice,
+                        Quantity = detail.Quantity,
+                        Subtotal = productoBd.UnitPrice * detail.Quantity,
+                    };
 
-                RemoveSaleDetailsTemp(detail.ProductId, sale.UserId);
-                _saleDetailRepository.SaveChanges();
+                    sale.TotalAmount += detalle.Subtotal;
+                    _saleDetailRepository.Add(detalle);
+
+                    RemoveSaleDetailsTemp(detail.ProductId, sale.UserId);
+                    _saleDetailRepository.SaveChanges();
+                }
             }
         }
         public void RemoveSaleDetailsTemp(Guid IdProducto, string userId)
@@ -175,6 +177,14 @@ namespace Marquesita.Infrastructure.Services
                 _productRepository.Update(productoBd);
                 _productRepository.SaveChanges();
             }
+        }
+
+        public bool IsGreaterThan0(int quantity)
+        {
+            if (quantity <= 0)
+                return false;
+            else
+                return true;
         }
         public List<string> GetPaymentList()
         {

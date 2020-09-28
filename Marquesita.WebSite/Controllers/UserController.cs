@@ -1,6 +1,8 @@
-﻿using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.Email;
+using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
+using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +17,15 @@ namespace MarquesitaDashboards.Controllers
         private readonly IRoleManagerService _rolesManager;
         private readonly IConstantService _images;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IEmailSenderService _emailSender;
 
-        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IConstantService images, IWebHostEnvironment webHostEnvironment)
+        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IConstantService images, IWebHostEnvironment webHostEnvironment, IEmailSenderService emailSender)
         {
             _usersManager = usersManager;
             _rolesManager = rolesManager;
             _images = images;
             _webHostEnvironment = webHostEnvironment;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -236,6 +240,37 @@ namespace MarquesitaDashboards.Controllers
                 return View(resetPasswordModel);
             }
             return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanAddUsers")]
+        public IActionResult RegisterClient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanAddUsers")]
+        public async Task<IActionResult> RegisterClient(ClientViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _usersManager.CreateClientAsync(model, model.Password);
+                if (result.Succeeded)
+                {
+                    await _usersManager.AddingRoleToClientAsync(model.Username);
+
+                    var user = await _usersManager.GetUserByEmailAsync(model.Email);
+                    var token = await _usersManager.ConfirmationEmailToken(user);
+                    TempData["userEmail"] = model.Email;
+                    TempData["userToken"] = token;
+                    var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
+                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user, confirmationLink, null);
+                    await _emailSender.SendEmailConfirmationAsync(message);
+                    return RedirectToAction("AddClientSale", "Sale");
+                }
+            }
+            return View();
         }
     }
 }

@@ -24,15 +24,26 @@
 {
     <div class="content">
         <div class="container-fluid">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>@TempData.Peek("stockError")</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Alerta!</h5>
+                @TempData.Peek("stockError")
             </div>
         </div>
     </div>
+}
 
+@if (TempData.Peek("error") != null)
+{
+    <div class="content">
+        <div class="container-fluid">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-ban"></i> ¡Alerta!</h5>
+                @TempData.Peek("error")
+            </div>
+        </div>
+    </div>
 }
 <section class="content">
     <div class="container-fluid">
@@ -92,10 +103,10 @@
                             <br />
                             <br />
                             <div class="fa-pull-left">
-                                <a asp-controller="Sale" asp-action="AddProductClientSale" asp-route-userId="@ViewBag.User.Id" class="btn btn-primary">Regresar</a>
+                                <a asp-controller="Sale" asp-action="AddProductClientSale" asp-route-userId="@ViewBag.User.Id" class="btn btn-danger"><i class="fas fa-arrow-left"></i></a>
                             </div>
                             <div class="fa-pull-right">
-                                <button type="submit" class="btn btn-primary">Confirmar Pedido</button>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Confirmar Pedido</button>
                             </div>
                         </form>
                     </div>

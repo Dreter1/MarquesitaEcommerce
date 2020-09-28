@@ -18,13 +18,13 @@ namespace Marquesita.Infrastructure.Interfaces
         Task AddItemToClientOrderSaleAsync(AddItemViewModel model);
         Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity);
         Task DeleteDetailTempAsync(Guid id);
-        List<string> GetPaymentList();
-        List<string> GetSaleStatusList();
         void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp);
         void RemoveSaleDetailsTemp(Guid IdProducto, string userId);
         bool IsProductStocked(AddItemViewModel product);
         bool StockAvailable(IEnumerable<SaleDetailTemp> productos);
         void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp);
-
+        bool IsGreaterThan0(int quantity);
+        List<string> GetPaymentList();
+        List<string> GetSaleStatusList();
     }
 }
