@@ -31,7 +31,6 @@
 
 function deleteRol(rol) {
     var roleId = rol.dataset.id;
-    console.log(roleId);
     Swal.fire({
         title: '¿Desea eliminar el Rol?',
         text: "Si estas seguro presiona eliminar, recuerde que los usuarios que contengan este rol quedarán sin el. Por lo tanto luego debe asignarles un rol",
@@ -79,7 +78,6 @@ function deleteRol(rol) {
 
 function deleteCategory(category) {
     var categoryId = category.dataset.id;
-    console.log(categoryId);
     Swal.fire({
         title: '¿Desea eliminar la Categoria?',
         text: "Si estas seguro presiona eliminar, recuerde que los productos que tengan esta categoria, tambien serán borrados!, tenga en cuenta eso",
@@ -175,7 +173,6 @@ function deleteProduct(product) {
 
 function removeUserCredentials(user) {
     var userId = user.dataset.id;
-    console.log(userId);
     Swal.fire({
         title: '¿Desea desactivar este usuario?',
         text: "Si estas seguro presiona desactivar, recuerde que puedes volver activarlo en cualquier momento.",
@@ -223,7 +220,6 @@ function removeUserCredentials(user) {
 
 function grantUserCredentials(user) {
     var userId = user.dataset.id;
-    console.log(userId);
     Swal.fire({
         title: '¿Desea activar este usuario?',
         text: "Si estas seguro presiona activar, recuerde que puedes volver a desactivarlo en cualquier momento.",
@@ -271,7 +267,6 @@ function grantUserCredentials(user) {
 
 function getPorductList() {
     var userId = $("#userId").val();
-    console.log(userId);
     var url = "/Sale/AddProductSale?userId=" + userId;
     $.get(url, function (e) {
         $("#vistaPro").html(e);
@@ -280,9 +275,33 @@ function getPorductList() {
 
 function getDetailTempList() {
     var userId = $("#userId").val();
-    console.log(userId);
     var url = "/Sale/GetSaleDetailTempList?userId=" + userId;
     $.get(url, function (e) {
         $("#vistaTempItems").html(e);
+    });
+}
+
+function addProductToList() {
+    var productId = $("#productId").val();
+    var Quantity = $("#Quantity").val();
+    var userId = $("#userId").val();
+    var url = "/Sale/AddProductSale?Productid=" + productId + "&Quantity=" + Quantity + "&UserId=" + userId;
+    $.post(url, function (result) {
+        if (result === true) {
+            getPorductList();
+            getDetailTempList();
+        }
+        else {
+            getPorductList();
+        }
+    });
+}
+
+function incrementProductSaleTemp(product) {
+    var id = product.dataset.id;
+    var userId = $("#userId").val();
+    var url = "/Sale/Increase?id=" + id + "&userId=" + userId;
+    $.post(url, function () {
+        getDetailTempList();
     });
 }

@@ -6,6 +6,12 @@ namespace Marquesita.Infrastructure.ViewModels.Dashboards.Sales
 {
     public class AddItemViewModel
     {
+        public AddItemViewModel(Guid productid, int quantity, string userId)
+        {
+            Productid = productid;
+            Quantity = quantity;
+            UserId = userId;
+        }
 
         [DisplayName("Producto")]
         public Guid Productid { get; set; }

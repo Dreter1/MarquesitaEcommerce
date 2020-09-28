@@ -17,34 +17,36 @@
         </button>
     </div>
 }
-<form asp-controller="Sale" asp-action="AddProductSale">
-    <div class="form-group">
-        <label asp-for="Productid"></label>
-        <div class="select2-blue">
-            <select asp-for="Productid" class="form-control select2bs4" data-dropdown-css-class="select2-blue" style="width: 100%;">
-                @foreach (var product in ViewBag.Product)
-                {
-                    <option value="@product.Id">@product.Name</option>
-                }
-            </select>
-        </div>
-        <span asp-validation-for="Productid" class="text-danger"></span>
+<div class="form-group">
+    <label asp-for="Productid"></label>
+    <div class="select2-blue">
+        <select asp-for="Productid" id="productId" class="form-control select2bs4" data-dropdown-css-class="select2-blue" style="width: 100%;">
+            @foreach (var product in ViewBag.Product)
+            {
+                <option  value="@product.Id">@product.Name</option>
+            }
+        </select>
     </div>
+    <span asp-validation-for="Productid" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Quantity" class="control-label"></label>
-        <input asp-for="Quantity" class="form-control positive" />
-        <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <input hidden name="userId" value="@ViewBag.UserId" />
-    <div class="form-group">
-        <input type="submit" value="Agregar" class="btn btn-primary" />
-    </div>
-</form>
+<div class="form-group">
+    <label asp-for="Quantity" class="control-label"></label>
+    <input asp-for="Quantity" id="Quantity" value="1" class="form-control positive" />
+    <span asp-validation-for="Quantity" class="text-danger"></span>
+</div>
+<input hidden name="userId" id="userId" value="@ViewBag.UserId" />
+<div class="form-group">
+    <button type="submit" onclick="addProductToList()" class="btn btn-primary">Agregar</button>
+</div>
+
 
 <script>
-    $('.select2bs4').select2({
-        theme: 'bootstrap4'
-    })
+    $(document).ready(function () {
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+    });
+
 </script>
 

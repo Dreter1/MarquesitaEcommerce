@@ -71,6 +71,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddSales")]
         public IActionResult AddProductSale(string userId)
         {
+            TempData["error"] = null;
             if (userId != null)
             {
                 ViewBag.UserId = userId;
@@ -82,36 +83,38 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> AddProductSale(AddItemViewModel model)
+        public async Task<Boolean> AddProductSale(Guid Productid, int Quantity, string UserId)
         {
             TempData["error"] = null;
+            var model = new AddItemViewModel(Productid, Quantity, UserId);
             if (ModelState.IsValid)
             {
-                if (_saleService.IsProductStocked(model)) {
+                if (_saleService.IsProductStocked(model))
+                {
                     await _saleService.AddItemToClientOrderSaleAsync(model);
-                    return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
+                    return true;
                 }
                 TempData["stockError"] = "No hay la cantidad que usted solicita";
-                return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
+                return false;
             }
             TempData["error"] = "Porfavor ingrese una cantidad";
-            return RedirectToAction("AddProductClientSale", "Sale", new { userId = model.UserId });
+            return false;
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> Increase(Guid id, string userId)
+        public async Task<Boolean> Increase(Guid id, string userId)
         {
             if (id != null)
             {
                 await _saleService.ModifyOrderDetailTempQuantityAsync(id, 1);
-                return RedirectToAction("AddProductClientSale", "Sale", new { userId });
+                return true;
             }
-            return RedirectToAction("NotFound404", "Error");
+            return false;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> Decrease(Guid id, string userId)
         {
@@ -123,6 +126,7 @@ namespace MarquesitaDashboards.Controllers
             return RedirectToAction("NotFound404", "Error");
         }
 
+        [HttpPost]
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> DeleteItem(Guid id, string userId)
         {
@@ -134,6 +138,7 @@ namespace MarquesitaDashboards.Controllers
             return RedirectToAction("NotFound404", "Error");
         }
 
+        [HttpGet]
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> CreateSale(string userId)
         {
