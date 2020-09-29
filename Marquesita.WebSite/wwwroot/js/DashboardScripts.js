@@ -323,3 +323,43 @@ function deleteItemProductSaleTemp(product) {
         getDetailTempList();
     });
 }
+
+function confirmOrder() {
+    var paymentType = $("#PaymentType").val();
+    var userId = $("#UserId").val();
+    var totalAmount = $("#TotalAmount").val();
+    var url = "/Sale/CreateSale?PaymentType=" + paymentType + "&userId=" + userId + "&TotalAmount=" + totalAmount;
+    Swal.fire({
+        title: '¿Seguro que quiere realizar la venta?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Confirmar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post(url, function (response) {
+                if (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Venta realizada con exito',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    location.href = "/Sale/Index";
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo realizar la venta revise la venta',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    location.href = "/Sale/CreateSale?userId=" + userId;
+                }
+                getDetailTempList();
+            });
+        }
+    })
+}

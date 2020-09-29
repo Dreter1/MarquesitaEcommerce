@@ -4,6 +4,7 @@ using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -162,26 +163,31 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<IActionResult> CreateSaleAsync(Sale sale)
+        public async Task<Boolean> CreateSaleAsync(string PaymentType, string UserId, decimal TotalAmount)
         {
             TempData["error"] = null;
             TempData["stockError"] = null;
+            var sale = new Sale {
+                TotalAmount = TotalAmount,
+                PaymentType = PaymentType,
+                UserId = UserId
+            };
             var employee = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var tempList = _saleService.GetClientSaleTempList(sale.UserId);
+            IEnumerable<SaleDetailTemp> tempList = _saleService.GetClientSaleTempList(sale.UserId);
 
-            if (Enumerable.Count(tempList) > 0) {
+            if (tempList.Count() > 0) {
                 if (_saleService.StockAvailable(tempList))
                 {
                     _saleService.UpdateStock(tempList);
                     _saleService.SaveSale(employee, sale, tempList);
                     TempData["saleSuccess"] = "Se realizo la venta con exito";
-                    return RedirectToAction("Index", "Sale");
+                    return true;
                 }
                 TempData["stockError"] = "No contamos con el stock que solicita, vuelva a intentarlo";
-                return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId });
+                return false;
             }
             TempData["error"] = "No puede realizar una venta sin productos";
-            return RedirectToAction("CreateSale", "Sale", new { userId = sale.UserId });
+            return false;
         }
 
         [Authorize(Policy = "CanEditSales")]
