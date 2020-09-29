@@ -1,0 +1,89 @@
+﻿@if (Enumerable.Count(Model) > 0)
+{
+    <div class="checkout-right">
+        <h4>
+            Su carrito de compras tiene:
+            <span>3 Products</span>
+        </h4>
+        <div class="table-responsive">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Cantidad</th>
+                        <th>Nombre del Producto</th>
+                        <th>Precio</th>
+                        <th>SubTotal</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{Decimal total = 0; }
+                    @foreach (var cart in Model)
+                    {
+                        total += (Decimal)(cart.Quantity * cart.Products.UnitPrice);
+                        <tr class="rem1">
+                            <td class="invert-image">
+                                @if (cart.Products.ImageRoute != null)
+                                {
+                                    <img src="@ViewBag.Image@cart.Products.ImageRoute" alt="Product Image">
+                                }
+                                else
+                                {
+                                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" alt="">
+                                }
+                            </td>
+                            <td class="invert">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <div class="entry value-minus">&nbsp;</div>
+                                        <div class="entry value">
+                                            <span>@cart.Quantity</span>
+                                        </div>
+                                        <div class="entry value-plus active">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="invert">@cart.Products.Name</td>
+                            <td class="invert">@cart.Products.UnitPrice</td>
+                            <td class="invert">@(cart.Quantity * cart.Products.UnitPrice)</td>
+                            <td class="invert">
+                                <div class="rem">
+                                    <button class="w3view-cart" type="submit" name="submit" value="">
+                                        <i style="height:35px" class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr />
+    <div class="pull-right">
+        <h1>Total : @total</h1>
+        <div class="checkout-right">
+            <div class="address_form_agile">
+                <div class="checkout-right-basket">
+                    <a asp-controller="Sale" asp-action="Checkout">
+                        Revisar
+                        <span class="fa fa-hand-o-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="checkout-right">
+        <div class="text-center">
+            <h4>Usted no tiene productos en su carrito</h4>
+            <br />
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Agregar Productos</a>
+        </div>
+    </div>
+}
+

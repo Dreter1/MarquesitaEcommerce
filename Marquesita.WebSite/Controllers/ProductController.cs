@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
+using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,7 @@ namespace MarquesitaDashboards.Controllers
 
                 if (!_usersManager.isColaborator(userRole))
                 {
+                    ViewBag.User = user;
                     return View();
                 }
                 return RedirectToAction("NotFound404", "Error");

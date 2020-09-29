@@ -1,7 +1,6 @@
 ﻿<div class="wrapper">
     <div class="panel panel-default">
         <div class="panel-body">
-
             @foreach (var product in Model)
             {
                 if (product.Stock > 0 && product.IsActive)
@@ -30,7 +29,7 @@
                                 <div class="info-product-price">
                                     <span class="item_price">S./ @product.UnitPrice</span>
                                 </div>
-                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToCart(this)">
                                     <input type="submit" name="submit" value="Añadir al Carrito" class="button" />
                                 </div>
                                 <br />

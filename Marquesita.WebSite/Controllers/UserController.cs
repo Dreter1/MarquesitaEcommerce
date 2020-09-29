@@ -272,5 +272,13 @@ namespace MarquesitaDashboards.Controllers
             }
             return View();
         }
+
+        [AllowAnonymous]
+        public bool IsLogged()
+        {
+            if (User.Identity.Name != null)
+                return true;
+            return false;
+        }
     }
 }
