@@ -1,0 +1,83 @@
+﻿@if (Enumerable.Count(Model) > 0)
+{
+    <input hidden id="userId" value="@ViewBag.User.Id"/>
+    <div class="checkout-right">
+        <h4>
+            Su lista de deseos tiene:
+            <span>@Enumerable.Count(Model) Products</span>
+        </h4>
+        <div class="table-responsive">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nombre del Producto</th>
+                        <th>Precio</th>
+                        <th>Estado de Existencia</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var wishlist in Model)
+                    {
+                    <tr class="rem1">
+                        <td class="invert-image">
+                            @if (wishlist.Product.ImageRoute != null)
+                            {
+                                <img src="@ViewBag.Image@wishlist.Product.ImageRoute" alt="Product Image">
+                            }
+                            else
+                            {
+                                <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" alt="">
+                            }
+                        </td>
+                        <td class="invert">@wishlist.Product.Name</td>
+                        <td class="invert">S/. @wishlist.Product.UnitPrice</td>
+                        @if (wishlist.Product.Stock > 0)
+                        {
+                            <td class="invert">Con stock: @wishlist.Product.Stock </td>
+                        }
+                        else
+                        {
+                            <td class="invert">Sin stock</td>
+                        }
+                        <td class="invert">
+                            <div class="rem">
+                                <button class="w3view-cart" type="button" title="Añadir a carrito" data-id="@wishlist.ProductId" onclick="addProductToCart(this)">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                </button>
+                                <button class="w3view-cart" type="button" title="Eliminar de lista de deseos" data-id="@wishlist.Id" onclick="deleteWishListItem(this)">
+                                    <i style="height:35px" class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="fa-pull-right">
+        <div class="checkout-right">
+            <div class="address_form_agile">
+                <div class="checkout-right-basket">
+                    <a asp-controller="ShoppingCart" asp-action="Index">
+                        Carrito de Compras
+                        <span class="fa fa-hand-o-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="checkout-right">
+        <div class="text-center">
+            <h4>Usted no tiene productos en su lista de deseos</h4>
+            <br />
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Agregar Productos</a>
+        </div>
+    </div>
+}

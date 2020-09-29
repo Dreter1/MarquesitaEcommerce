@@ -270,11 +270,13 @@ namespace MarquesitaDashboards
             services.AddTransient<IRepository<SaleDetailTemp>, SaleDetailTempRepository>();
             services.AddTransient<IRepository<SaleDetail>, SaleDetailRepository>();
             services.AddTransient<IRepository<ShoppingCart>, ShoppingCartRepository>();
+            services.AddTransient<IRepository<WishList>, WishListRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISaleService, SaleService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IWishListService, WishListService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();

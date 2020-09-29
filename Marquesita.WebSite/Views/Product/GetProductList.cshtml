@@ -1,6 +1,6 @@
 ﻿<div class="wrapper">
     <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-body itemsFiltrar">
             @foreach (var product in Model)
             {
                 if (product.Stock > 0 && product.IsActive)
@@ -33,7 +33,7 @@
                                     <input type="submit" name="submit" value="Añadir al Carrito" class="button" />
                                 </div>
                                 <br />
-                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToWishList(this)">
                                     <input type="submit" name="submit" value="Añadir a lista deseos" class="button" />
                                 </div>
                             </div>
