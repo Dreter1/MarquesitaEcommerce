@@ -36,11 +36,11 @@
                             <td class="invert">
                                 <div class="quantity">
                                     <div class="quantity-select">
-                                        <div class="entry value-minus">&nbsp;</div>
+                                        <div data-id="@cart.Id" onclick="decreaseCartItemQuantity(this)" class="entry value-minus">&nbsp;</div>
                                         <div class="entry value">
                                             <span>@cart.Quantity</span>
                                         </div>
-                                        <div class="entry value-plus active">&nbsp;</div>
+                                        <div data-id="@cart.Id" onclick="incrementCartItemQuantity(this)" class="entry value-plus active">&nbsp;</div>
                                     </div>
                                 </div>
                             </td>
@@ -49,7 +49,7 @@
                             <td class="invert">@(cart.Quantity * cart.Products.UnitPrice)</td>
                             <td class="invert">
                                 <div class="rem">
-                                    <button class="w3view-cart" type="submit" name="submit" value="">
+                                    <button class="w3view-cart" type="submit" name="submit" value="" data-id="@cart.Id" onclick="deleteCartItem(this)">
                                         <i style="height:35px" class="glyphicon glyphicon-remove" aria-hidden="true"></i>
                                     </button>
                                 </div>

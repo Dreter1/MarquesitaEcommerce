@@ -79,5 +79,28 @@ function addProductToCart(product) {
             })
         }
     });
+}
 
+function incrementCartItemQuantity(itemCart) {
+    var id = itemCart.dataset.id;
+    var url = "/ShoppingCart/Increase?id=" + id;
+    $.post(url, function () {
+        getshoppingCartList();
+    });
+}
+
+function decreaseCartItemQuantity(itemCart) {
+    var id = itemCart.dataset.id;
+    var url = "/ShoppingCart/Decrease?id=" + id;
+    $.post(url, function () {
+        getshoppingCartList();
+    });
+}
+
+function deleteCartItem(itemCart) {
+    var id = itemCart.dataset.id;
+    var url = "/ShoppingCart/DeleteItem?id=" + id;
+    $.post(url, function () {
+        getshoppingCartList();
+    });
 }
