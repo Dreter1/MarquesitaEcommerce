@@ -5,17 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Marquesita.Infrastructure.Services
 {
     public class ShoppingCartService : IShoppingCartService
     {
-        private readonly IRepository<ShoppingCart> _repository;
+        private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly BusinessDbContext _context;
 
-        public ShoppingCartService(IRepository<ShoppingCart> repository, BusinessDbContext context)
+        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, BusinessDbContext context)
         {
-            _repository = repository;
+            _shoppingCartRepository = shoppingCartRepository;
             _context = context;
         }
 
@@ -45,8 +46,35 @@ namespace Marquesita.Infrastructure.Services
                 Quantity = 1
             };
 
-            _repository.Add(cartItem);
-            _repository.SaveChanges();
+            _shoppingCartRepository.Add(cartItem);
+            _shoppingCartRepository.SaveChanges();
+        }
+
+        public async Task UpdateQuantityShoppingCartItem(Guid id, int quantity)
+        {
+            var shoppingCartItem = await _context.ShoppingCarts.FindAsync(id);
+
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.Quantity += quantity;
+                if (shoppingCartItem.Quantity > 0)
+                {
+                    _shoppingCartRepository.Update(shoppingCartItem);
+                    _shoppingCartRepository.SaveChanges();
+                }
+            }
+            return;
+        }
+
+        public async Task DeleteShoppingCartItem(Guid id)
+        {
+            var shoppingCartItem = await _context.ShoppingCarts.FindAsync(id);
+            if (shoppingCartItem != null)
+            {
+                _shoppingCartRepository.Remove(shoppingCartItem);
+                _shoppingCartRepository.SaveChanges();
+            }
+            return;
         }
     }
 }

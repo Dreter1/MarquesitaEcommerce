@@ -66,5 +66,41 @@ namespace Marquesita.WebSite.Controllers
             _shoppingCartService.CreateShoppingCartItem(idProduct, userId);
             return true;
         }
+
+        [HttpPost]
+        [Authorize(Policy = "Client")]
+        public async Task<Boolean> Increase(Guid id)
+        {
+            if (id != null)
+            {
+                await _shoppingCartService.UpdateQuantityShoppingCartItem(id, 1);
+                return true;
+            }
+            return false;
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Client")]
+        public async Task<Boolean> Decrease(Guid id)
+        {
+            if (id != null)
+            {
+                await _shoppingCartService.UpdateQuantityShoppingCartItem(id, -1);
+                return true;
+            }
+            return false;
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Client")]
+        public async Task<Boolean> DeleteItem(Guid id)
+        {
+            if (id != null)
+            {
+                await _shoppingCartService.DeleteShoppingCartItem(id);
+                return true;
+            }
+            return false;
+        }
     }
 }

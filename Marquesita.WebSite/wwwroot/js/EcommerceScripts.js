@@ -57,7 +57,7 @@ function addProductToCart(product) {
                         confirmButtonText: 'Ir a carrito'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            location.href = "/Home/Index";
+                            location.href = "/ShoppingCart/Index";
                         }
                     })
                 }
