@@ -1,0 +1,103 @@
+﻿@model Marquesita.Models.Business.Product
+@{
+    ViewData["Title"] = "Detalle de producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a asp-controller="Product" asp-action="Index">Home</a>
+                    <i>|</i>
+                </li>
+                <li>Producto</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="banner-bootom-w3-agileits">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Especificaciones de producto
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+
+        <div class="col-md-5 single-right-left ">
+            <div class="grid images_3_of_2">
+                @if (Model.ImageRoute != null)
+                {
+                    <div class="thumb-image">
+                        <img src="@ViewBag.Image@Model.ImageRoute"
+                             data-imagezoom="true" class="img-responsive"
+                             alt="Product Image"
+                             asp-append-version="true" />
+                    </div>
+                }
+                else
+                {
+                    <div class="thumb-image">
+                        <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" data-imagezoom="true" class="img-responsive" alt="">
+                    </div>
+                }
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-7 single-right-left simpleCart_shelfItem">
+            <h3>@Model.Name</h3>
+            <p>
+                <span class="item_price">Precio: S./ @Model.UnitPrice</span>
+            </p>
+            <p>
+                @if (Model.Stock >= 100)
+                {
+                    <span class="badge badge-pill badge-success">Stock: @Model.Stock</span>
+                }
+                else if (Model.Stock >= 50 && Model.Stock < 100)
+                {
+                    <span class="badge badge-pill badge-warning">Stock: @Model.Stock</span>
+                }
+                else
+                {
+                    <span class="badge badge-pill badge-danger">Stock: @Model.Stock</span>
+                }
+            </p>
+            <br />
+            <div class="product-single-w3l">
+                <p>
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>This is a
+                    <label>Vegetarian</label> product.
+                </p>
+                <ul>
+                    <li>
+                        @Model.Description
+                    </li>
+                </ul>
+            </div>
+            <br />
+            <div class="product-single-w3l">
+                <br />
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add hvr-outline-out" data-id="@Model.Id" onclick="addProductToCart(this)">
+                        <input type="submit" name="submit" value="Añadir a carrito" class="button" />
+                    </div>
+                </div>
+                <br />
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add hvr-outline-out" data-id="@Model.Id" onclick="addProductToCart(this)">
+                        <input type="submit" name="submit" value="Añadir a carrito" class="button" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+

@@ -10,7 +10,10 @@
                             <div class="men-thumb-item">
                                 @if (product.ImageRoute != null)
                                 {
-                                    <img src="@ViewBag.Image@product.ImageRoute" alt="Product Image">
+                                    <img src="@ViewBag.Image@product.ImageRoute"
+                                         width="128" height="128"
+                                         alt="Product Image"
+                                         asp-append-version="true" />
                                 }
                                 else
                                 {
@@ -18,26 +21,28 @@
                                 }
                                 <div class="men-cart-pro">
                                     <div class="inner-men-cart-pro">
-                                        <a href="#" class="link-product-add-cart">Vista rápida</a>
+                                        <a asp-controller="Product" asp-action="Detail" asp-route-Id="@product.Id" class="link-product-add-cart">Vista rápida</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="item-info-product ">
                                 <h4>
-                                    <a href="#">@product.Name</a>
+                                    <a asp-controller="Product" asp-action="Detail" asp-route-Id="@product.Id">@product.Name</a>
                                 </h4>
                                 <div class="info-product-price">
                                     <span class="item_price">S./ @product.UnitPrice</span>
                                 </div>
-                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToCart(this)">
-                                    <input type="submit" name="submit" value="Añadir al Carrito" class="button" />
+                                <div class="mb-4 snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToCart(this)">
+                                    <input type="submit" value="Añadir a Carrito" class="button" />
                                 </div>
                                 <br />
-                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToWishList(this)">
-                                    <input type="submit" name="submit" value="Añadir a lista deseos" class="button" />
+                                <div class="mt-5 snipcart-details top_brand_home_details item_add single-item hvr-outline-out" data-id="@product.Id" onclick="addProductToWishList(this)">
+                                    <input type="submit" value="Añadir a deseos" class="button" />
                                 </div>
                             </div>
                         </div>
+                        <br />
+                        <hr />
                     </div>
                 }
             }

@@ -133,6 +133,33 @@ namespace MarquesitaDashboards.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> DetailAsync(Guid Id)
+        {
+            var product = _productService.GetProductById(Id);
+
+            if (product == null)
+                return RedirectToAction("NotFound404", "Error");
+
+            if (User.Identity.Name != null)
+            {
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(user);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    ViewBag.Image = _images.RoutePathRootProductsImages();
+                    ViewBag.UserId = user.Id;
+                    return View(product);
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+
+            ViewBag.Image = _images.RoutePathRootProductsImages();
+            return View(product);
+        }
+
         [HttpPost]
         [Authorize(Policy = "CanDeleteProducts")]
         public Boolean Delete(Guid Id)
