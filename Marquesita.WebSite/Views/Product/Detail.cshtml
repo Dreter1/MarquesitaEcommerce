@@ -82,6 +82,10 @@
                 </ul>
             </div>
             <br />
+            @if (ViewBag.User != null)
+            {
+                <input hidden id="userId" value="@ViewBag.User.Id" />
+            }
             <div class="product-single-w3l">
                 <br />
                 <div class="occasion-cart">
@@ -91,8 +95,8 @@
                 </div>
                 <br />
                 <div class="occasion-cart">
-                    <div class="snipcart-details top_brand_home_details item_add hvr-outline-out" data-id="@Model.Id" onclick="addProductToCart(this)">
-                        <input type="submit" name="submit" value="Añadir a carrito" class="button" />
+                    <div class="snipcart-details top_brand_home_details item_add hvr-outline-out" data-id="@Model.Id" onclick="addProductToWishList(this)">
+                        <input type="submit" name="submit" value="Añadir a deseos" class="button" />
                     </div>
                 </div>
             </div>

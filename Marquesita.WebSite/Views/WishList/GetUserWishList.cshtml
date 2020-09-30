@@ -24,11 +24,14 @@
                         <td class="invert-image">
                             @if (wishlist.Product.ImageRoute != null)
                             {
-                                <img src="@ViewBag.Image@wishlist.Product.ImageRoute" alt="Product Image">
+                                <img src="@ViewBag.Image@wishlist.Product.ImageRoute"
+                                     width="150" height="150"
+                                     alt="Product Image"
+                                     asp-append-version="true" />
                             }
                             else
                             {
-                                <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" alt="">
+                                <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" width="150" height="150" alt="">
                             }
                         </td>
                         <td class="invert">@wishlist.Product.Name</td>

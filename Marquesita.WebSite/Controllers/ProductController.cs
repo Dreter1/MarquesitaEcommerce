@@ -150,7 +150,7 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     ViewBag.Image = _images.RoutePathRootProductsImages();
-                    ViewBag.UserId = user.Id;
+                    ViewBag.User = user;
                     return View(product);
                 }
                 return RedirectToAction("NotFound404", "Error");
