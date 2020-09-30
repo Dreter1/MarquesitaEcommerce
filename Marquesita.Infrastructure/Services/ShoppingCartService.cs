@@ -76,5 +76,15 @@ namespace Marquesita.Infrastructure.Services
             }
             return;
         }
+
+        public void RemoveShoppingCartItemForSale(Guid IdProducto, string userId)
+        {
+            var shoppingCartItem = _context.ShoppingCarts.Where(x => x.ProductId == IdProducto && x.UserId == userId).FirstOrDefault();
+            if (shoppingCartItem != null)
+            {
+                _shoppingCartRepository.Remove(shoppingCartItem);
+                _shoppingCartRepository.SaveChanges();
+            }
+        }
     }
 }

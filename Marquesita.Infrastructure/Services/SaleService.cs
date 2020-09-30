@@ -19,6 +19,7 @@ namespace Marquesita.Infrastructure.Services
         private readonly IRepository<Product> _productRepository;
         private readonly IProductService _productService;
         private readonly IConstantService _constantService;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly BusinessDbContext _context;
 
         public SaleService(IRepository<Sale> Salerepository,
@@ -27,12 +28,15 @@ namespace Marquesita.Infrastructure.Services
             IRepository<Product> productRepository,
             IProductService productService,
             IConstantService constantService,
+            IShoppingCartService shoppingCartService,
             BusinessDbContext context) {
             _saleRepository = Salerepository;
             _saleDetailTempRepository = SaleDetailTempRepository;
             _saleDetailRepository = saleDetailRepository;
             _productRepository = productRepository;
             _productService = productService;
+            _constantService = constantService;
+            _shoppingCartService = shoppingCartService;
             _context = context;
         }
         public async Task<Sale> GetOrdersAsync(int id)
@@ -76,6 +80,7 @@ namespace Marquesita.Infrastructure.Services
             }
             _saleDetailTempRepository.SaveChanges();
         }
+
         public async Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity)
         {
             var orderDetailTemp = await _context.SaleDetailsTemp.FindAsync(id);
@@ -140,6 +145,7 @@ namespace Marquesita.Infrastructure.Services
                 }
             }
         }
+
         public void RemoveSaleDetailsTemp(Guid IdProducto, string userId)
         {
             var saleDetailTemp = _context.SaleDetailsTemp.Where(x => x.ProductId == IdProducto && x.UserId == userId).FirstOrDefault();
@@ -150,13 +156,14 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
-        public bool IsProductStocked(AddItemViewModel product)
+        public bool IsProductStocked(Guid productId, int quantity)
         {
-            var productoBd = _productService.GetProductById(product.Productid);
-            if (productoBd.Stock < product.Quantity)
+            var product = _productService.GetProductById(productId);
+            if (product.Stock < quantity)
                 return false;
             return true;
         }
+
         public bool StockAvailable(IEnumerable<SaleDetailTemp> productos)
         {
             Product productoBd;
@@ -168,6 +175,7 @@ namespace Marquesita.Infrastructure.Services
             }
             return true;
         }
+
         public void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp)
         {
             Product productoBd;
@@ -180,6 +188,68 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
+        public void SaveEcommerceSale(User user, Sale sale, IEnumerable<ShoppingCart> shoppigCart)
+        {
+            if (shoppigCart.Count() > 0)
+            {
+                var order = new Sale
+                {
+                    UserId = sale.UserId,
+                    TotalAmount = sale.TotalAmount,
+                    EmployeeId = user.Id,
+                    Date = DateTime.UtcNow,
+                    PaymentType = sale.PaymentType,
+                    SaleStatus = _constantService.SaleStatus_Process(),
+                    TypeOfSale = _constantService.Ecommerce_Sale()
+                };
+                _saleRepository.Add(order);
+                _saleRepository.SaveChanges();
+
+                foreach (var detail in shoppigCart)
+                {
+                    var product = _productService.GetProductById(detail.ProductId);
+                    var saleDetail = new SaleDetail
+                    {
+                        ProductId = product.Id,
+                        SaleId = order.Id,
+                        UnitPrice = product.UnitPrice,
+                        Quantity = detail.Quantity,
+                        Subtotal = product.UnitPrice * detail.Quantity,
+                    };
+
+                    sale.TotalAmount += saleDetail.Subtotal;
+                    _saleDetailRepository.Add(saleDetail);
+
+                     _shoppingCartService.RemoveShoppingCartItemForSale(detail.ProductId, sale.UserId);
+                    _saleDetailRepository.SaveChanges();
+                }
+            }
+        }
+
+        public bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products)
+        {
+            Product product;
+            foreach (var shoppingCartItem in products)
+            {
+                product = _productService.GetProductById(shoppingCartItem.ProductId);
+                if (product.Stock < shoppingCartItem.Quantity)
+                    return false;
+            }
+            return true;
+        }
+
+        public void UpdateStockEcommerce(IEnumerable<ShoppingCart> shoppingCartItems)
+        {
+            Product product;
+            foreach (var item in shoppingCartItems)
+            {
+                product = _context.Products.Where(o => o.Id == item.ProductId).FirstOrDefault();
+                product.Stock -= item.Quantity;
+                _productRepository.Update(product);
+                _productRepository.SaveChanges();
+            }
+        }
+
         public bool IsGreaterThan0(int quantity)
         {
             if (quantity <= 0)
@@ -187,6 +257,7 @@ namespace Marquesita.Infrastructure.Services
             else
                 return true;
         }
+
         public List<string> GetPaymentList()
         {
             return new List<string>() {

@@ -12,5 +12,6 @@ namespace Marquesita.Infrastructure.Interfaces
         void CreateShoppingCartItem(Guid idProduct, string userId);
         Task UpdateQuantityShoppingCartItem(Guid id, int quantity);
         Task DeleteShoppingCartItem(Guid id);
+        void RemoveShoppingCartItemForSale(Guid IdProducto, string userId);
     }
 }

@@ -96,7 +96,7 @@ namespace MarquesitaDashboards.Controllers
             };
             if (_saleService.IsGreaterThan0(model.Quantity))
             {
-                if (_saleService.IsProductStocked(model))
+                if (_saleService.IsProductStocked(model.Productid, model.Quantity))
                 {
                     await _saleService.AddItemToClientOrderSaleAsync(model);
                     return true;

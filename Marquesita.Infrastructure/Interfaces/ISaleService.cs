@@ -20,9 +20,12 @@ namespace Marquesita.Infrastructure.Interfaces
         Task DeleteDetailTempAsync(Guid id);
         void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp);
         void RemoveSaleDetailsTemp(Guid IdProducto, string userId);
-        bool IsProductStocked(AddItemViewModel product);
+        bool IsProductStocked(Guid productId, int quantity);
         bool StockAvailable(IEnumerable<SaleDetailTemp> productos);
         void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp);
+        void SaveEcommerceSale(User user, Sale sale, IEnumerable<ShoppingCart> shoppigCart);
+        bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products);
+        void UpdateStockEcommerce(IEnumerable<ShoppingCart> shoppingCartItems);
         bool IsGreaterThan0(int quantity);
         List<string> GetPaymentList();
         List<string> GetSaleStatusList();
