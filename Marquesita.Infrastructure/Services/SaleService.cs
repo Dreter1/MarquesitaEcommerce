@@ -18,6 +18,7 @@ namespace Marquesita.Infrastructure.Services
         private readonly IRepository<SaleDetail> _saleDetailRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IProductService _productService;
+        private readonly IConstantService _constantService;
         private readonly BusinessDbContext _context;
 
         public SaleService(IRepository<Sale> Salerepository,
@@ -25,6 +26,7 @@ namespace Marquesita.Infrastructure.Services
             IRepository<SaleDetail> saleDetailRepository,
             IRepository<Product> productRepository,
             IProductService productService,
+            IConstantService constantService,
             BusinessDbContext context) {
             _saleRepository = Salerepository;
             _saleDetailTempRepository = SaleDetailTempRepository;
@@ -112,9 +114,8 @@ namespace Marquesita.Infrastructure.Services
                     EmployeeId = user.Id,
                     Date = DateTime.UtcNow,
                     PaymentType = sale.PaymentType,
-                    SaleStatus = "En proceso",
-                    TypeOfSale = "En Tienda"
-
+                    SaleStatus = _constantService.SaleStatus_Process(),
+                    TypeOfSale = _constantService.Store_Sale()
                 };
                 _saleRepository.Add(order);
                 _saleRepository.SaveChanges();
