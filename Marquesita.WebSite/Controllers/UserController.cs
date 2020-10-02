@@ -28,6 +28,14 @@ namespace MarquesitaDashboards.Controllers
             _emailSender = emailSender;
         }
 
+        [AllowAnonymous]
+        public bool IsLogged()
+        {
+            if (User.Identity.Name != null)
+                return true;
+            return false;
+        }
+
         [HttpGet]
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
@@ -271,14 +279,6 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
             return View();
-        }
-
-        [AllowAnonymous]
-        public bool IsLogged()
-        {
-            if (User.Identity.Name != null)
-                return true;
-            return false;
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
-    public partial class creatingDbBussines : Migration
+    public partial class CreatingBussinesDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,12 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Street = table.Column<string>(nullable: false),
-                    Conutry = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
                     Region = table.Column<string>(nullable: false),
                     City = table.Column<string>(nullable: false),
                     PostalCode = table.Column<string>(nullable: false),
+                    FullNames = table.Column<string>(nullable: false),
+                    Phone = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

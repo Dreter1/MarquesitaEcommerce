@@ -1,0 +1,79 @@
+﻿@model List<Marquesita.Models.Business.Address>
+@{
+    ViewData["Title"] = "Direcciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="privacy">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Mis Direcciones
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        @if (Enumerable.Count(Model) > 0)
+        {
+            <div class="fa-pull-right">
+                <a asp-controller="Client" class="btn btn-lg btn-primary"  asp-action="NewAddress"><i class="fas fa-plus-square"></i> <i class="fas fa-address-card"></i></a>
+            </div>
+            <br />
+            <br />
+            <hr />
+            <div class="checkout-right">
+                <div class="table-responsive">
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>Destinatario</th>
+                                <th>Celular</th>
+                                <th>Calle</th>
+                                <th>Región</th>
+                                <th>Ciudad</th>
+                                <th>Código Postal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var address in Model)
+                            {
+                            <tr class="rem1">
+                                <td class="invert">@address.FullNames</td>
+                                <td class="invert">@address.Phone</td>
+                                <td class="invert">@address.Street</td>
+                                <td class="invert">@address.Region</td>
+                                <td class="invert">@address.City</td>
+                                <td class="invert">@address.PostalCode</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        <button class="w3view-cart" type="button" title="Editar" data-id="@address.Id" onclick="editAddress(this)">
+                                            <i class="fas fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="w3view-cart" type="button" title="Eliminar" data-id="@address.Id" onclick="deleteAddress(this)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="checkout-right">
+                <div class="text-center">
+                    <h4>Usted no tiene ninguna direccion registrada</h4>
+                    <br />
+                    <a asp-controller="Client" asp-action="NewAddress" class="btn btn-primary">Agregar nueva direccion</a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

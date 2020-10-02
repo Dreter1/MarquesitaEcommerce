@@ -23,7 +23,6 @@ namespace Marquesita.Infrastructure.Services
         public IEnumerable<ShoppingCart> getUserCartAsList(string userId)
         {
             return _context.ShoppingCarts.Where(cart => cart.UserId == userId).Include(p => p.Products).ToList();
-
         }
 
         public bool DoesUserAndProductExistInCart(Guid idProduct, string userId)

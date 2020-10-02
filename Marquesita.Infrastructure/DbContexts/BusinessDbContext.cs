@@ -129,10 +129,12 @@ namespace Marquesita.Infrastructure.DbContexts
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Street).IsRequired();
-                entity.Property(p => p.Conutry).IsRequired();
+                entity.Property(p => p.Country).IsRequired();
                 entity.Property(p => p.Region).IsRequired();
                 entity.Property(p => p.City).IsRequired();
                 entity.Property(p => p.PostalCode).IsRequired();
+                entity.Property(p => p.FullNames).IsRequired();
+                entity.Property(p => p.Phone).IsRequired();
                 entity.Property(p => p.UserId).IsRequired();
             });
 

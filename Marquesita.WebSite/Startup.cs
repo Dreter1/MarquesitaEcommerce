@@ -260,6 +260,8 @@ namespace MarquesitaDashboards
             services.AddTransient<IValidator<ProductViewModel>, ProductViewModelValidator>();
             services.AddTransient<IValidator<ProductEditViewModel>, ProductEditViewModelValidator>();
             services.AddTransient<IValidator<AddItemViewModel>, AddItemViewModelValidator>();
+            services.AddTransient<IValidator<AddressViewModel>, AddressViewModelValidator>();
+            services.AddTransient<IValidator<AddressEditViewModel>, AddressEditViewModelValidator>();
         }
 
         private void RepositoriesConfiguration(IServiceCollection services)
@@ -271,12 +273,14 @@ namespace MarquesitaDashboards
             services.AddTransient<IRepository<SaleDetail>, SaleDetailRepository>();
             services.AddTransient<IRepository<ShoppingCart>, ShoppingCartRepository>();
             services.AddTransient<IRepository<WishList>, WishListRepository>();
+            services.AddTransient<IRepository<Address>, AddressRepositroy>();
 
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISaleService, SaleService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IWishListService, WishListService>();
+            services.AddTransient<IAddressService, AddressService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();

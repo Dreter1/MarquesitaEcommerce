@@ -192,3 +192,55 @@ function deleteWishListItem(itemCart) {
         getWishList();
     });
 }
+
+function editAddress(address) {
+    var Id = address.dataset.id;
+    location.href = "/Client/EditAddress?Id=" + Id;
+}
+
+function deleteAddress(address) {
+    var addressId = address.dataset.id;
+    Swal.fire({
+        title: '¿Desea eliminar esta direccion?',
+        text: "Si estas seguro presiona eliminar, recuerde que si elimina la direccion no habra vuelta atras.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.value) {
+            console.log(result.value);
+            $.ajax({
+                url: "/Client/DeleteAddress",
+                type: "POST",
+                data: {
+                    Id: addressId,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Completado',
+                        text: 'La direccion se ha eliminado con exito'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Client/Addresses";
+                        }
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La direccion no se pudo eliminar, vuelva a intentarlo'
+                    }).then((result) => {
+                        if (result.value) {
+                            location.href = "/Client/Addresses";
+                        }
+                    })
+                }
+            })
+        }
+    });
+}
