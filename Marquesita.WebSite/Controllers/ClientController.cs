@@ -15,13 +15,15 @@ namespace MarquesitaDashboards.Controllers
         private readonly IConstantService _images;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAddressService _addressService;
+        private readonly ISaleService _saleService;
 
-        public ClientController(IUserManagerService usersManager, IConstantService images, IWebHostEnvironment webHostEnvironment, IAddressService addressService)
+        public ClientController(IUserManagerService usersManager, IConstantService images, IWebHostEnvironment webHostEnvironment, IAddressService addressService, ISaleService saleService)
         {
             _usersManager = usersManager;
             _images = images;
             _webHostEnvironment = webHostEnvironment;
             _addressService = addressService;
+            _saleService = saleService;
         }
 
         [Authorize(Policy = "Client")]
@@ -158,6 +160,22 @@ namespace MarquesitaDashboards.Controllers
                 return true;
             }
             return false;
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Client")]
+        public async Task<IActionResult> MyOrdersAsync()
+        {
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            return View(_saleService.GetClientSaleList(userId));
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Client")]
+        public IActionResult MyOrderDetail(Guid saleId)
+        {
+            ViewBag.Sale = _saleService.GetSaleById(saleId);
+            return View(_saleService.GetDetailSaleList(saleId));
         }
     }
 }

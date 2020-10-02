@@ -193,6 +193,11 @@ function deleteWishListItem(itemCart) {
     });
 }
 
+function getSaleDetails(sale) {
+    var Id = sale.dataset.id;
+    location.href = "/Client/MyOrderDetail?saleId=" + Id;
+}
+
 function editAddress(address) {
     var Id = address.dataset.id;
     location.href = "/Client/EditAddress?Id=" + Id;

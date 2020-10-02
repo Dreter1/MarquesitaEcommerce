@@ -1,0 +1,68 @@
+﻿@model List<Marquesita.Models.Business.SaleDetail>
+@{
+    ViewData["Title"] = "Detalle de pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="privacy">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Detalle de orden
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <hr />
+        <br />
+        <div>
+            @if (ViewBag.Sale.Address != null)
+            {
+                <h4>Destinatario: @ViewBag.Sale.Address.FullNames</h4>
+                <h4>Telefono de contacto: @ViewBag.Sale.Address.Phone</h4>
+                <h4>Direccion: @ViewBag.Sale.Address.Street - @ViewBag.Sale.Address.Region - @ViewBag.Sale.Address.City - @ViewBag.Sale.Address.PostalCode </h4>
+
+            }
+            else
+            {
+                <h4>Tipo de compra: Tienda La Marquesita</h4>
+            }
+            <h4>Fecha: @ViewBag.Sale.Date</h4>
+        </div>
+        <hr />
+        <br />
+        <div class="checkout-right">
+            <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int count = 0; }
+                        @foreach (var saleDetail in Model)
+                        {
+                            count += 1;
+                            <tr class="rem1">
+                                <td class="invert">@count</td>
+                                <td class="invert">@saleDetail.Product.Name</td>
+                                <td class="invert">@saleDetail.UnitPrice</td>
+                                <td class="invert">@saleDetail.Quantity</td>
+                                <td class="invert">@saleDetail.Subtotal</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <hr />
+                <a asp-controller="Client" asp-action="MyOrders" class="btn btn-danger fa-pull-left"><i class="fas fa-arrow-left"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+

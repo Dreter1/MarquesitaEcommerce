@@ -1,0 +1,72 @@
+﻿@model List<Marquesita.Models.Business.Sale>
+@{
+    ViewData["Title"] = "Mis Pedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="privacy">
+    <div class="container">
+        <h3 class="tittle-w3l">
+            Mis Ordenes
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        @if (Model.Count() > 0)
+        {
+            <div class="checkout-right">
+                <div class="table-responsive">
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Destinatario</th>
+                                <th>Fecha</th>
+                                <th>Monto</th>
+                                <th>Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int count = 0; }
+                            @foreach (var sale in Model)
+                            {
+                                count += 1;
+                            <tr class="rem1">
+                                <td class="invert">@count</td>
+                                @if (sale.Address != null)
+                                {
+                                    <td class="invert">@sale.Address.FullNames</td>
+                                }
+                                else
+                                {
+                                    <td class="invert">Venta hecha en tienda</td>
+                                }
+                                <td class="invert">@sale.Date.ToShortDateString()</td>
+                                <td class="invert">S/. @sale.TotalAmount</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        <button class="w3view-cart" type="button" title="Detalles" data-id="@sale.Id" onclick="getSaleDetails(this)">
+                                            <i style="height:35px" class="fas fa-info-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="checkout-right">
+                <div class="text-center">
+                    <h4>Usted no ningun pedido realizado</h4>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

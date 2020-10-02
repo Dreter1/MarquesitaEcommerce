@@ -3,6 +3,7 @@ using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,10 +44,34 @@ namespace Marquesita.Infrastructure.Services
         {
             return await _context.Sales.FindAsync(id);
         }
+
+        public Sale GetSaleById(Guid id)
+        {
+            if (id == null)
+                return null;
+
+            return _context.Sales.Where(sale => sale.Id == id).Include(address => address.Address).FirstOrDefault();
+        }
+
+
         public IEnumerable<Sale> GetSaleList()
         {
             return _saleRepository.All();
         }
+
+        public IEnumerable<Sale> GetClientSaleList(string userId)
+        {
+            if (userId == null)
+                return null;
+
+            return _context.Sales.Where(sale => sale.UserId == userId).Include(address => address.Address).ToList();
+        }
+
+        public IEnumerable<SaleDetail> GetDetailSaleList(Guid saleId)
+        {
+            return _context.SaleDetails.Where(saleDetail => saleDetail.SaleId == saleId).Include(products => products.Product).ToList();
+        }
+
         public IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId)
         {
             var clientSaleDetailtTemp = _context.SaleDetailsTemp.Where(x => x.UserId == userId).ToList();
@@ -188,17 +213,17 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
-        public void SaveEcommerceSale(User user, Sale sale, IEnumerable<ShoppingCart> shoppigCart)
+        public void SaveEcommerceSale(Address address, Sale sale, IEnumerable<ShoppingCart> shoppigCart)
         {
             if (shoppigCart.Count() > 0)
             {
                 var order = new Sale
                 {
+                    Date = DateTime.UtcNow,
                     UserId = sale.UserId,
                     TotalAmount = sale.TotalAmount,
-                    EmployeeId = user.Id,
-                    Date = DateTime.UtcNow,
                     PaymentType = sale.PaymentType,
+                    AddressId = address.Id,
                     SaleStatus = _constantService.SaleStatus_Process(),
                     TypeOfSale = _constantService.Ecommerce_Sale()
                 };

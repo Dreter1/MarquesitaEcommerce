@@ -12,7 +12,10 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface ISaleService
     {
+        Sale GetSaleById(Guid id);
         IEnumerable<Sale> GetSaleList();
+        IEnumerable<Sale> GetClientSaleList(string userId);
+        IEnumerable<SaleDetail> GetDetailSaleList(Guid saleId);
         IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId);
         Task<Sale> GetOrdersAsync(int id);
         Task AddItemToClientOrderSaleAsync(AddItemViewModel model);
@@ -23,7 +26,7 @@ namespace Marquesita.Infrastructure.Interfaces
         bool IsProductStocked(Guid productId, int quantity);
         bool StockAvailable(IEnumerable<SaleDetailTemp> productos);
         void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp);
-        void SaveEcommerceSale(User user, Sale sale, IEnumerable<ShoppingCart> shoppigCart);
+        void SaveEcommerceSale(Address address, Sale sale, IEnumerable<ShoppingCart> shoppigCart);
         bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products);
         void UpdateStockEcommerce(IEnumerable<ShoppingCart> shoppingCartItems);
         bool IsGreaterThan0(int quantity);
