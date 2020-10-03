@@ -11,7 +11,7 @@ namespace Marquesita.Infrastructure.Interfaces
         IEnumerable<Categories> GetCategoryList();
         Categories GetCategoryById(Guid Id);
         void CreateCategory(Categories category);
-        void DeleteCategory(Categories category);
+        void DeleteCategory(Categories category, string path);
         void UpdateCategory(CategoryViewModel model, Categories category);
     }
 }

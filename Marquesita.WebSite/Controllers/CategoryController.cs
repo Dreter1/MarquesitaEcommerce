@@ -1,6 +1,7 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Category;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -10,10 +11,12 @@ namespace MarquesitaDashboards.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IWebHostEnvironment webHostEnvironment)
         {
             _categoryService = categoryService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize(Policy = "CanViewCategory")]
@@ -77,10 +80,11 @@ namespace MarquesitaDashboards.Controllers
         public Boolean Delete(Guid Id)
         {
             var category = _categoryService.GetCategoryById(Id);
+            var path = _webHostEnvironment.WebRootPath;
 
             if (category != null)
             {
-                _categoryService.DeleteCategory(category);
+                _categoryService.DeleteCategory(category, path);
                 return true;
             }
             return false;

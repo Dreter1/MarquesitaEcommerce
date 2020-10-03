@@ -165,10 +165,11 @@ namespace MarquesitaDashboards.Controllers
         public Boolean Delete(Guid Id)
         {
             var product = _productService.GetProductById(Id);
+            var path = _webHostEnvironment.WebRootPath;
 
             if (product != null)
             {
-                _productService.DeleteProduct(product);
+                _productService.DeleteProduct(product, path);
                 return true;
             }
             return false;

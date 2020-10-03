@@ -236,7 +236,7 @@ namespace MarquesitaDashboards.Controllers
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             ViewBag.Image = _images.RoutePathRootProductsImages();
-            ViewBag.ShoppingCart = _shoppingCartService.getUserCartAsList(user.Id);
+            ViewBag.ShoppingCart = _shoppingCartService.GetUserCartAsList(user.Id);
             ViewBag.AddressList = _addressService.GetUserAddresses(user.Id);
             ViewBag.PaymentList = _saleService.GetEcommercePaymentList();
             return PartialView();
@@ -247,7 +247,7 @@ namespace MarquesitaDashboards.Controllers
         public async Task<bool> CheckStock()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.getUserCartAsList(user.Id);
+            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.GetUserCartAsList(user.Id);
 
             if (_saleService.StockAvailableEcommerce(shoppingCartList))
                 return true;
@@ -267,7 +267,7 @@ namespace MarquesitaDashboards.Controllers
                 UserId = user.Id,
                 AddressId = addressId
             };
-            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.getUserCartAsList(user.Id);
+            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.GetUserCartAsList(user.Id);
 
             if (shoppingCartList.Count() > 0)
             {

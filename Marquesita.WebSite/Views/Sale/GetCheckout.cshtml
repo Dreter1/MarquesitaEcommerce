@@ -71,6 +71,11 @@
     <h4>
         Escoja una Direccion
     </h4>
+    <div class="pull-right">
+        <a asp-controller="Client" class="btn btn-primary" asp-action="NewAddress" title="Nueva dirección"><i class="fas fa-plus-square"></i> <i class="fas fa-address-card"></i></a>
+    </div>
+    <br />
+    <br />
     <select class="list_of_cities" name="addressId" id="addressId">
         @foreach (var address in ViewBag.AddressList)
         {

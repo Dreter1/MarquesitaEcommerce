@@ -7,7 +7,7 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IShoppingCartService
     {
-        IEnumerable<ShoppingCart> getUserCartAsList(string userId);
+        IEnumerable<ShoppingCart> GetUserCartAsList(string userId);
         bool DoesUserAndProductExistInCart(Guid idProduct, string userId);
         void CreateShoppingCartItem(Guid idProduct, string userId);
         Task UpdateQuantityShoppingCartItem(Guid id, int quantity);

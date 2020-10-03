@@ -128,7 +128,7 @@ function deleteProduct(product) {
     console.log(productId);
     Swal.fire({
         title: '¿Desea eliminar este producto?',
-        text: "Si estas seguro presiona eliminar, recuerde que al eliminarlo no habra vuelta atras.",
+        text: "Recuerda que cuando lo elimines, borrara todo registro que se tenga como: boletas, detalles de venta/compra. Si estas seguro presiona eliminar, ",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

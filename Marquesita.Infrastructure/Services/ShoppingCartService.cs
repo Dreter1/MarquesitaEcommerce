@@ -20,14 +20,14 @@ namespace Marquesita.Infrastructure.Services
             _context = context;
         }
 
-        public IEnumerable<ShoppingCart> getUserCartAsList(string userId)
+        public IEnumerable<ShoppingCart> GetUserCartAsList(string userId)
         {
             return _context.ShoppingCarts.Where(cart => cart.UserId == userId).Include(p => p.Products).ToList();
         }
 
         public bool DoesUserAndProductExistInCart(Guid idProduct, string userId)
         {
-            var dbShoppingCart = getUserCartAsList(userId);
+            var dbShoppingCart = GetUserCartAsList(userId);
             foreach (var cart in dbShoppingCart)
             {
                 if (cart.ProductId == idProduct)

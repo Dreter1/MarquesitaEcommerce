@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Marquesita.Infrastructure.Services
 {
@@ -25,6 +26,11 @@ namespace Marquesita.Infrastructure.Services
             return _repository.All();
         }
 
+        public IEnumerable<Product> GetProductListByCategory(Guid categoryId)
+        {
+            return _context.Products.Where(product => product.CategoryId == categoryId).ToList();
+        }
+
         public Product GetProductById(Guid Id)
         {
             return _repository.Get(Id);
@@ -39,8 +45,9 @@ namespace Marquesita.Infrastructure.Services
             _repository.SaveChanges();
         }
 
-        public void DeleteProduct(Product product)
+        public void DeleteProduct(Product product, string path)
         {
+            DeleteServerFile(path, product.ImageRoute);
             _repository.Remove(product);
         }
 
@@ -85,15 +92,13 @@ namespace Marquesita.Infrastructure.Services
                 string uploadsFolder = Path.Combine(path, "Images", "Products");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                image.CopyTo(fileStream);
             }
             return uniqueFileName;
         }
 
-        private void DeleteServerFile(string path, string image)
+        public void DeleteServerFile(string path, string image)
         {
             if (image != null)
             {

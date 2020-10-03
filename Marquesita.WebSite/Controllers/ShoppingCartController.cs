@@ -35,7 +35,7 @@ namespace Marquesita.WebSite.Controllers
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             ViewBag.Image = _images.RoutePathRootProductsImages();
-            return PartialView(_shoppingCartService.getUserCartAsList(user.Id));
+            return PartialView(_shoppingCartService.GetUserCartAsList(user.Id));
         }
 
         [HttpPost]

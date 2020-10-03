@@ -302,10 +302,8 @@ namespace Marquesita.Infrastructure.Services
                 string uploadsFolder = Path.Combine(path, "Images", "Users", "Employees");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                image.CopyTo(fileStream);
             }
             return uniqueFileName;
         }
@@ -329,10 +327,8 @@ namespace Marquesita.Infrastructure.Services
                 string uploadsFolder = Path.Combine(path, "Images", "Users", "Clients");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
+                using FileStream fileStream = new FileStream(filePath, FileMode.Create);
+                image.CopyTo(fileStream);
             }
             return uniqueFileName;
         }
