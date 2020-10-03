@@ -1,0 +1,83 @@
+﻿@model List<Marquesita.Models.Business.SaleDetail>
+@{
+    ViewData["Title"] = "Detalle de Venta";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Detalle de venta</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Sale" asp-action="Index">Ventas</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            <div>
+                @if (ViewBag.Sale.Address != null)
+                {
+                    <h4>Destinatario: @ViewBag.Sale.Address.FullNames</h4>
+                    <h4>Telefono de contacto: @ViewBag.Sale.Address.Phone</h4>
+                    <h4>Direccion: @ViewBag.Sale.Address.Street - @ViewBag.Sale.Address.Region - @ViewBag.Sale.Address.City - @ViewBag.Sale.Address.PostalCode </h4>
+
+                }
+                else
+                {
+                    <h4>Tipo de compra: Tienda La Marquesita</h4>
+                }
+                @if (ViewBag.Sale.EmployeeId != null)
+                {
+                    <h4>Colaborador: @await Component.InvokeAsync("EcommerceClientInfo", new { userId = ViewBag.Sale.EmployeeId })</h4>
+                }
+                <h4>Fecha: @ViewBag.Sale.Date</h4>
+            </div>
+            <hr />
+            <br />
+            <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th class="text-center">Producto</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int count = 0; }
+                    @foreach (var saleDetail in Model)
+                    {
+                        count += 1;
+                        <tr>
+                            <td class="text-center">@count</td>
+                            <td class="text-center">@saleDetail.Product.Name</td>
+                            <td class="text-center">S./ @saleDetail.UnitPrice</td>
+                            <td class="text-center">@saleDetail.Quantity</td>
+                            <td class="text-center">S./ @saleDetail.Subtotal</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <a asp-controller="Sale" asp-action="Index" class="btn btn-danger fa-pull-left" title="Regresar"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        dataTableScript();
+    });
+</script>
+

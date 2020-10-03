@@ -1,6 +1,6 @@
 ﻿@model List<Marquesita.Models.Business.SaleDetail>
 @{
-    ViewData["Title"] = "Detalle de pedido";
+    ViewData["Title"] = "Detalle de Compra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -52,15 +52,15 @@
                             <tr class="rem1">
                                 <td class="invert">@count</td>
                                 <td class="invert">@saleDetail.Product.Name</td>
-                                <td class="invert">@saleDetail.UnitPrice</td>
+                                <td class="invert">S./ @saleDetail.UnitPrice</td>
                                 <td class="invert">@saleDetail.Quantity</td>
-                                <td class="invert">@saleDetail.Subtotal</td>
+                                <td class="invert">S./ @saleDetail.Subtotal</td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <hr />
-                <a asp-controller="Client" asp-action="MyOrders" class="btn btn-danger fa-pull-left"><i class="fas fa-arrow-left"></i></a>
+                <a asp-controller="Client" asp-action="MyOrders" class="btn btn-danger fa-pull-left" title="Regresar"><i class="fas fa-arrow-left"></i></a>
             </div>
         </div>
     </div>

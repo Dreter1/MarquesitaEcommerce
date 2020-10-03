@@ -41,31 +41,25 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [Authorize(Policy = "Client")]
-        public async Task<IActionResult> Edit(string Id)
+        public async Task<IActionResult> Edit()
         {
-            var actualId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            var userEditProfile = _usersManager.ClientToViewModel(await _usersManager.GetUserByIdAsync(userId));
 
-            if (actualId == Id)
+            if (userEditProfile != null)
             {
-                var userEditProfile = _usersManager.ClientToViewModel(await _usersManager.GetUserByIdAsync(Id));
-
-                if (userEditProfile != null)
-                {
-                    ViewBag.Image = _images.RoutePathRootClientsImages();
-                    ViewBag.UserId = actualId;
-                    ViewBag.User = userEditProfile.Id;
-                    return View(userEditProfile);
-                }
+                ViewBag.Image = _images.RoutePathRootClientsImages();
+                return View(userEditProfile);
             }
             return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
         [Authorize(Policy = "Client")]
-        public async Task<IActionResult> Edit(ClientEditViewModel model, string Id)
+        public async Task<IActionResult> Edit(ClientEditViewModel model)
         {
 
-            var userProfile = await _usersManager.GetUserByIdAsync(Id);
+            var userProfile = await _usersManager.GetUserByIdAsync(model.Id);
             var path = _webHostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
@@ -78,12 +72,7 @@ namespace MarquesitaDashboards.Controllers
             }
 
             ViewBag.Image = _images.RoutePathRootClientsImages();
-            ViewBag.UserId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
-            ViewBag.UserRole = await _usersManager.GetUserRole(userProfile);
-            ViewBag.User = userProfile.Id;
-
             return View(model);
-
         }
 
         [HttpGet]
@@ -118,13 +107,17 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Client")]
-        public IActionResult EditAddress(Guid Id)
+        public async Task<IActionResult> EditAddressAsync(Guid Id)
         {
-            var address = _addressService.AddressToViewModel(_addressService.GetAddressById(Id));
-
-            if (address != null)
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            if (_addressService.IsUserAddress(Id, userId))
             {
-                return View(address);
+                var address = _addressService.AddressToViewModel(_addressService.GetAddressById(Id));
+
+                if (address != null)
+                {
+                    return View(address);
+                }
             }
             return RedirectToAction("NotFound404", "Error");
         }
@@ -172,10 +165,15 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Client")]
-        public IActionResult MyOrderDetail(Guid saleId)
+        public async Task<IActionResult> MyOrderDetailAsync(Guid saleId)
         {
-            ViewBag.Sale = _saleService.GetSaleById(saleId);
-            return View(_saleService.GetDetailSaleList(saleId));
+            var userId = await _usersManager.GetUserIdByNameAsync(User.Identity.Name);
+            if (_saleService.IsUserSale(saleId, userId))
+            {
+                ViewBag.Sale = _saleService.GetSaleById(saleId);
+                return View(_saleService.GetDetailSaleList(saleId));
+            }
+            return RedirectToAction("NotFound404", "Error");
         }
     }
 }

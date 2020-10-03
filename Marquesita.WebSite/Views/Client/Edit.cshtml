@@ -27,7 +27,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <form role="form" asp-controller="Client" asp-action="Edit" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="Id" value="@Model.Id" />
+                                        <input type="hidden" asp-for="Id" value="@Model.Id" />
                                         <div class="form-row">
                                             <div class="form-group col-12 col-md-5 text-center">
                                                 @if (Model.ImageRoute != null)

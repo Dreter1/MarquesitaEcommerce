@@ -30,6 +30,8 @@ namespace Marquesita.Infrastructure.Interfaces
         bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products);
         void UpdateStockEcommerce(IEnumerable<ShoppingCart> shoppingCartItems);
         bool IsGreaterThan0(int quantity);
+        bool SaleExists(Guid saleId);
+        bool IsUserSale(Guid saleId, string userId);
         List<string> GetPaymentList();
         List<string> GetSaleStatusList();
     }

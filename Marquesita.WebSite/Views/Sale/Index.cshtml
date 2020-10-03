@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-
+@model List<Marquesita.Models.Business.Sale>
 @{
     ViewData["Title"] = "Index";
     Layout = "_LayoutDashboard";
@@ -47,37 +47,43 @@
             <table id="dataTable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th> Cliente </th>
-                        <th> Fecha </th>
-                        <th> Tipo de pago </th>
-                        <th> Tipo de venta </th>
-                        <th> Estado </th>
-                        <th> Vendedor </th>
-                        <th> Monto Total </th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Tipo de venta</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Vendedor</th>
+                        <th class="text-center">Monto Total</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var sale in Model)
                     {
-                        <tr>
-                            <th>
-                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
-                            </th>
-
-                            <td>@sale.Date</td>
-                            <td>@sale.PaymentType</td>
-                            <td>@sale.TypeOfSale</td>
-                            <td>@sale.SaleStatus</td>
+                    <tr>
+                        <td>
+                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
+                        </td>
+                        <td class="text-center">@sale.Date.ToShortDateString()</td>
+                        <td class="text-center">@sale.TypeOfSale</td>
+                        <td class="text-center">@sale.SaleStatus</td>
+                        @if (sale.EmployeeId != null)
+                        {
                             <td>
                                 @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
                             </td>
-                            <td>@sale.TotalAmount</td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@sale.Id" class="btn btn-warning">Edit</a>
-                                <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-info">Details</a>
-                            </td>
-                        </tr>
+                        }
+                        else
+                        {
+                            <td class="text-center">-</td>
+                        }
+                        <td class="text-center">S./ @sale.TotalAmount</td>
+                        <td>
+                            <div class="form-row justify-content-center">
+                                <a asp-controller="Sale" asp-action="Edit" asp-route-saleId="@sale.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
+                                <a asp-controller="Sale" asp-action="Detail" asp-route-saleId="@sale.Id" class="btn btn-info" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                            </div>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

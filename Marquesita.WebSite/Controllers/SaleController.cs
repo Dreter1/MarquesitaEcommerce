@@ -34,6 +34,18 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CanViewSales")]
+        public IActionResult Detail(Guid saleId)
+        {
+            if (_saleService.SaleExists(saleId))
+            {
+                ViewBag.Sale = _saleService.GetSaleById(saleId);
+                return View(_saleService.GetDetailSaleList(saleId));
+            }
+            return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpGet]
         [Authorize(Policy = "CanAddSales")]
         public async Task<IActionResult> AddClientSaleAsync()
         {

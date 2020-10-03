@@ -14,5 +14,6 @@ namespace Marquesita.Infrastructure.Interfaces
         void UpdateUserAddress(AddressEditViewModel model, Address address);
         AddressEditViewModel AddressToViewModel(Address obj);
         Address AddressEditViewModelToAddress(AddressEditViewModel obj);
+        bool IsUserAddress(Guid addressId, string userId);
     }
 }

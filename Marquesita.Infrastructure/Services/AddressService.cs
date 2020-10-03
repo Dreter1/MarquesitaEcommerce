@@ -19,6 +19,11 @@ namespace Marquesita.Infrastructure.Services
             _context = context;
         }
 
+        public IEnumerable<Address> GetUsersAddresses()
+        {
+            return _addresstRepository.All();
+        }
+
         public IEnumerable<Address> GetUserAddresses(string userId)
         {
             return _context.Addresses.Where(address => address.UserId == userId).ToList();
@@ -87,6 +92,24 @@ namespace Marquesita.Infrastructure.Services
                 };
             }
             return null;
+        }
+
+        public bool IsUserAddress(Guid addressId, string userId)
+        {
+            if (addressId != null && userId != null)
+            {
+                var address = GetAddressById(addressId);
+                if (address != null)
+                {
+                    var addressesList = GetUsersAddresses();
+                    foreach (var addresses in addressesList)
+                    {
+                        if (addresses.Id == addressId && addresses.UserId == userId)
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

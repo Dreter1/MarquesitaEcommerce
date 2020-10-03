@@ -283,6 +283,42 @@ namespace Marquesita.Infrastructure.Services
                 return true;
         }
 
+        public bool SaleExists(Guid saleId)
+        {
+            if (saleId != null)
+            {
+                var sale = GetSaleById(saleId);
+                if (sale != null)
+                {
+                    var saleList = GetSaleList();
+                    foreach (var list in saleList)
+                    {
+                        if (list.Id == saleId)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool IsUserSale(Guid saleId, string userId)
+        {
+            if (saleId != null && userId != null)
+            {
+                var sale = GetSaleById(saleId);
+                if (sale != null)
+                {
+                    var saleList = GetSaleList();
+                    foreach (var list in saleList)
+                    {
+                        if (list.Id == saleId && list.UserId == userId)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public List<string> GetPaymentList()
         {
             return new List<string>() {

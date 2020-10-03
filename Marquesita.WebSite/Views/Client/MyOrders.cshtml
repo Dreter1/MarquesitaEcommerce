@@ -25,6 +25,7 @@
                                 <th>Destinatario</th>
                                 <th>Fecha</th>
                                 <th>Monto</th>
+                                <th>Estado</th>
                                 <th>Detalles</th>
                             </tr>
                         </thead>
@@ -45,6 +46,7 @@
                                 }
                                 <td class="invert">@sale.Date.ToShortDateString()</td>
                                 <td class="invert">S/. @sale.TotalAmount</td>
+                                <td class="invert">@sale.SaleStatus</td>
                                 <td class="invert">
                                     <div class="rem">
                                         <button class="w3view-cart" type="button" title="Detalles" data-id="@sale.Id" onclick="getSaleDetails(this)">
@@ -63,7 +65,7 @@
         {
             <div class="checkout-right">
                 <div class="text-center">
-                    <h4>Usted no ningun pedido realizado</h4>
+                    <h4>Usted no tiene ningun pedido hecho</h4>
                 </div>
             </div>
         }
