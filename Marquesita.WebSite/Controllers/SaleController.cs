@@ -225,5 +225,21 @@ namespace MarquesitaDashboards.Controllers
             ViewBag.PaymentList = _saleService.GetEcommercePaymentList();
             return View();
         }
+
+        [Authorize(Policy = "Client")]
+        public async Task<IActionResult> Payment(Guid addressId, string paymentType, decimal TotalAmount)
+        {
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            var sale = new Sale
+            {
+                TotalAmount = TotalAmount,
+                PaymentType = paymentType,
+                UserId = user.Id,
+                AddressId = addressId
+            };
+            IEnumerable <ShoppingCart> shoppingCartList= _shoppingCartService.getUserCartAsList(user.Id);
+            _saleService.SaveEcommerceSale(sale, shoppingCartList);
+            return View();
+        }
     }
 }

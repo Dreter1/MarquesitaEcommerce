@@ -26,7 +26,7 @@ namespace Marquesita.Infrastructure.Interfaces
         bool IsProductStocked(Guid productId, int quantity);
         bool StockAvailable(IEnumerable<SaleDetailTemp> productos);
         void UpdateStock(IEnumerable<SaleDetailTemp> saledetailTemp);
-        void SaveEcommerceSale(Address address, Sale sale, IEnumerable<ShoppingCart> shoppigCart);
+        void SaveEcommerceSale(Sale sale, IEnumerable<ShoppingCart> shoppigCart);
         bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products);
         void UpdateStockEcommerce(IEnumerable<ShoppingCart> shoppingCartItems);
         bool IsGreaterThan0(int quantity);

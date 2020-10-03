@@ -80,24 +80,32 @@
                 </table>
             </div>
         </div>
-        <div class="checkout-left">
-            <div class="address_form_agile">
-                <h4>
-                    Escoje una Direccion
-                </h4>
-                <select class="list_of_cities" name="addressId">
-                    @foreach (var address in ViewBag.AddressList)
-                    {
-                        <option value="address.Id">@address.FullNames / @address.Street / @address.Region / @address.City / @address.PostalCode</option>
-                    }
-                </select>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
         <br />
         <div class="checkout-right">
+            <input hidden name="TotalAmount" value="@total"/>
+            <h4>
+                Escoja una Direccion
+            </h4>
+            <select class="list_of_cities" name="addressId">
+                @foreach (var address in ViewBag.AddressList)
+                {
+                    <option value="address.Id">@address.FullNames / @address.Street / @address.Region / @address.City / @address.PostalCode</option>
+                }
+            </select>
+            <hr />
             <h4>
                 Escoja un metodo de pago
+            </h4>
+            <select class="list_of_cities" name="paymentType">
+                @foreach (var list in ViewBag.PaymentList)
+                {
+                    <option value="@list">@list</option>
+                }
+            </select>
+            <hr />
+            <br />
+            <h4>
+                Informacion de metodos de pago
             </h4>
             <div id="parentHorizontalTab">
                 <ul class="resp-tabs-list hor_1">
@@ -264,8 +272,8 @@
         </div>
         <hr />
         <br />
-        <div class="checkout-right-basket">
-            <a href="payment.html">
+        <div class="checkout-right-basket fa-pull-right">
+            <a href="#">
                 Realizar pago
                 <span class="fa fa-hand-o-right" aria-hidden="true"></span>
             </a>

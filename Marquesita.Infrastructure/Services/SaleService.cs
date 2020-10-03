@@ -213,7 +213,7 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
-        public void SaveEcommerceSale(Address address, Sale sale, IEnumerable<ShoppingCart> shoppigCart)
+        public void SaveEcommerceSale(Sale sale, IEnumerable<ShoppingCart> shoppigCart)
         {
             if (shoppigCart.Count() > 0)
             {
@@ -223,7 +223,7 @@ namespace Marquesita.Infrastructure.Services
                     UserId = sale.UserId,
                     TotalAmount = sale.TotalAmount,
                     PaymentType = sale.PaymentType,
-                    AddressId = address.Id,
+                    AddressId = sale.AddressId,
                     SaleStatus = _constantService.SaleStatus_Process(),
                     TypeOfSale = _constantService.Ecommerce_Sale()
                 };
