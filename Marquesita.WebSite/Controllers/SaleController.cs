@@ -108,7 +108,8 @@ namespace MarquesitaDashboards.Controllers
         {
             TempData["error"] = null;
             TempData["stockError"] = null;
-            var model = new AddItemViewModel{
+            var model = new AddItemViewModel
+            {
                 Productid = Productid,
                 Quantity = Quantity,
                 UserId = UserId
@@ -182,11 +183,12 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpPost]
         [Authorize(Policy = "CanAddSales")]
-        public async Task<Boolean> CreateSaleAsync(string PaymentType, string UserId, decimal TotalAmount)
+        public async Task<bool> CreateSaleAsync(string PaymentType, string UserId, decimal TotalAmount)
         {
             TempData["error"] = null;
             TempData["stockError"] = null;
-            var sale = new Sale {
+            var sale = new Sale
+            {
                 TotalAmount = TotalAmount,
                 PaymentType = PaymentType,
                 UserId = UserId
@@ -194,7 +196,8 @@ namespace MarquesitaDashboards.Controllers
             var employee = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             IEnumerable<SaleDetailTemp> tempList = _saleService.GetClientSaleTempList(sale.UserId);
 
-            if (tempList.Count() > 0) {
+            if (tempList.Count() > 0)
+            {
                 if (_saleService.StockAvailable(tempList))
                 {
                     _saleService.UpdateStock(tempList);
@@ -209,25 +212,52 @@ namespace MarquesitaDashboards.Controllers
             return false;
         }
 
+        [HttpGet]
         [Authorize(Policy = "CanEditSales")]
         public IActionResult Edit()
         {
             return View();
         }
 
+        [HttpGet]
         [Authorize(Policy = "Client")]
-        public async Task<IActionResult> CheckoutAsync()
+        public IActionResult Checkout()
+        {
+            ViewBag.stockError = TempData["stockError"];
+            ViewBag.error = TempData["error"];
+            TempData["stockError"] = null;
+            TempData["error"] = null;
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "Client")]
+        public async Task<IActionResult> GetCheckoutAsync()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             ViewBag.Image = _images.RoutePathRootProductsImages();
             ViewBag.ShoppingCart = _shoppingCartService.getUserCartAsList(user.Id);
             ViewBag.AddressList = _addressService.GetUserAddresses(user.Id);
             ViewBag.PaymentList = _saleService.GetEcommercePaymentList();
-            return View();
+            return PartialView();
         }
 
+        [HttpGet]
         [Authorize(Policy = "Client")]
-        public async Task<IActionResult> Payment(Guid addressId, string paymentType, decimal TotalAmount)
+        public async Task<bool> CheckStock()
+        {
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.getUserCartAsList(user.Id);
+
+            if (_saleService.StockAvailableEcommerce(shoppingCartList))
+                return true;
+
+            return false;
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Client")]
+        public async Task<bool> Payment(Guid addressId, string paymentType, decimal TotalAmount)
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
             var sale = new Sale
@@ -237,9 +267,15 @@ namespace MarquesitaDashboards.Controllers
                 UserId = user.Id,
                 AddressId = addressId
             };
-            IEnumerable <ShoppingCart> shoppingCartList= _shoppingCartService.getUserCartAsList(user.Id);
-            _saleService.SaveEcommerceSale(sale, shoppingCartList);
-            return View();
+            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.getUserCartAsList(user.Id);
+
+            if (shoppingCartList.Count() > 0)
+            {
+                _saleService.UpdateStockEcommerce(shoppingCartList);
+                _saleService.SaveEcommerceSale(sale, shoppingCartList);
+                return true;
+            }
+            return false;
         }
     }
 }

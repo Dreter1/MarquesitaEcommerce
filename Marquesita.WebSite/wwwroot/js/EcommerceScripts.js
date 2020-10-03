@@ -249,3 +249,62 @@ function deleteAddress(address) {
         }
     });
 }
+
+function getChekoutInfo() {
+    var url = "/Sale/GetCheckout";
+    $.get(url, function (response) {
+        $("#checkout_info").html(response);
+    });
+}
+
+function confirmEcommerceOrder() {
+    var paymentType = $("#paymentType").val();
+    var addressId = $("#addressId").val();
+    var totalAmount = $("#TotalAmount").val();
+    var checkStockUrl = "/Sale/CheckStock";
+    var url = "/Sale/Payment?addressId=" + addressId + "&paymentType=" + paymentType + "&TotalAmount=" + totalAmount;
+    Swal.fire({
+        title: '¿Seguro que desea continuar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Confirmar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.get(checkStockUrl, function (response) {
+                if (response) {
+                    $.post(url, function (response) {
+                        if (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Tu pedido se realizo con exito',
+                                showConfirmButton: false,
+                                timer: 10000
+                            });
+                            location.href = "/Client/MyOrders";
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'No se pudo realizar el pedido, vuelva a intentarlo',
+                                showConfirmButton: false,
+                                timer: 10000
+                            });
+                            location.href = "/Sale/Checkout";
+                        }
+                    });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Sin Stock',
+                        text: 'Uno de los productos que quiere comprar no hay stock revise de nuevo porfavor',
+                    })
+                    getChekoutInfo();
+                }
+            });
+        }
+    })
+}
