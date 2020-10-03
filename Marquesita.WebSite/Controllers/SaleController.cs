@@ -16,12 +16,19 @@ namespace MarquesitaDashboards.Controllers
         private readonly ISaleService _saleService;
         private readonly IProductService _productService;
         private readonly IUserManagerService _usersManager;
+        private readonly IConstantService _images;
+        private readonly IShoppingCartService _shoppingCartService;
+        private readonly IAddressService _addressService;
 
-        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService)
+
+        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IConstantService images, IShoppingCartService shoppingCartService, IAddressService addressService)
         {
             _saleService = saleService;
             _usersManager = usersManager;
             _productService = productService;
+            _images = images;
+            _shoppingCartService = shoppingCartService;
+            _addressService = addressService;
         }
 
         [HttpGet]
@@ -209,8 +216,13 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [Authorize(Policy = "Client")]
-        public IActionResult Checkout()
+        public async Task<IActionResult> CheckoutAsync()
         {
+            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.ShoppingCart = _shoppingCartService.getUserCartAsList(user.Id);
+            ViewBag.AddressList = _addressService.GetUserAddresses(user.Id);
+            ViewBag.PaymentList = _saleService.GetEcommercePaymentList();
             return View();
         }
     }

@@ -34,5 +34,6 @@ namespace Marquesita.Infrastructure.Interfaces
         bool IsUserSale(Guid saleId, string userId);
         List<string> GetPaymentList();
         List<string> GetSaleStatusList();
+        List<string> GetEcommercePaymentList();
     }
 }

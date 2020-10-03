@@ -327,12 +327,22 @@ namespace Marquesita.Infrastructure.Services
                 "Efectivo y Tarjeta",
             };
         }
+
         public List<string> GetSaleStatusList()
         {
             return new List<string>() {
                 "En proceso",
                 "Confirmada",
                 "Cancelada",
+            };
+        }
+
+        public List<string> GetEcommercePaymentList()
+        {
+            return new List<string>() {
+                "Contra Entrega",
+                "Transferencia Bancaria",
+                "Monedero Virtual",
             };
         }
     }
