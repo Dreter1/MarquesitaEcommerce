@@ -238,7 +238,7 @@ function deleteAddress(address) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'La direccion no se pudo eliminar, vuelva a intentarlo'
+                        text: 'La direccion no se pudo eliminar, ya que tiene compras relacionadas con esta dirección, si desea eliminarla o desvincularla contactese con nosotros, gracias'
                     }).then((result) => {
                         if (result.value) {
                             location.href = "/Client/Addresses";
