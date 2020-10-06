@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var extensionesValidas = ".png, .jpeg, .jpg";
-    var pesoPermitido = 1024;
+    var pesoPermitido = 25000;
     // Cuando cambie #fichero
     $("#fichero").change(function () {
         $('#texto').text('');
@@ -26,7 +26,7 @@
     // Validacion de peso del fichero en kbs
     function validarPeso(datos) {
         if (datos.files && datos.files[0]) {
-            var pesoFichero = datos.files[0].size / 1024;
+            var pesoFichero = datos.files[0].size / 25000;
             if (pesoFichero > pesoPermitido) {
                 $('#texto').text('El peso maximo permitido del fichero es: ' + pesoPermitido + ' KBs Su fichero tiene: ' + pesoFichero + ' KBs');
                 return false;
