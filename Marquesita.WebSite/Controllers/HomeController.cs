@@ -111,20 +111,29 @@ namespace MarquesitaDashboards.Controllers
 
                 if (user != null)
                 {
-                    var userRole = await _usersManager.GetUserRole(user);
-                    if (userRole == "Cliente")
+                    if (user.EmailConfirmed)
                     {
-                        var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
-                        if (signInResult.Succeeded)
+                        var userRole = await _usersManager.GetUserRole(user);
+                        if (userRole == "Cliente")
                         {
-                            return LocalRedirect(returnUrl);
+                            var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
+                            if (signInResult.Succeeded)
+                            {
+                                return LocalRedirect(returnUrl);
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.LoginError = "Cuenta no valida, por favor revise sus credenciales.";
+                            return View();
                         }
                     }
                     else
                     {
-                        ViewBag.LoginError = "Cuenta no valida, por favor revise sus credenciales.";
+                        ViewBag.LoginError = "Porfavor valide su correo electronico para poder ingresar";
                         return View();
                     }
+
                 }
                 else
                 {
