@@ -39,10 +39,12 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     ViewBag.User = user;
+                    ViewBag.ProductCount = _productService.GetProductList();
                     return View();
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
+            ViewBag.ProductCount = _productService.GetProductList();
             return View();
         }
 

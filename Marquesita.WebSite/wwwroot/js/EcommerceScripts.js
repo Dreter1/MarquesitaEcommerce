@@ -308,3 +308,36 @@ function confirmEcommerceOrder() {
         }
     })
 }
+
+function pagination() {
+    jQuery(function ($) {
+        var items = $(".wrapper .panel .panel-body .product-men");
+        var numItems = items.length;
+        var perPage = 1;
+        items.slice(perPage).hide();
+        $("#pagination-container").pagination({
+            items: numItems,
+            itemsOnPage: perPage,
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            cssStyle: "light-theme",
+            onPageClick: function (pageNumber) {
+                var showFrom = perPage * (pageNumber - 1);
+                var showTo = showFrom + perPage;
+                items.hide().slice(showFrom, showTo).show();
+            }
+        });
+    });
+}
+
+function productSearchFilter() {
+    (function ($) {
+        $('#filtro').keyup(function () {
+            var rex = new RegExp($(this).val(), 'i');
+            $('.itemsFiltrar').hide();
+            $('.itemsFiltrar').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+        })
+    }(jQuery));
+}

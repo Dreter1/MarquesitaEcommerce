@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Marquesita.Infrastructure.Migrations
+namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
 {
-    public partial class creatingIdentityDb : Migration
+    public partial class IdentityDbSqlServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

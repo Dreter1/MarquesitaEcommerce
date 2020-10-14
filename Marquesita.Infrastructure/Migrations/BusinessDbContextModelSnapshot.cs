@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Marquesita.Infrastructure.Migrations.BusinessDb
+namespace Marquesita.Infrastructure.Migrations
 {
     [DbContext(typeof(BusinessDbContext))]
     partial class BusinessDbContextModelSnapshot : ModelSnapshot

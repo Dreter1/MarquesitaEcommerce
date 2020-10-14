@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Marquesita.Infrastructure.Migrations.BusinessDb
+namespace Marquesita.Infrastructure.Migrations
 {
-    public partial class CreatingBussinesDb : Migration
+    public partial class BussinessDbSqlServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

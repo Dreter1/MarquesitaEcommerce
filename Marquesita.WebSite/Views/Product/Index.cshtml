@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Productos";
 }
 
@@ -33,7 +32,7 @@
         </h3>
         <div class="side-bar col-md-3">
             <div class="search-hotel">
-                <h3 class="agileits-sear-head">Busque aqui</h3>          
+                <h3 class="agileits-sear-head">Busque aqui</h3>
                 <form>
                     <input type="search" id="filtro" placeholder="Nombre de producto" name="search" required>
                 </form>
@@ -58,20 +57,20 @@
         }
         <div class="agileinfo-ads-display col-md-9 w3l-rightpro" id="ProducList">
         </div>
+        <input hidden id="totalProducts" value="@Enumerable.Count(ViewBag.ProductCount)" />
+        <div id="pagination-container">
+        </div>
     </div>
 </div>
+
+
+
+<script src="~/EcommerceTemplate/js/jquery.simplePagination.js"></script>
+<link href="~/EcommerceTemplate/css/simplePagination.css" rel="stylesheet" />
 
 <script>
     $(document).ready(function () {
         getProductPanelList();
-        (function ($) {
-            $('#filtro').keyup(function () {
-                var rex = new RegExp($(this).val(), 'i');
-                $('.itemsFiltrar').hide();
-                $('.itemsFiltrar').filter(function () {
-                    return rex.test($(this).text());
-                }).show();
-            })
-        }(jQuery));
+        productSearchFilter();
     });
 </script>
