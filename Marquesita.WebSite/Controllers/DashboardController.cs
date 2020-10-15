@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace MarquesitaDashboards.Controllers
                 if (user != null)
                 {
                     var userRole = await _usersManager.GetUserRole(user);
-                    if(userRole != "Cliente")
+                    if(userRole != ConstantsService.UserType.CLIENT)
                     {
                         if (user.IsActive)
                         {
@@ -49,24 +50,24 @@ namespace MarquesitaDashboards.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError(string.Empty, "Su cuenta fue desactiva, comuniquese con un administrador");
+                            ModelState.AddModelError(string.Empty, ConstantsService.Errors.USER_INACTIVE);
                             return View();
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Cuenta no valida, comuniquese con un administrador");
+                        ModelState.AddModelError(string.Empty, ConstantsService.Errors.INVALID_ACCOUNT);
                         return View();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Usuario o Contraseña Incorrecta");
+                    ModelState.AddModelError(string.Empty, ConstantsService.Errors.INVALID_USER);
                     return View();
                 }
 
             }
-            ModelState.AddModelError(string.Empty, "Usuario o Contraseña Incorrecta");
+            ModelState.AddModelError(string.Empty, ConstantsService.Errors.INVALID_USER);
             return View();
         }
 

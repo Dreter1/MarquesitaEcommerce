@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,14 +13,12 @@ namespace Marquesita.WebSite.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IProductService _productService;
         private readonly IShoppingCartService _shoppingCartService;
-        private readonly IConstantService _images;
 
-        public ShoppingCartController(IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IConstantService images)
+        public ShoppingCartController(IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService)
         {
             _usersManager = usersManager;
             _productService = productService;
             _shoppingCartService = shoppingCartService;
-            _images = images;
         }
 
         [HttpGet]
@@ -34,7 +33,7 @@ namespace Marquesita.WebSite.Controllers
         public async Task<IActionResult> GetUserCartItemsAsync()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             return PartialView(_shoppingCartService.GetUserCartAsList(user.Id));
         }
 

@@ -107,30 +107,5 @@ namespace Marquesita.Infrastructure.Services
             }
             return null;
         }
-
-        public List<string> PermissionList()
-        {
-            return new List<string>() {
-                "Ver Usuarios",
-                "Agregar Usuario",
-                "Editar Usuario",
-                "Eliminar Usuario",
-                "Ver Roles",
-                "Agregar Roles",
-                "Editar Roles",
-                "Eliminar Roles",
-                "Ver Productos",
-                "Agregar Productos",
-                "Editar Productos",
-                "Eliminar Productos",
-                "Ver Categorias",
-                "Agregar Categoria",
-                "Editar Categoria",
-                "Eliminar Categoria",
-                "Ver Ventas",
-                "Agregar Venta",
-                "Editar Venta",
-            };
-        }
     }
 }

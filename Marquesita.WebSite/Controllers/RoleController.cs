@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Roles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace MarquesitaDashboards.Controllers
     public class RoleController : Controller
     {
         private readonly IRoleManagerService _rolesManager;
+        private readonly IConstantsService _constant;
 
-        public RoleController(IRoleManagerService rolesManager)
+        public RoleController(IRoleManagerService rolesManager, IConstantsService constant)
         {
             _rolesManager = rolesManager;
+            _constant = constant;
         }
 
         [HttpGet]
@@ -28,7 +31,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanAddRoles")]
         public IActionResult Create()
         {
-            ViewBag.Permissions = _rolesManager.PermissionList();
+            ViewBag.Permissions = _constant.PermissionList();
             return View();
         }
 
@@ -47,7 +50,7 @@ namespace MarquesitaDashboards.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Permissions = _rolesManager.PermissionList();
+            ViewBag.Permissions = _constant.PermissionList();
             return View();
         }
 
@@ -73,7 +76,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (role != null)
             {
-                if (role.Name != "Super Admin")
+                if (role.Name != ConstantsService.UserType.ADMINISTRATOR)
                 {
                     return View(role);
                 }
@@ -92,7 +95,7 @@ namespace MarquesitaDashboards.Controllers
             {
                 if (role != null)
                 {
-                    if (role.Name != "Super Admin")
+                    if (role.Name != ConstantsService.UserType.ADMINISTRATOR)
                     {
                         _rolesManager.UpdateRoles(model, role);
                         return RedirectToAction("Index");
@@ -110,7 +113,7 @@ namespace MarquesitaDashboards.Controllers
             var role = await _rolesManager.GetRoleByIdAsync(Id);
             if (role != null)
             {
-                if (role.Name != "Super Admin")
+                if (role.Name != ConstantsService.UserType.ADMINISTRATOR)
                 {
                     await _rolesManager.DeletingRoleAsync(role);
                     return true;

@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Products;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -15,15 +16,13 @@ namespace MarquesitaDashboards.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        private readonly IConstantService _images;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService, IConstantService images, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IUserManagerService usersManager, IProductService productService, ICategoryService categoryService, IWebHostEnvironment webHostEnvironment)
         {
             _usersManager = usersManager;
             _productService = productService;
             _categoryService = categoryService;
-            _images = images;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -57,13 +56,13 @@ namespace MarquesitaDashboards.Controllers
 
                 if (!_usersManager.isColaborator(userRole))
                 {
-                    ViewBag.Image = _images.RoutePathRootProductsImages();
+                    ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
                     ViewBag.UserId = user.Id;
                     return PartialView(_productService.GetProductList());
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             return PartialView(_productService.GetProductList());
         }
 
@@ -71,7 +70,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewProducts")]
         public IActionResult List()
         {
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             return View(_productService.GetProductList());
         }
 
@@ -105,7 +104,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (product != null)
             {
-                ViewBag.Image = _images.RoutePathRootProductsImages();
+                ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
                 ViewBag.Categorias = _categoryService.GetCategoryList();
                 return View(product);
             }
@@ -128,7 +127,7 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             ViewBag.Categorias = _categoryService.GetCategoryList();
             return View(model);
         }
@@ -149,14 +148,14 @@ namespace MarquesitaDashboards.Controllers
 
                 if (!_usersManager.isColaborator(userRole))
                 {
-                    ViewBag.Image = _images.RoutePathRootProductsImages();
+                    ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
                     ViewBag.User = user;
                     return View(product);
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
 
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             return View(product);
         }
 

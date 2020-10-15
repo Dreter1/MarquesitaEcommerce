@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,14 +14,12 @@ namespace Marquesita.WebSite.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IProductService _productService;
         private readonly IWishListService _wishListService;
-        private readonly IConstantService _images;
 
-        public WishListController(IUserManagerService usersManager, IProductService productService, IWishListService wishListService, IConstantService images)
+        public WishListController(IUserManagerService usersManager, IProductService productService, IWishListService wishListService)
         {
             _usersManager = usersManager;
             _productService = productService;
             _wishListService = wishListService;
-            _images = images;
         }
         [HttpGet]
         [Authorize(Policy = "Client")]
@@ -34,7 +33,7 @@ namespace Marquesita.WebSite.Controllers
         public async Task<IActionResult> GetUserWishListAsync()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             ViewBag.User = user;
             return PartialView(_wishListService.GetUserWishList(user.Id));
         }

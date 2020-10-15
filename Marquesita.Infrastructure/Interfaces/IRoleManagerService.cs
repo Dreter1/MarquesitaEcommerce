@@ -20,6 +20,5 @@ namespace Marquesita.Infrastructure.Interfaces
         List<string> PermissionListOfRole(Role role);
         void UpdateRoles(RoleEditViewModel model, Role role);
         RoleEditViewModel RoleToViewModel(Role obj);
-        List<string> PermissionList();
     }
 }

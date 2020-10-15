@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -12,15 +13,13 @@ namespace MarquesitaDashboards.Controllers
     public class ClientController : Controller
     {
         private readonly IUserManagerService _usersManager;
-        private readonly IConstantService _images;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAddressService _addressService;
         private readonly ISaleService _saleService;
 
-        public ClientController(IUserManagerService usersManager, IConstantService images, IWebHostEnvironment webHostEnvironment, IAddressService addressService, ISaleService saleService)
+        public ClientController(IUserManagerService usersManager, IWebHostEnvironment webHostEnvironment, IAddressService addressService, ISaleService saleService)
         {
             _usersManager = usersManager;
-            _images = images;
             _webHostEnvironment = webHostEnvironment;
             _addressService = addressService;
             _saleService = saleService;
@@ -33,7 +32,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (userProfile != null)
             {
-                ViewBag.Image = _images.RoutePathRootClientsImages();
+                ViewBag.Image = ConstantsService.Images.IMG_ROUTE_CLIENT;
                 ViewBag.UserId = userProfile.Id;
                 return View(userProfile);
             }
@@ -48,7 +47,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (userEditProfile != null)
             {
-                ViewBag.Image = _images.RoutePathRootClientsImages();
+                ViewBag.Image = ConstantsService.Images.IMG_ROUTE_CLIENT;
                 return View(userEditProfile);
             }
             return RedirectToAction("NotFound404", "Error");
@@ -71,7 +70,7 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.Image = _images.RoutePathRootClientsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_CLIENT;
             return View(model);
         }
 

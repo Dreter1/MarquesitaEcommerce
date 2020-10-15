@@ -19,7 +19,6 @@ namespace Marquesita.Infrastructure.Services
         private readonly IRepository<SaleDetail> _saleDetailRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IProductService _productService;
-        private readonly IConstantService _constantService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly BusinessDbContext _context;
 
@@ -28,15 +27,14 @@ namespace Marquesita.Infrastructure.Services
             IRepository<SaleDetail> saleDetailRepository,
             IRepository<Product> productRepository,
             IProductService productService,
-            IConstantService constantService,
             IShoppingCartService shoppingCartService,
-            BusinessDbContext context) {
+            BusinessDbContext context)
+        {
             _saleRepository = Salerepository;
             _saleDetailTempRepository = SaleDetailTempRepository;
             _saleDetailRepository = saleDetailRepository;
             _productRepository = productRepository;
             _productService = productService;
-            _constantService = constantService;
             _shoppingCartService = shoppingCartService;
             _context = context;
         }
@@ -144,8 +142,8 @@ namespace Marquesita.Infrastructure.Services
                     EmployeeId = user.Id,
                     Date = DateTime.UtcNow,
                     PaymentType = sale.PaymentType,
-                    SaleStatus = _constantService.SaleStatus_Process(),
-                    TypeOfSale = _constantService.Store_Sale()
+                    SaleStatus = ConstantsService.SaleStatus.IN_PROCESS,
+                    TypeOfSale = ConstantsService.SaleType.STORE_SALE
                 };
                 _saleRepository.Add(order);
                 _saleRepository.SaveChanges();
@@ -224,8 +222,8 @@ namespace Marquesita.Infrastructure.Services
                     TotalAmount = sale.TotalAmount,
                     PaymentType = sale.PaymentType,
                     AddressId = sale.AddressId,
-                    SaleStatus = _constantService.SaleStatus_Process(),
-                    TypeOfSale = _constantService.Ecommerce_Sale()
+                    SaleStatus = ConstantsService.SaleStatus.IN_PROCESS,
+                    TypeOfSale = ConstantsService.SaleType.ECOMMERCE_SALE
                 };
                 _saleRepository.Add(order);
                 _saleRepository.SaveChanges();
@@ -317,33 +315,6 @@ namespace Marquesita.Infrastructure.Services
                 }
             }
             return false;
-        }
-
-        public List<string> GetPaymentList()
-        {
-            return new List<string>() {
-                "Efectivo",
-                "Tarjeta debito/credito",
-                "Efectivo y Tarjeta",
-            };
-        }
-
-        public List<string> GetSaleStatusList()
-        {
-            return new List<string>() {
-                "En proceso",
-                "Confirmada",
-                "Cancelada",
-            };
-        }
-
-        public List<string> GetEcommercePaymentList()
-        {
-            return new List<string>() {
-                "Contra Entrega",
-                "Transferencia Bancaria",
-                "Monedero Virtual",
-            };
         }
     }
 }

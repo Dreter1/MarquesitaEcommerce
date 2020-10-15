@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
@@ -15,15 +16,13 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IRoleManagerService _rolesManager;
-        private readonly IConstantService _images;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IEmailSenderService _emailSender;
 
-        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IConstantService images, IWebHostEnvironment webHostEnvironment, IEmailSenderService emailSender)
+        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IWebHostEnvironment webHostEnvironment, IEmailSenderService emailSender)
         {
             _usersManager = usersManager;
             _rolesManager = rolesManager;
-            _images = images;
             _webHostEnvironment = webHostEnvironment;
             _emailSender = emailSender;
         }
@@ -40,7 +39,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewUsers")]
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.Image = _images.RoutePathRootEmployeeImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
             return View(await _usersManager.GetUsersEmployeeList());
         }
 
@@ -78,7 +77,7 @@ namespace MarquesitaDashboards.Controllers
 
             if (user != null)
             {
-                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
                 ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
                 ViewBag.UserRole = await _usersManager.GetUserRole(user);
                 return View(user);
@@ -103,7 +102,7 @@ namespace MarquesitaDashboards.Controllers
                 }
             }
 
-            ViewBag.Image = _images.RoutePathRootEmployeeImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
             ViewBag.Roles = _rolesManager.GetEmployeeRolesList();
             ViewBag.UserRole = await _usersManager.GetUserRole(user);
 
@@ -134,7 +133,7 @@ namespace MarquesitaDashboards.Controllers
             {
                 if (user != null)
                 {
-                    ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                    ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
                     ViewBag.UserRole = await _usersManager.GetUserRole(user);
                     return View(_usersManager.UserToViewModel(await _usersManager.GetUserByNameAsync(User.Identity.Name)));
                 }
@@ -159,7 +158,7 @@ namespace MarquesitaDashboards.Controllers
 
                     if (userEditProfile != null)
                     {
-                        ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                        ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
                         return View(userEditProfile);
                     }
                 }
@@ -188,7 +187,7 @@ namespace MarquesitaDashboards.Controllers
                     }
                 }
 
-                ViewBag.Image = _images.RoutePathRootEmployeeImages();
+                ViewBag.Image = ConstantsService.Images.IMG_ROUTE_COLABORATOR;
                 return View(model);
             }
             return RedirectToAction("NotFound404", "Error");
@@ -273,7 +272,7 @@ namespace MarquesitaDashboards.Controllers
                     TempData["userEmail"] = model.Email;
                     TempData["userToken"] = token;
                     var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
-                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user, confirmationLink, null);
+                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null);
                     await _emailSender.SendEmailConfirmationAsync(message);
                     return RedirectToAction("AddClientSale", "Sale");
                 }

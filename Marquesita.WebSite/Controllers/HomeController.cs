@@ -1,5 +1,6 @@
 ﻿using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Ecommerce.Clients;
 using MarquesitaDashboards.Models;
@@ -114,7 +115,7 @@ namespace MarquesitaDashboards.Controllers
                     if (user.EmailConfirmed)
                     {
                         var userRole = await _usersManager.GetUserRole(user);
-                        if (userRole == "Cliente")
+                        if (userRole == ConstantsService.UserType.CLIENT)
                         {
                             var signInResult = await _signsInManager.LoginAsync(model.Username, model.Password);
                             if (signInResult.Succeeded)
@@ -124,24 +125,24 @@ namespace MarquesitaDashboards.Controllers
                         }
                         else
                         {
-                            ViewBag.LoginError = "Cuenta no valida, por favor revise sus credenciales.";
+                            ViewBag.LoginError = ConstantsService.Errors.INVALID_USER_TYPE;
                             return View();
                         }
                     }
                     else
                     {
-                        ViewBag.LoginError = "Porfavor valide su correo electronico para poder ingresar";
+                        ViewBag.LoginError = ConstantsService.Errors.VALIDATE_EMAIL;
                         return View();
                     }
 
                 }
                 else
                 {
-                    ViewBag.LoginError = "Usuario o Contraseña Incorrecta";
+                    ViewBag.LoginError = ConstantsService.Errors.INVALID_USER;
                     return View();
                 }
             }
-            ViewBag.LoginError = "Usuario o Contraseña Incorrecta";
+            ViewBag.LoginError = ConstantsService.Errors.INVALID_USER;
             return View();
         }
 
@@ -186,7 +187,7 @@ namespace MarquesitaDashboards.Controllers
                     TempData["userEmail"] = model.Email;
                     TempData["userToken"] = token;
                     var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
-                    var message = new Message(new string[] { model.Email }, "Confirma tu correo para La Marquesita", user,confirmationLink, null);
+                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user,confirmationLink, null);
                     await _emailSender.SendEmailConfirmationAsync(message);
                     return RedirectToAction("SuccessRegistration", "Home");
                 }
@@ -243,7 +244,7 @@ namespace MarquesitaDashboards.Controllers
 
             var user = await _usersManager.GetUserByEmailAsync(email);
             var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token , email }, Request.Scheme);
-            var message = new Message(new string[] { email }, "Confirma tu correo para La Marquesita", user, confirmationLink, null);
+            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null);
             await _emailSender.SendEmailConfirmationAsync(message);
             return RedirectToAction("SuccessRegistration", "Home");
         }
@@ -313,7 +314,7 @@ namespace MarquesitaDashboards.Controllers
             TempData["userEmail"] = user.Email;
             TempData["userToken"] = token;
             var callback = Url.Action("ResetPassword", "Home", new { token, email = user.Email }, Request.Scheme);
-            var message = new Message(new string[] { user.Email }, "Cambiar contraseña", user,callback, null);
+            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user,callback, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
             return RedirectToAction("ForgotPasswordConfirmation", "Home");
         }
@@ -336,7 +337,7 @@ namespace MarquesitaDashboards.Controllers
 
             var user = await _usersManager.GetUserByEmailAsync(email);
             var callback = Url.Action("ResetPassword", "Home", new { token, email }, Request.Scheme);
-            var message = new Message(new string[] { email }, "Cambiar contraseña", user, callback, null);
+            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user, callback, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
             return RedirectToAction("ForgotPasswordConfirmation", "Home");
         }

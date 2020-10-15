@@ -1,4 +1,5 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
 using Microsoft.AspNetCore.Authorization;
@@ -16,19 +17,18 @@ namespace MarquesitaDashboards.Controllers
         private readonly ISaleService _saleService;
         private readonly IProductService _productService;
         private readonly IUserManagerService _usersManager;
-        private readonly IConstantService _images;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IAddressService _addressService;
+        private readonly IConstantsService _constants;
 
-
-        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IConstantService images, IShoppingCartService shoppingCartService, IAddressService addressService)
+        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IAddressService addressService, IConstantsService constants)
         {
             _saleService = saleService;
             _usersManager = usersManager;
             _productService = productService;
-            _images = images;
             _shoppingCartService = shoppingCartService;
             _addressService = addressService;
+            _constants = constants;
         }
 
         [HttpGet]
@@ -121,10 +121,10 @@ namespace MarquesitaDashboards.Controllers
                     await _saleService.AddItemToClientOrderSaleAsync(model);
                     return true;
                 }
-                TempData["stockError"] = "No hay la cantidad que usted solicita";
+                TempData["stockError"] = ConstantsService.Errors.STOCK_NOT_AVALIBLE;
                 return false;
             }
-            TempData["error"] = "Porfavor ingrese una cantidad";
+            TempData["error"] = ConstantsService.Errors.INVALID_QUANTITY;
             return false;
         }
 
@@ -175,7 +175,7 @@ namespace MarquesitaDashboards.Controllers
                 ViewBag.User = user;
                 ViewBag.Product = _productService.GetProductList();
                 ViewBag.SaleDatailTemp = _saleService.GetClientSaleTempList(user.Id.ToString());
-                ViewBag.PaymentList = _saleService.GetPaymentList();
+                ViewBag.PaymentList = _constants.GetPaymentList();
                 return View();
             }
             return RedirectToAction("NotFound404", "Error");
@@ -202,13 +202,13 @@ namespace MarquesitaDashboards.Controllers
                 {
                     _saleService.UpdateStock(tempList);
                     _saleService.SaveSale(employee, sale, tempList);
-                    TempData["saleSuccess"] = "Se realizo la venta con exito";
+                    TempData["saleSuccess"] = ConstantsService.Messages.SALE_SUCCESS;
                     return true;
                 }
-                TempData["stockError"] = "No contamos con el stock que solicita, vuelva a intentarlo";
+                TempData["stockError"] = ConstantsService.Errors.STOCK_NOT_AVALIBLE;
                 return false;
             }
-            TempData["error"] = "No puede realizar una venta sin productos";
+            TempData["error"] = ConstantsService.Errors.EMPTY_SALE;
             return false;
         }
 
@@ -235,10 +235,10 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> GetCheckoutAsync()
         {
             var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            ViewBag.Image = _images.RoutePathRootProductsImages();
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             ViewBag.ShoppingCart = _shoppingCartService.GetUserCartAsList(user.Id);
             ViewBag.AddressList = _addressService.GetUserAddresses(user.Id);
-            ViewBag.PaymentList = _saleService.GetEcommercePaymentList();
+            ViewBag.PaymentList = _constants.GetPaymentList();
             return PartialView();
         }
 
