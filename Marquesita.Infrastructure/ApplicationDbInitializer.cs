@@ -1,4 +1,5 @@
-﻿using Marquesita.Models.Identity;
+﻿using Marquesita.Infrastructure.Services;
+using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Security.Claims;
@@ -20,28 +21,28 @@ namespace Marquesita.Infrastructure
                 await roleManager.CreateAsync(new Role { Name = "Cliente", NormalizedName = "CLIENTE" });
 
                 var newAdminRole = await roleManager.FindByNameAsync("Super Admin");
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Ver Usuarios"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Agregar Usuario"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Editar Usuario"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Eliminar Usuario"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Ver Roles"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Agregar Roles"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Editar Roles"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Eliminar Roles"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Ver Productos"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Agregar Productos"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Editar Productos"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Eliminar Productos"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Ver Categorias"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Agregar Categoria"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Editar Categoria"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Eliminar Categoria"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Ver Ventas"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Agregar Venta"));
-                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", "Editar Venta"));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_USERS));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_USER));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_USER));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.DELETE_USER));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_ROLES));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_ROLE));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_ROLE));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.DELETE_ROLE));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_PRODUCTS));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_PRODUCT));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_PRODUCT));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.DELETE_PRODUCT));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_CATEGORYS));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_CATEGORY));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_CATEGORY));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.DELETE_CATEGORY));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_SALES));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_SALE));
+                await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_SALE));
 
                 var newClientRole = await roleManager.FindByNameAsync("Cliente");
-                await roleManager.AddClaimAsync(newClientRole, new Claim("Permission", "Compras"));
+                await roleManager.AddClaimAsync(newClientRole, new Claim("Permission", ConstantsService.RoleTypes.CLIENT));
             }
 
             Thread.Sleep(300);

@@ -151,107 +151,107 @@ namespace MarquesitaDashboards
                 // User Policy
                 options.AddPolicy("CanViewUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "Ver Usuarios");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.VIEW_USERS);
                 });
 
                 options.AddPolicy("CanAddUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "Agregar Usuario");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.ADD_USER);
                 });
 
                 options.AddPolicy("CanEditUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "Editar Usuario");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.EDIT_USER);
                 });
 
                 options.AddPolicy("CanDeleteUsers", policy =>
                 {
-                    policy.RequireClaim("Permission", "Eliminar Usuario");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.DELETE_USER);
                 });
 
                 // Roles Policy
                 options.AddPolicy("CanViewRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "Ver Roles");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.VIEW_ROLES);
                 });
 
                 options.AddPolicy("CanAddRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "Agregar Roles");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.ADD_ROLE);
                 });
 
                 options.AddPolicy("CanEditRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "Editar Roles");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.EDIT_ROLE);
                 });
 
                 options.AddPolicy("CanDeleteRoles", policy =>
                 {
-                    policy.RequireClaim("Permission", "Eliminar Roles");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.DELETE_ROLE);
                 });
 
                 // Products Policy
                 options.AddPolicy("CanViewProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "Ver Productos");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.VIEW_PRODUCTS);
                 });
 
                 options.AddPolicy("CanAddProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "Agregar Productos");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.ADD_PRODUCT);
                 });
 
                 options.AddPolicy("CanEditProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "Editar Productos");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.EDIT_PRODUCT);
                 });
 
                 options.AddPolicy("CanDeleteProducts", policy =>
                 {
-                    policy.RequireClaim("Permission", "Eliminar Productos");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.DELETE_PRODUCT);
                 });
 
                 // Categories Policy
                 options.AddPolicy("CanViewCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "Ver Categorias");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.VIEW_CATEGORYS);
                 });
 
                 options.AddPolicy("CanAddCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "Agregar Categoria");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.ADD_CATEGORY);
                 });
 
                 options.AddPolicy("CanEditCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "Editar Categoria");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.EDIT_CATEGORY);
                 });
 
                 options.AddPolicy("CanDeleteCategory", policy =>
                 {
-                    policy.RequireClaim("Permission", "Eliminar Categoria");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.DELETE_CATEGORY);
                 });
 
                 // Sales Policy
                 options.AddPolicy("CanViewSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "Ver Ventas");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.VIEW_SALES);
                 });
 
                 options.AddPolicy("CanAddSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "Agregar Venta");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.ADD_SALE);
                 });
 
                 options.AddPolicy("CanEditSales", policy =>
                 {
-                    policy.RequireClaim("Permission", "Editar Venta");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.EDIT_SALE);
                 });
 
                 // Client Policy
                 options.AddPolicy("Client", policy =>
                 {
-                    policy.RequireClaim("Permission", "Compras");
+                    policy.RequireClaim("Permission", ConstantsService.RoleTypes.CLIENT);
                 });
             });
         }
@@ -295,7 +295,7 @@ namespace MarquesitaDashboards
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();
             services.AddScoped<IAuthManagerService, AuthManagerService>();
-            services.AddScoped<IConstantService, ConstantService>();
+            services.AddScoped<IConstantsService, ConstantsService>();
             services.AddTransient<IEmailsTextService, EmailsTextService>();
 
         }
