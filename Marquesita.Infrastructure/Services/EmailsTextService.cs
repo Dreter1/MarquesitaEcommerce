@@ -1,6 +1,5 @@
 ﻿using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
-using System;
 
 namespace Marquesita.Infrastructure.Services
 {
