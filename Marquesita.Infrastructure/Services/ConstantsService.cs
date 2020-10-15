@@ -9,6 +9,9 @@ namespace Marquesita.Infrastructure.Services
         {
             public const string CLIENT = "Cliente";
             public const string ADMINISTRATOR = "Super Admin";
+
+            public const string CLIENT_UPPERCASE = "CLIENTE";
+            public const string ADMINISTRATOR_UPPERCASE = "SUPER ADMIN";
         }
 
         public struct RoleTypes 
@@ -39,6 +42,26 @@ namespace Marquesita.Infrastructure.Services
 
 
             public const string CLIENT = "Compras";
+        }
+
+        public struct InitialsUsers 
+        {
+            public const string ADMIN_USERNAME = "Super Admin";
+            public const string ADMIN_FIRSTNAME = "Administrator";
+            public const string ADMIN_LASTNAME = "Company Name";
+            public const string ADMIN_EMAIL = "admin@gmail.com";
+            public const string ADMIN_EMAIL_UPPERCASE = "ADMIN@GMAIL.COM";
+
+            public const string CLIENT_USERNAME = "Cliente";
+            public const string CLIENT_FIRSTNAME = "Client";
+            public const string CLIENT_LASTNAME = "Test";
+            public const string CLIENT_EMAIL = "cliente@gmail.com";
+            public const string CLIENT_EMAIL_UPPERCASE = "CLIENTE@GMAIL.COM";
+
+            public const string PHONE = "123456789";
+            public const bool EMAIL_CONFIRMED = true;
+            public const bool LOCKOUT_ENABLED = false;
+            public const string PASSWORD = "password";
         }
 
         public struct Images

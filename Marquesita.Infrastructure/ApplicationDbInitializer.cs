@@ -13,14 +13,14 @@ namespace Marquesita.Infrastructure
         public static async Task SeedUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
 
-            var adminRole = await roleManager.FindByNameAsync("Super Admin");
-            var clientRole = await roleManager.FindByNameAsync("Cliente");
+            var adminRole = await roleManager.FindByNameAsync(ConstantsService.UserType.ADMINISTRATOR);
+            var clientRole = await roleManager.FindByNameAsync(ConstantsService.UserType.CLIENT);
             if (adminRole == null && clientRole == null)
             {
-                await roleManager.CreateAsync(new Role { Name = "Super Admin", NormalizedName = "SUPER ADMIN" });
-                await roleManager.CreateAsync(new Role { Name = "Cliente", NormalizedName = "CLIENTE" });
+                await roleManager.CreateAsync(new Role { Name = ConstantsService.UserType.ADMINISTRATOR, NormalizedName = ConstantsService.UserType.ADMINISTRATOR_UPPERCASE });
+                await roleManager.CreateAsync(new Role { Name = ConstantsService.UserType.CLIENT, NormalizedName = ConstantsService.UserType.CLIENT_UPPERCASE });
 
-                var newAdminRole = await roleManager.FindByNameAsync("Super Admin");
+                var newAdminRole = await roleManager.FindByNameAsync(ConstantsService.UserType.ADMINISTRATOR);
                 await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.VIEW_USERS));
                 await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_USER));
                 await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_USER));
@@ -41,49 +41,49 @@ namespace Marquesita.Infrastructure
                 await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.ADD_SALE));
                 await roleManager.AddClaimAsync(newAdminRole, new Claim("Permission", ConstantsService.RoleTypes.EDIT_SALE));
 
-                var newClientRole = await roleManager.FindByNameAsync("Cliente");
+                var newClientRole = await roleManager.FindByNameAsync(ConstantsService.UserType.CLIENT);
                 await roleManager.AddClaimAsync(newClientRole, new Claim("Permission", ConstantsService.RoleTypes.CLIENT));
             }
 
             Thread.Sleep(300);
 
-            if (userManager.FindByNameAsync("superadmin").Result == null && userManager.FindByNameAsync("cliente").Result == null)
+            if (userManager.FindByNameAsync(ConstantsService.InitialsUsers.ADMIN_USERNAME).Result == null && userManager.FindByNameAsync(ConstantsService.InitialsUsers.CLIENT_USERNAME).Result == null)
             {
                 User userAdmin = new User
                 {
-                    LockoutEnabled = false,
-                    UserName = "superadmin",
-                    FirstName = "admin",
-                    LastName = "admin",
-                    Email = "admin@gmail.com",
-                    EmailConfirmed = true,
-                    NormalizedEmail = "ADMIN@GMAIL.COM",
-                    Phone = "123456789",
+                    LockoutEnabled = ConstantsService.InitialsUsers.LOCKOUT_ENABLED,
+                    UserName = ConstantsService.InitialsUsers.ADMIN_USERNAME,
+                    FirstName = ConstantsService.InitialsUsers.ADMIN_FIRSTNAME,
+                    LastName = ConstantsService.InitialsUsers.ADMIN_LASTNAME,
+                    Email = ConstantsService.InitialsUsers.ADMIN_EMAIL,
+                    EmailConfirmed = ConstantsService.InitialsUsers.EMAIL_CONFIRMED,
+                    NormalizedEmail = ConstantsService.InitialsUsers.ADMIN_EMAIL_UPPERCASE,
+                    Phone = ConstantsService.InitialsUsers.PHONE,
                     DateOfBirth = new DateTime(1996, 05, 05),
                     RegisterDate = DateTime.Now   
                 };
 
                 User userClient = new User
                 {
-                    LockoutEnabled = false,
-                    UserName = "cliente",
-                    FirstName = "Cliente",
-                    LastName = "Cliente",
-                    Email = "cliente@gmail.com",
-                    EmailConfirmed = true,
-                    NormalizedEmail = "CLIENTE@GMAIL.COM",
-                    Phone = "123456789",
+                    LockoutEnabled = ConstantsService.InitialsUsers.LOCKOUT_ENABLED,
+                    UserName = ConstantsService.InitialsUsers.CLIENT_USERNAME,
+                    FirstName = ConstantsService.InitialsUsers.CLIENT_FIRSTNAME,
+                    LastName = ConstantsService.InitialsUsers.CLIENT_LASTNAME,
+                    Email = ConstantsService.InitialsUsers.CLIENT_EMAIL,
+                    EmailConfirmed = ConstantsService.InitialsUsers.EMAIL_CONFIRMED,
+                    NormalizedEmail = ConstantsService.InitialsUsers.CLIENT_EMAIL_UPPERCASE,
+                    Phone = ConstantsService.InitialsUsers.PHONE,
                     DateOfBirth = new DateTime(1996, 05, 05),
                     RegisterDate = DateTime.Now
                 };
 
-                IdentityResult resultAdmin = userManager.CreateAsync(userAdmin, "password").Result;
-                IdentityResult resultClient = userManager.CreateAsync(userClient, "password").Result;
+                IdentityResult resultAdmin = userManager.CreateAsync(userAdmin, ConstantsService.InitialsUsers.PASSWORD).Result;
+                IdentityResult resultClient = userManager.CreateAsync(userClient, ConstantsService.InitialsUsers.PASSWORD).Result;
 
                 if (resultAdmin.Succeeded && resultClient.Succeeded)
                 {
-                    userManager.AddToRoleAsync(userAdmin, "Super Admin").Wait();
-                    userManager.AddToRoleAsync(userClient, "Cliente").Wait();
+                    userManager.AddToRoleAsync(userAdmin, ConstantsService.UserType.ADMINISTRATOR).Wait();
+                    userManager.AddToRoleAsync(userClient, ConstantsService.UserType.CLIENT).Wait();
                 }
             }
         }

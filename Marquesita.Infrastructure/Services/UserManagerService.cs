@@ -61,7 +61,7 @@ namespace Marquesita.Infrastructure.Services
             foreach (var user in usersList)
             {
                 var role = await GetUserRole(user);
-                if (role != "Cliente")
+                if (role != ConstantsService.UserType.CLIENT)
                 {
                     employeeList.Add(user);
                 }
@@ -76,7 +76,7 @@ namespace Marquesita.Infrastructure.Services
             foreach (var user in usersList)
             {
                 var role = await GetUserRole(user);
-                if (role == "Cliente")
+                if (role == ConstantsService.UserType.CLIENT)
                 {
                     clientList.Add(user);
                 }
@@ -256,13 +256,13 @@ namespace Marquesita.Infrastructure.Services
         public async Task AddingRoleToClientAsync(string User)
         {
             var user = await _userManager.FindByNameAsync(User);
-            var role = await _roleManager.GetRoleByName("Cliente");
+            var role = await _roleManager.GetRoleByName(ConstantsService.UserType.CLIENT);
             await _userManager.AddToRoleAsync(user, role.Name);
         }
 
         public bool isColaborator(string role)
         {
-            if (role != "Cliente")
+            if (role != ConstantsService.UserType.CLIENT)
                 return true;
             return false;
         }
