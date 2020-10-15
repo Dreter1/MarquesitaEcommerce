@@ -1,4 +1,6 @@
-﻿using Marquesita.Infrastructure.Interfaces;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -276,6 +279,37 @@ namespace MarquesitaDashboards.Controllers
                 return true;
             }
             return false;
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewSales")]
+        public IActionResult GenerateExcelReport()
+        {
+            var sales = _saleService.GetSaleList();
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Sales");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Fecha";
+            worksheet.Cell(currentRow, 2).Value = "Metodo de Pago";
+            worksheet.Cell(currentRow, 3).Value = "Tipo de venta";
+            worksheet.Cell(currentRow, 4).Value = "Estado de venta";
+            foreach (var sale in sales)
+            {
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = sale.Date;
+                worksheet.Cell(currentRow, 2).Value = sale.PaymentType;
+                worksheet.Cell(currentRow, 3).Value = sale.TypeOfSale;
+                worksheet.Cell(currentRow, 4).Value = sale.SaleStatus;
+            }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+
+            return File(
+                content,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "saleReport.xlsx");
         }
     }
 }

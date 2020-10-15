@@ -36,6 +36,9 @@
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
+            <div class="fa-pull-right">
+                <a asp-controller="Sale" asp-action="GenerateExcelReport" class="btn btn-primary btn-block" title="Generar Reporte"><i class="fas fa-file-archive"></i></a>
+            </div>
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddSales")).Succeeded)
             {
                 <div class="fa-pull-right">
@@ -59,31 +62,31 @@
                 <tbody>
                     @foreach (var sale in Model)
                     {
-                    <tr>
-                        <td>
-                            @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
-                        </td>
-                        <td class="text-center">@sale.Date.ToShortDateString()</td>
-                        <td class="text-center">@sale.TypeOfSale</td>
-                        <td class="text-center">@sale.SaleStatus</td>
-                        @if (sale.EmployeeId != null)
-                        {
+                        <tr>
                             <td>
-                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
+                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
                             </td>
-                        }
-                        else
-                        {
-                            <td class="text-center">-</td>
-                        }
-                        <td class="text-center">S./ @sale.TotalAmount</td>
-                        <td>
-                            <div class="form-row justify-content-center">
-                                <a asp-controller="Sale" asp-action="Edit" asp-route-saleId="@sale.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
-                                <a asp-controller="Sale" asp-action="Detail" asp-route-saleId="@sale.Id" class="btn btn-info" title="Detalles"><i class="fas fa-info-circle"></i></a>
-                            </div>
-                        </td>
-                    </tr>
+                            <td class="text-center">@sale.Date.ToShortDateString()</td>
+                            <td class="text-center">@sale.TypeOfSale</td>
+                            <td class="text-center">@sale.SaleStatus</td>
+                            @if (sale.EmployeeId != null)
+                            {
+                                <td>
+                                    @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">-</td>
+                            }
+                            <td class="text-center">S./ @sale.TotalAmount</td>
+                            <td>
+                                <div class="form-row justify-content-center">
+                                    <a asp-controller="Sale" asp-action="Edit" asp-route-saleId="@sale.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
+                                    <a asp-controller="Sale" asp-action="Detail" asp-route-saleId="@sale.Id" class="btn btn-info" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                                </div>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
