@@ -32,5 +32,6 @@ namespace Marquesita.Infrastructure.Interfaces
         bool IsGreaterThan0(int quantity);
         bool SaleExists(Guid saleId);
         bool IsUserSale(Guid saleId, string userId);
+        byte[] GenerateExcelReport();
     }
 }

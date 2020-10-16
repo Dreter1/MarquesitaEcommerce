@@ -283,33 +283,13 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanViewSales")]
-        public IActionResult GenerateExcelReport()
+        public IActionResult DownloadExcelReport()
         {
-            var sales = _saleService.GetSaleList();
-            using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add("Sales");
-            var currentRow = 1;
-            worksheet.Cell(currentRow, 1).Value = "Fecha";
-            worksheet.Cell(currentRow, 2).Value = "Metodo de Pago";
-            worksheet.Cell(currentRow, 3).Value = "Tipo de venta";
-            worksheet.Cell(currentRow, 4).Value = "Estado de venta";
-            foreach (var sale in sales)
-            {
-                currentRow++;
-                worksheet.Cell(currentRow, 1).Value = sale.Date;
-                worksheet.Cell(currentRow, 2).Value = sale.PaymentType;
-                worksheet.Cell(currentRow, 3).Value = sale.TypeOfSale;
-                worksheet.Cell(currentRow, 4).Value = sale.SaleStatus;
-            }
+            var content = _saleService.GenerateExcelReport();
+            var format = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var excelName = "ReporteDeVentas_"+DateTime.Now.ToShortDateString()+".xlsx";
 
-            using var stream = new MemoryStream();
-            workbook.SaveAs(stream);
-            var content = stream.ToArray();
-
-            return File(
-                content,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "saleReport.xlsx");
+            return File(content, format, excelName);
         }
     }
 }

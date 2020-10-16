@@ -37,7 +37,7 @@
     <div class="card card-solid">
         <div class="card-body">
             <div class="fa-pull-right">
-                <a asp-controller="Sale" asp-action="GenerateExcelReport" class="btn btn-primary btn-block" title="Generar Reporte"><i class="fas fa-file-archive"></i></a>
+                <a asp-controller="Sale" asp-action="DownloadExcelReport" class="btn btn-primary btn-block" title="Generar Reporte"><i class="fas fa-file-excel"></i></a>
             </div>
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddSales")).Succeeded)
             {
