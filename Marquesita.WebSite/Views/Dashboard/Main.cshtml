@@ -2,7 +2,7 @@
 @inject IAuthorizationService AuthorizationService
 
 @{
-    ViewData["Title"] = "Inicio";
+    ViewData["Title"] = "Panel";
     Layout = "_LayoutDashboard";
 }
 
@@ -63,7 +63,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Reporte Mensual</h5>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -95,18 +94,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <p class="text-center">
-                                    <strong>Ventas: 1 Enero, 2020 - 31 Diciembre, 2020</strong>
-                                </p>
-
                                 <div class="chart">
-                                    <canvas id="Linecanvas" height="180" style="height: 180px;"></canvas>
-                                    @*<canvas id="salesChart" height="180" style="height: 180px;"></canvas>*@
+                                    <canvas id="salesChart" style="display: block; width: 1000px; height: 500px;" width="1000" height="500" class="chartjs-render-monitor"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-sm-3 col-6">
@@ -238,36 +231,58 @@
         </div>
     </div>
 </section>
-
+<!-- ChartJS -->
+<script src="~/DashboardTemplate/plugins/chart.js/Chart.min.js"></script>
 <script>
-
-        var LineChartData =
-            {
-                labels: [@Html.Raw(ViewBag.Productname_List)],
-                datasets: [{
-                    label: 'ProductWise Sales Count',
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderWidth: 2,
-                    data: [@ViewBag.MobileCount_List]
+    var MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    var config = {
+        type: 'line',
+        data: {
+            labels: MONTHS,
+            datasets: [{
+                label: 'Venta del Mes',
+                backgroundColor: '#cc0000',
+                borderColor: '##4d0000',
+                data: [@ViewBag.SalesAmountPerMonth],
+                fill: true,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Ventas: 1 Enero, 2020 - 31 Diciembre, 2020'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: true,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Mes'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Venta Total'
+                    }
                 }]
-            };
-
-            window.onload = function () {
-                var ctx1 = document.getElementById("Linecanvas").getContext("2d");
-                window.myBar = new Chart(ctx1,
-                    {
-                        type: 'line',
-                        data: LineChartData,
-                        options:
-                            {
-                                title:
-                                {
-                                    display: true,
-                                    text: "ProductWise Sales Count"
-                                },
-                                responsive: true,
-                                maintainAspectRatio: true
-                            }
-                    });
             }
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    };
 </script>

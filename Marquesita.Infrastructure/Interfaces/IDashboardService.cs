@@ -6,6 +6,6 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IDashboardService
     {
-        void ProductWiseSales(out string MobileCountList, out string ProductList);
+        void GetSaleAmountOfMonths(out string saleMonthList);
     }
 }

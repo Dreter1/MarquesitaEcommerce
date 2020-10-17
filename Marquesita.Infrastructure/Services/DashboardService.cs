@@ -1,10 +1,6 @@
-﻿using Dapper;
-using Marquesita.Infrastructure.DbContexts;
+﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -12,31 +8,45 @@ namespace Marquesita.Infrastructure.Services
 {
     public class DashboardService : IDashboardService
     {
-        private readonly IConfiguration _configuration;
+        private readonly BusinessDbContext _context;
 
-        public DashboardService(IConfiguration configuration)
+        public DashboardService(BusinessDbContext context)
         {
-            _configuration = configuration;
+            _context = context;
         }
 
-        public void ProductWiseSales(out string MobileCountList, out string ProductList)
+        public void GetSaleAmountOfMonths(out string saleMonthList)
         {
-            string connectionString = _configuration.GetConnectionString("BusinessDB");
-            using SqlConnection con = new SqlConnection(connectionString);
+            var januarySale = _context.Sales.Where(sale => sale.Date.Month == 1).Sum(total => total.TotalAmount);
+            var februarySale = _context.Sales.Where(sale => sale.Date.Month == 2).Sum(total => total.TotalAmount);
+            var marchSale = _context.Sales.Where(sale => sale.Date.Month == 3).Sum(total => total.TotalAmount);
+            var aprilSale = _context.Sales.Where(sale => sale.Date.Month == 4).Sum(total => total.TotalAmount);
+            var maySale = _context.Sales.Where(sale => sale.Date.Month == 5).Sum(total => total.TotalAmount);
+            var juneSale = _context.Sales.Where(sale => sale.Date.Month == 6).Sum(total => total.TotalAmount);
+            var julySale = _context.Sales.Where(sale => sale.Date.Month == 7).Sum(total => total.TotalAmount);
+            var augustSale = _context.Sales.Where(sale => sale.Date.Month == 8).Sum(total => total.TotalAmount);
+            var septemberSale = _context.Sales.Where(sale => sale.Date.Month == 9).Sum(total => total.TotalAmount);
+            var octoberSale = _context.Sales.Where(sale => sale.Date.Month == 10).Sum(total => total.TotalAmount);
+            var novemberSale = _context.Sales.Where(sale => sale.Date.Month == 11).Sum(total => total.TotalAmount);
+            var decemberSale = _context.Sales.Where(sale => sale.Date.Month == 12).Sum(total => total.TotalAmount);
 
-            var saletdata = con.Query<SaleViewModel>("Usp_GetTotalsalesProductwise", null, null, true, 0, CommandType.StoredProcedure).ToList();
-            var MobileSalesCounts = (from temp in saletdata
-                                     select temp.Quantity).ToList();
+            var saleData = new List<decimal>
+            {
+                januarySale,
+                februarySale,
+                marchSale,
+                aprilSale,
+                maySale,
+                juneSale,
+                julySale,
+                augustSale,
+                septemberSale,
+                octoberSale,
+                novemberSale,
+                decemberSale
+            };
 
-            var ProductNames = (from temp in saletdata
-                                select temp.Date).ToList();
-
-            MobileCountList = string.Join(",", MobileSalesCounts);
-
-            ProductList = string.Join(",", ProductNames);
-
-
-
+            saleMonthList = string.Join(",", saleData);
         }
     }
 }

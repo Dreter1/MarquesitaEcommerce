@@ -95,17 +95,15 @@ namespace MarquesitaDashboards.Controllers
                     ViewBag.UserId = user.Id;
                     try
                     {
-                        string tempMobile = string.Empty;
-                        string tempProduct = string.Empty;
-                        _dashboard.ProductWiseSales(out tempMobile, out tempProduct);
-                        ViewBag.MobileCount_List = tempMobile.Trim();
-                        ViewBag.Productname_List = tempProduct.Trim();
+                        string sales = string.Empty;
+                        _dashboard.GetSaleAmountOfMonths(out sales);
+                        ViewBag.SalesAmountPerMonth = sales.Trim();
 
                         return View();
                     }
                     catch (Exception)
                     {
-                        throw;
+                        return RedirectToAction("NotFound404", "Error");
                     }
                     
                 }
