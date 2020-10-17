@@ -291,6 +291,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IWishListService, WishListService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IDashboardService, DashboardService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();

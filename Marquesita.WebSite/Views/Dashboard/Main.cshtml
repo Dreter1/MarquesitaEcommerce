@@ -100,7 +100,14 @@
                                 </p>
 
                                 <div class="chart">
-                                    <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                                    @*<canvas id="salesChart" height="180" style="height: 180px;"></canvas>*@
+                                    <div style="text-align: center">
+                                        <canvas id="Linecanvas" height="180" style="height: 180px;"></canvas>
+                                    </div>
+                                    <div style="text-align: center">
+                                        Disclaimer:- This data is for demo it is
+                                        not real data it wont relate to any company
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -237,3 +244,39 @@
         </div>
     </div>
 </section>
+
+<meta name="viewport" content="width=device-width" />
+<title>Line Charts</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+<script>
+
+        var LineChartData =
+            {
+                labels: [@Html.Raw(ViewBag.Productname_List)],
+                datasets: [{
+                    label: 'ProductWise Sales Count',
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderWidth: 2,
+                    data: [@ViewBag.MobileCount_List]
+                }]
+            };
+
+            window.onload = function () {
+                var ctx1 = document.getElementById("Linecanvas").getContext("2d");
+                window.myBar = new Chart(ctx1,
+                    {
+                        type: 'line',
+                        data: LineChartData,
+                        options:
+                            {
+                                title:
+                                {
+                                    display: true,
+                                    text: "ProductWise Sales Count"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+                    });
+            }
+</script>

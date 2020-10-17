@@ -3,6 +3,7 @@ using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace MarquesitaDashboards.Controllers
@@ -11,12 +12,14 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IAuthManagerService _signsInManager;
         private readonly IUserManagerService _usersManager;
+        private readonly IDashboardService _dashboard;
 
-        
-        public DashboardController(IAuthManagerService signsInManager, IUserManagerService usersManager)
+
+        public DashboardController(IAuthManagerService signsInManager, IUserManagerService usersManager, IDashboardService dashboard)
         {
             _signsInManager = signsInManager;
             _usersManager = usersManager;
+            _dashboard = dashboard;
         }
 
         [HttpGet]
@@ -91,7 +94,21 @@ namespace MarquesitaDashboards.Controllers
                 if (_usersManager.isColaborator(userRole))
                 {
                     ViewBag.UserId = user.Id;
-                    return View();
+                    try
+                    {
+                        string tempMobile = string.Empty;
+                        string tempProduct = string.Empty;
+                        _dashboard.ProductWiseSales(out tempMobile, out tempProduct);
+                        ViewBag.MobileCount_List = tempMobile.Trim();
+                        ViewBag.Productname_List = tempProduct.Trim();
+
+                        return View();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
