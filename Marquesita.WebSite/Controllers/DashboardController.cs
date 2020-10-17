@@ -14,7 +14,6 @@ namespace MarquesitaDashboards.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IDashboardService _dashboard;
 
-
         public DashboardController(IAuthManagerService signsInManager, IUserManagerService usersManager, IDashboardService dashboard)
         {
             _signsInManager = signsInManager;
