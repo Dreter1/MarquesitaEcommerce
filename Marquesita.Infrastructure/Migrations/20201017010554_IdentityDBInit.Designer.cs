@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Marquesita.Infrastructure.Migrations.AuthIdentityDb
+namespace Marquesita.Infrastructure.Migrations
 {
     [DbContext(typeof(AuthIdentityDbContext))]
-    [Migration("20201014225728_IdentityDbSqlServer")]
-    partial class IdentityDbSqlServer
+    [Migration("20201017010554_IdentityDBInit")]
+    partial class IdentityDBInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

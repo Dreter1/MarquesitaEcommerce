@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Marquesita.Infrastructure.Migrations
+namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20201014225633_BussinessDbSqlServer")]
-    partial class BussinessDbSqlServer
+    [Migration("20201017010626_BussinesDBInit")]
+    partial class BussinesDBInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

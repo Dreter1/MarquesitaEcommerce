@@ -46,13 +46,13 @@ namespace Marquesita.Infrastructure.Services
 
         public struct InitialsUsers 
         {
-            public const string ADMIN_USERNAME = "Super Admin";
+            public const string ADMIN_USERNAME = "superadmin";
             public const string ADMIN_FIRSTNAME = "Administrator";
             public const string ADMIN_LASTNAME = "Company Name";
             public const string ADMIN_EMAIL = "admin@gmail.com";
             public const string ADMIN_EMAIL_UPPERCASE = "ADMIN@GMAIL.COM";
 
-            public const string CLIENT_USERNAME = "Cliente";
+            public const string CLIENT_USERNAME = "cliente";
             public const string CLIENT_FIRSTNAME = "Client";
             public const string CLIENT_LASTNAME = "Test";
             public const string CLIENT_EMAIL = "cliente@gmail.com";
