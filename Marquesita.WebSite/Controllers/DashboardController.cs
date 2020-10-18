@@ -93,6 +93,10 @@ namespace MarquesitaDashboards.Controllers
                 if (_usersManager.isColaborator(userRole))
                 {
                     ViewBag.UserId = user.Id;
+                    ViewBag.DaySale = _dashboard.GetSaleAmountOfDay();
+                    ViewBag.TotalDaySale = _dashboard.GetTotalSalesOfDay();
+                    ViewBag.NewUsersCount = _dashboard.GetNewUsersOfDay();
+                    ViewBag.LastestSales = _dashboard.GetLastestSales();
                     try
                     {
                         string sales = string.Empty;
