@@ -56,7 +56,7 @@ namespace Marquesita.Infrastructure.Services
 
         public IEnumerable<Sale> GetSaleList()
         {
-            return _saleRepository.All();
+            return _saleRepository.All().OrderByDescending(sale => sale.Date);
         }
 
         public IEnumerable<Sale> GetClientSaleList(string userId)
@@ -142,7 +142,7 @@ namespace Marquesita.Infrastructure.Services
                     UserId = sale.UserId,
                     TotalAmount = sale.TotalAmount,
                     EmployeeId = user.Id,
-                    Date = DateTime.UtcNow,
+                    Date = DateTime.Now,
                     PaymentType = sale.PaymentType,
                     SaleStatus = ConstantsService.SaleStatus.IN_PROCESS,
                     TypeOfSale = ConstantsService.SaleType.STORE_SALE
@@ -219,7 +219,7 @@ namespace Marquesita.Infrastructure.Services
             {
                 var order = new Sale
                 {
-                    Date = DateTime.UtcNow,
+                    Date = DateTime.Now,
                     UserId = sale.UserId,
                     TotalAmount = sale.TotalAmount,
                     PaymentType = sale.PaymentType,

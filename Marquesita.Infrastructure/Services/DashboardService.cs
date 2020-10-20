@@ -28,34 +28,14 @@ namespace Marquesita.Infrastructure.Services
 
         public void GetSaleAmountOfMonths(out string saleMonthList)
         {
-            var januarySale = _context.Sales.Where(sale => sale.Date.Month == 1).Sum(total => total.TotalAmount);
-            var februarySale = _context.Sales.Where(sale => sale.Date.Month == 2).Sum(total => total.TotalAmount);
-            var marchSale = _context.Sales.Where(sale => sale.Date.Month == 3).Sum(total => total.TotalAmount);
-            var aprilSale = _context.Sales.Where(sale => sale.Date.Month == 4).Sum(total => total.TotalAmount);
-            var maySale = _context.Sales.Where(sale => sale.Date.Month == 5).Sum(total => total.TotalAmount);
-            var juneSale = _context.Sales.Where(sale => sale.Date.Month == 6).Sum(total => total.TotalAmount);
-            var julySale = _context.Sales.Where(sale => sale.Date.Month == 7).Sum(total => total.TotalAmount);
-            var augustSale = _context.Sales.Where(sale => sale.Date.Month == 8).Sum(total => total.TotalAmount);
-            var septemberSale = _context.Sales.Where(sale => sale.Date.Month == 9).Sum(total => total.TotalAmount);
-            var octoberSale = _context.Sales.Where(sale => sale.Date.Month == 10).Sum(total => total.TotalAmount);
-            var novemberSale = _context.Sales.Where(sale => sale.Date.Month == 11).Sum(total => total.TotalAmount);
-            var decemberSale = _context.Sales.Where(sale => sale.Date.Month == 12).Sum(total => total.TotalAmount);
 
-            var saleData = new List<decimal>
+            var saleData = new List<decimal>();
+
+            for(int month = 1; month <= 12; month++)
             {
-                januarySale,
-                februarySale,
-                marchSale,
-                aprilSale,
-                maySale,
-                juneSale,
-                julySale,
-                augustSale,
-                septemberSale,
-                octoberSale,
-                novemberSale,
-                decemberSale
-            };
+                var monthSale = _context.Sales.Where(sale => sale.Date.Month == month).Sum(total => total.TotalAmount);
+                saleData.Add(monthSale);
+            }
 
             saleMonthList = string.Join(",", saleData);
         }
