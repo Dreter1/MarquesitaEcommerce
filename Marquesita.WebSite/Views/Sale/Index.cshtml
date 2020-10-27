@@ -64,7 +64,16 @@
                     {
                         <tr>
                             <td>
-                                @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
+                                @if (sale.Date.ToShortDateString() == DateTime.Now.ToShortDateString())
+                                {
+                                    @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
+                                    <span class="badge badge-info">Nueva orden</span>
+                                }
+                                else
+                                {
+                                    @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
+                                }
+
                             </td>
                             <td class="text-center">@sale.Date.ToShortDateString()</td>
                             <td class="text-center">@sale.TypeOfSale</td>
@@ -98,7 +107,35 @@
 
 <script>
     $(document).ready(function () {
-        dataTableScript();
+        $("#dataTable").DataTable({
+            order: [[1, 'desc']],
+            "responsive": true,
+            "autoWidth": false,
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty": "Registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
         SaleListActiveLink();
     });
 </script>

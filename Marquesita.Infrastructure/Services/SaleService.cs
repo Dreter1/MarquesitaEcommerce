@@ -326,7 +326,7 @@ namespace Marquesita.Infrastructure.Services
 
             var worksheet = workbook.Worksheets.Add("Ventas");
             var currentRow = 1;
-            worksheet.Cell(currentRow, 1).Value = "Fecha";
+            worksheet.Cell(currentRow, 1).Value = "Fecha y hora";
             worksheet.Cell(currentRow, 2).Value = "Metodo de Pago";
             worksheet.Cell(currentRow, 3).Value = "Tipo de venta";
             worksheet.Cell(currentRow, 4).Value = "Estado de venta";
@@ -339,7 +339,7 @@ namespace Marquesita.Infrastructure.Services
                 worksheet.Cell(currentRow, 2).Value = sale.PaymentType;
                 worksheet.Cell(currentRow, 3).Value = sale.TypeOfSale;
                 worksheet.Cell(currentRow, 4).Value = sale.SaleStatus;
-                worksheet.Cell(currentRow, 4).Value = sale.TotalAmount;
+                worksheet.Cell(currentRow, 5).Value = "S/. " + sale.TotalAmount;
             }
 
             using var stream = new MemoryStream();
