@@ -313,7 +313,7 @@ function pagination() {
     jQuery(function ($) {
         var items = $(".wrapper .panel .panel-body .product-men");
         var numItems = items.length;
-        var perPage = 1;
+        var perPage = 12;
         items.slice(perPage).hide();
         $("#pagination-container").pagination({
             items: numItems,
@@ -340,4 +340,43 @@ function productSearchFilter() {
             }).show();
         })
     }(jQuery));
+}
+
+function HomeIndexActiveLink() {
+    $('#IndexLink').addClass('active');
+
+    $('#AboutLink').removeClass('active');
+    $('#ProductsLink').removeClass('active');
+    $('#ContactLink').removeClass('active');
+}
+
+function AboutActiveLink() {
+    $('#AboutLink').addClass('active');
+
+    $('#IndexLink').removeClass('active');
+    $('#ProductsLink').removeClass('active');
+    $('#ContactLink').removeClass('active');
+}
+
+function ProductsActiveLink() {
+    $('#ProductsLink').addClass('active');
+
+    $('#IndexLink').removeClass('active');
+    $('#AboutLink').removeClass('active');
+    $('#ContactLink').removeClass('active');
+}
+
+function ContactActiveLink() {
+    $('#ContactLink').addClass('active');
+
+    $('#IndexLink').removeClass('active');
+    $('#AboutLink').removeClass('active');
+    $('#ProductsLink').removeClass('active');
+}
+
+function RemoveActiveLink() {
+    $('#IndexLink').removeClass('active');
+    $('#AboutLink').removeClass('active');
+    $('#ProductsLink').removeClass('active');
+    $('#ContactLink').removeClass('active');
 }

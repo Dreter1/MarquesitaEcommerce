@@ -112,7 +112,7 @@
                             </button>
                         </div>
                     </div>
-                    <input hidden value="@Enumerable.Count(ViewBag.LastestSales)"/>
+                    <input hidden value="@Enumerable.Count(ViewBag.LastestSales)" />
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table m-0">
@@ -193,7 +193,7 @@
 <!-- ChartJS -->
 <script src="~/DashboardTemplate/plugins/chart.js/Chart.min.js"></script>
 <script>
-    var MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     var config = {
         type: 'line',
         data: {
@@ -244,4 +244,7 @@
         var ctx = document.getElementById('salesChart').getContext('2d');
         window.myLine = new Chart(ctx, config);
     };
+    $(document).ready(function () {
+        DashboardActiveLink();
+    });
 </script>

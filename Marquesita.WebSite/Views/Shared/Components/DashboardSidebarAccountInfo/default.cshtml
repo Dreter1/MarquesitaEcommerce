@@ -4,7 +4,7 @@
 @model Marquesita.Models.Identity.User
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a asp-controller="Home" asp-action="Index" class="brand-link">
+    <a asp-controller="Dashboard" asp-action="Main" class="brand-link">
         <img src="~/DashboardTemplate/dist/img/AdminLTELogo.png" alt="Marquesita Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">La Marquesita</span>
@@ -33,7 +33,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a asp-controller="Dashboard" asp-action="Main" class="nav-link">
+                    <a asp-controller="Dashboard" asp-action="Main" id="DashboardLink" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
@@ -42,7 +42,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewUsers")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanAddUsers")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a asp-controller="User" asp-action="Index" class="nav-link">
+                        <a asp-controller="User" asp-action="Index" id="UserLink"  class="nav-link" data-click="link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Usuarios</p>
                         </a>
@@ -52,7 +52,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanAddRoles")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a asp-controller="Role" asp-action="Index" class="nav-link">
+                        <a asp-controller="Role" asp-action="Index" id="RoleLink" class="nav-link" data-click="link">
                             <i class="nav-icon fas fa-user-tag"></i>
                             <p>Roles</p>
                         </a>
@@ -62,7 +62,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewCategory")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a asp-controller="Category" asp-action="Index" class="nav-link">
+                        <a asp-controller="Category" asp-action="Index" id="CategoryLink" class="nav-link" data-click="link">
                             <i class="nav-icon far fa-list-alt"></i>
                             <p>Categorias</p>
                         </a>
@@ -72,7 +72,7 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewProducts")).Succeeded)
                 {
                     <li class="nav-item">
-                        <a asp-controller="Product" asp-action="List" class="nav-link">
+                        <a asp-controller="Product" asp-action="List" id="ProductLink" class="nav-link" data-click="link">
                             <i class="nav-icon fab fa-product-hunt"></i>
                             <p>Productos</p>
                         </a>
@@ -81,8 +81,8 @@
 
                 @if ((await AuthorizationService.AuthorizeAsync(User, "CanViewSales")).Succeeded)
                 {
-                    <li class="nav-item has-treeview">
-                        <a asp-controller="Sale" asp-action="Index" class="nav-link">
+                    <li id="SaleMenuLink" class="nav-item has-treeview">
+                        <a asp-controller="Sale" asp-action="Index" id="SaleLink" class="nav-link">
                             <i class="nav-icon fas fa-store"></i>
                             <p>
                                 Tienda <i class="fas fa-angle-left right"></i>
@@ -90,13 +90,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a asp-controller="Sale" asp-action="Index" class="nav-link">
+                                <a asp-controller="Sale" asp-action="Index" id="SaleListLink"  class="nav-link" >
                                     <i class="fas fa-clipboard-list"></i>
                                     <p> Lista de Ventas</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-controller="Sale" asp-action="AddClientSale" class="nav-link">
+                                <a asp-controller="Sale" asp-action="AddClientSale" id="MakeSaleLink" class="nav-link">
                                     <i class="fas fa-cart-plus"></i>
                                     <p> Realizar Venta</p>
                                 </a>

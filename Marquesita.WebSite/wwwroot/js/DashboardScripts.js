@@ -363,3 +363,96 @@ function confirmOrder() {
         }
     })
 }
+
+function DashboardActiveLink() {
+    $('#DashboardLink').addClass('active');
+
+    $('#UserLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#SaleMenuLink').removeClass('menu-open');
+    $('#SaleLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active');
+}
+
+function UserActiveLink() {
+    $('#UserLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#SaleMenuLink').removeClass('menu-open');
+    $('#SaleLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active'); 
+}
+
+function RoleActiveLink() {
+    $('#RoleLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#UserLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#SaleMenuLink').removeClass('menu-open');
+    $('#SaleLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active');
+}
+
+function CategoryActiveLink() {
+    $('#CategoryLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#UserLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#SaleMenuLink').removeClass('menu-open');
+    $('#SaleLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active');
+}
+
+function ProductActiveLink() {
+    $('#ProductLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#UserLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#SaleMenuLink').removeClass('menu-open');
+    $('#SaleLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active');
+}
+
+function SaleListActiveLink() {
+    $('#SaleMenuLink').addClass('menu-open');
+    $('#SaleLink').addClass('active');
+    $('#SaleListLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#UserLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#MakeSaleLink').removeClass('active');
+}
+
+function MakeSaleActiveLink() {
+    $('#SaleMenuLink').addClass('menu-open');
+    $('#SaleLink').addClass('active');
+    $('#MakeSaleLink').addClass('active');
+
+    $('#DashboardLink').removeClass('active');
+    $('#UserLink').removeClass('active');
+    $('#RoleLink').removeClass('active');
+    $('#CategoryLink').removeClass('active');
+    $('#ProductLink').removeClass('active');
+    $('#SaleListLink').removeClass('active');
+}
+
+
