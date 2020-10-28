@@ -33,7 +33,42 @@ namespace Marquesita.Infrastructure.Services
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 
-            var bodyBuilder = new BodyBuilder { HtmlBody =  _emailText.ConfirmMailText(message)};
+            var bodyBuilder = new BodyBuilder { HtmlBody =  _emailText.ConfirmMailTextEcommerce(message)};
+
+            if (message.Attachments != null && message.Attachments.Any())
+            {
+                byte[] fileBytes;
+                foreach (var attachment in message.Attachments)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        attachment.CopyTo(ms);
+                        fileBytes = ms.ToArray();
+                    }
+
+                    bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
+                }
+            }
+
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+            return emailMessage;
+        }
+
+        public async Task SendEmailConfirmationShopAsync(Message message)
+        {
+            var mailMessage = CreateEmailConfirmationMessageShop(message);
+
+            await SendAsync(mailMessage);
+        }
+
+        private MimeMessage CreateEmailConfirmationMessageShop(Message message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            var bodyBuilder = new BodyBuilder { HtmlBody = _emailText.ConfirmMailTextShop(message) };
 
             if (message.Attachments != null && message.Attachments.Any())
             {

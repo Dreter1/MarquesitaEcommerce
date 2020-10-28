@@ -45,6 +45,14 @@ p {
     color: #999;
 }
 
+ol {
+    margin: 0;
+    letter-spacing: 1px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #999;
+}
+
 ul {
     margin: 0;
     padding: 0;

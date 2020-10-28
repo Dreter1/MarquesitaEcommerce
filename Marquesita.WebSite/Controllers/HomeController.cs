@@ -187,7 +187,7 @@ namespace MarquesitaDashboards.Controllers
                     TempData["userEmail"] = model.Email;
                     TempData["userToken"] = token;
                     var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
-                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user,confirmationLink, null);
+                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null, null);
                     await _emailSender.SendEmailConfirmationAsync(message);
                     return RedirectToAction("SuccessRegistration", "Home");
                 }
@@ -244,7 +244,7 @@ namespace MarquesitaDashboards.Controllers
 
             var user = await _usersManager.GetUserByEmailAsync(email);
             var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token , email }, Request.Scheme);
-            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null);
+            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null, null);
             await _emailSender.SendEmailConfirmationAsync(message);
             return RedirectToAction("SuccessRegistration", "Home");
         }
@@ -314,7 +314,7 @@ namespace MarquesitaDashboards.Controllers
             TempData["userEmail"] = user.Email;
             TempData["userToken"] = token;
             var callback = Url.Action("ResetPassword", "Home", new { token, email = user.Email }, Request.Scheme);
-            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user,callback, null);
+            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user, callback, null, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
             return RedirectToAction("ForgotPasswordConfirmation", "Home");
         }
@@ -337,7 +337,7 @@ namespace MarquesitaDashboards.Controllers
 
             var user = await _usersManager.GetUserByEmailAsync(email);
             var callback = Url.Action("ResetPassword", "Home", new { token, email }, Request.Scheme);
-            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user, callback, null);
+            var message = new Message(new string[] { email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user, callback, null, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
             return RedirectToAction("ForgotPasswordConfirmation", "Home");
         }

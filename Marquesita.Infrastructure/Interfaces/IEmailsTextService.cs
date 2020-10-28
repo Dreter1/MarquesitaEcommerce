@@ -4,7 +4,8 @@ namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IEmailsTextService
     {
-        string ConfirmMailText(Message message);
+        string ConfirmMailTextEcommerce(Message message);
+        string ConfirmMailTextShop(Message message);
         string RecoveryPasswordText(Message message);
     }
 }

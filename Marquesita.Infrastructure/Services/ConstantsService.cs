@@ -121,6 +121,11 @@ namespace Marquesita.Infrastructure.Services
             public const string FORGOT_PASSWORD = "Cambiar contraseña";
         }
 
+        public struct WhatsApp
+        {
+            public const string LINK = "#";
+        }
+
         public List<string> PermissionList()
         {
             return new List<string>() {

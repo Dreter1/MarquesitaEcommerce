@@ -272,8 +272,9 @@ namespace MarquesitaDashboards.Controllers
                     TempData["userEmail"] = model.Email;
                     TempData["userToken"] = token;
                     var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
-                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, null);
-                    await _emailSender.SendEmailConfirmationAsync(message);
+                    var forgotPasswordLink = $"{Request.Scheme}://{Request.Host}{Url.Action("ForgotPassword", "Home")}";
+                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, forgotPasswordLink, null);
+                    await _emailSender.SendEmailConfirmationShopAsync(message);
                     return RedirectToAction("AddClientSale", "Sale");
                 }
             }

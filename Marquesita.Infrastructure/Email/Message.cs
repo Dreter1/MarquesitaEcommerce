@@ -12,14 +12,16 @@ namespace Marquesita.Infrastructure.Email
         public User User { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
+        public string OptionalURL { get; set; }
         public IFormFileCollection Attachments { get; set; }
-        public Message(IEnumerable<string> to, string subject, User user, string content, IFormFileCollection attachments)
+        public Message(IEnumerable<string> to, string subject, User user, string content, string optionalURL, IFormFileCollection attachments)
         {
             To = new List<MailboxAddress>();
             To.AddRange(to.Select(x => new MailboxAddress(x)));
             Subject = subject;
             User = user;
             Content = content;
+            OptionalURL = optionalURL;
             Attachments = attachments;
         }
     }
