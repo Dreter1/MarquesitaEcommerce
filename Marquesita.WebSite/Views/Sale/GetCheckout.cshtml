@@ -77,10 +77,18 @@
     <br />
     <br />
     <select class="list_of_cities" name="addressId" id="addressId">
-        @foreach (var address in ViewBag.AddressList)
+        @if (Enumerable.Count(ViewBag.AddressList) > 0)
         {
-            <option value="@address.Id">@address.FullNames / @address.Street / @address.Region / @address.City / @address.PostalCode</option>
+            foreach (var address in ViewBag.AddressList)
+            {
+                <option value="@address.Id">@address.FullNames / @address.Street / @address.Region / @address.City / @address.PostalCode</option>
+            }
         }
+        else
+        {
+            <option value="null">Agregue una dirección</option>
+        }
+
     </select>
     <hr />
     <h4>

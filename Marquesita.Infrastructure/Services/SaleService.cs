@@ -64,7 +64,7 @@ namespace Marquesita.Infrastructure.Services
             if (userId == null)
                 return null;
 
-            return _context.Sales.Where(sale => sale.UserId == userId).Include(address => address.Address).ToList();
+            return _context.Sales.Where(sale => sale.UserId == userId).Include(address => address.Address).ToList().OrderByDescending(sale => sale.Date);
         }
 
         public IEnumerable<SaleDetail> GetDetailSaleList(Guid saleId)

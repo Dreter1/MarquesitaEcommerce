@@ -241,7 +241,7 @@ namespace MarquesitaDashboards.Controllers
             ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
             ViewBag.ShoppingCart = _shoppingCartService.GetUserCartAsList(user.Id);
             ViewBag.AddressList = _addressService.GetUserAddresses(user.Id);
-            ViewBag.PaymentList = _constants.GetPaymentList();
+            ViewBag.PaymentList = _constants.GetEcommercePaymentList();
             return PartialView();
         }
 
@@ -262,21 +262,26 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "Client")]
         public async Task<bool> Payment(Guid addressId, string paymentType, decimal TotalAmount)
         {
-            var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
-            var sale = new Sale
+            var addressIdExists = _addressService.GetAddressById(addressId);
+            if(addressIdExists != null)
             {
-                TotalAmount = TotalAmount,
-                PaymentType = paymentType,
-                UserId = user.Id,
-                AddressId = addressId
-            };
-            IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.GetUserCartAsList(user.Id);
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var sale = new Sale
+                {
+                    TotalAmount = TotalAmount,
+                    PaymentType = paymentType,
+                    UserId = user.Id,
+                    AddressId = addressId
+                };
+                IEnumerable<ShoppingCart> shoppingCartList = _shoppingCartService.GetUserCartAsList(user.Id);
 
-            if (shoppingCartList.Count() > 0)
-            {
-                _saleService.UpdateStockEcommerce(shoppingCartList);
-                _saleService.SaveEcommerceSale(sale, shoppingCartList);
-                return true;
+                if (shoppingCartList.Count() > 0)
+                {
+                    _saleService.UpdateStockEcommerce(shoppingCartList);
+                    _saleService.SaveEcommerceSale(sale, shoppingCartList);
+                    return true;
+                }
+                return false;
             }
             return false;
         }
