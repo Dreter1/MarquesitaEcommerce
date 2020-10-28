@@ -380,3 +380,13 @@ function RemoveActiveLink() {
     $('#ProductsLink').removeClass('active');
     $('#ContactLink').removeClass('active');
 }
+
+function searchProduct(evt) {
+    var product = $('#selectedProductId').val();
+    if (product === '¿Que producto busca?') {
+        evt.preventDefault();
+    }
+    else {
+        location.href = "/Product/Detail/" + product;
+    }
+}

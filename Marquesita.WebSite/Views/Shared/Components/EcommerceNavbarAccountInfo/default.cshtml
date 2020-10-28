@@ -7,16 +7,16 @@
 <div class="header-bot">
     <div class="header-bot_inner_wthreeinfo_header_mid">
 
-        <div class="col-md-4 logo-align">
+        <div class="col-md-3 logo-align">
             <h1>
                 <a asp-controller="Home" asp-action="Index">
                     <img src="~/EcommerceTemplate/images/logo3.png" alt=" ">
 
-                </a>    
+                </a>
             </h1>
         </div>
 
-        <div class="col-md-8 header">
+        <div class="col-md-9 header">
             <ul>
                 @if (Model.Id != null)
                 {
@@ -63,29 +63,36 @@
                     </li>
                 }
             </ul>
-
-            <div class="agileits_search">
-                @*<h1 class="tittle-w3l">Tienda de Quesos lo mejor en lácteos</h1>*@
-                @*<h2 class="heading-tittle">
-            Tienda de Quesos lo mejor en lácteos
-            <span>T</span>Tienda de
-            <span>Q</span>Quesos lo
-            <span>M</span>Mejor en
-            <span>L</span>Lácteos
-
-        </h2>*@
-                <form action="#" method="post">
-                    <input name="Search" type="search" placeholder="How can we help you today?" required="">
-                    <button type="submit" class="btn btn-default" aria-label="Left Align">
-                        <span class="fa fa-search" aria-hidden="true"> </span>
-                    </button>
-                </form>
-
-            </div>
-
-            <div class="top_nav_right">
-                <div class="wthreecartaits wthreecartaits2 cart cart box_1">
-                    <button class="w3view-cart" onclick="goToShoppingCart()"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+            <div class="row">
+                <div class="col-12">
+                    <div class="agileits_search">
+                        <div class="form-row">
+                            <div class="select2-red col-12 col-md-10">
+                                <select id="selectedProductId" name="selectedProductId" class="form-control select2bs4" data-dropdown-css-class="select2-red" style="width: 100%;">
+                                    <option>¿Que producto busca?</option>
+                                    @foreach (var product in ViewBag.ProductList)
+                                    {
+                                        <option value="@product.Id">@product.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="button" onclick="searchProduct(event)" class="btn btn-default pull-left" aria-label="Left Align">
+                                    <span class="fa fa-search" aria-hidden="true"> </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Id != null)
+                    {
+                        <div class="col-12">
+                            <div class="top_nav_right">
+                                <div class="wthreecartaits wthreecartaits2 cart cart box_1">
+                                    <button class="w3view-cart" onclick="goToShoppingCart()"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -99,15 +106,6 @@
         <div class="top_nav_left">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                                aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
                     <div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav menu__list">
                             <li id="IndexLink">
@@ -129,4 +127,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.select2bs4').select2();
+    });
+</script>
 
