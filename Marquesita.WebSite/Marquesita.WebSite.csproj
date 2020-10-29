@@ -42,4 +42,10 @@
     <None Include="wwwroot\DashboardTemplate\fonts\fontomas-webfont.svg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="PDFUtility\Libraries\libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

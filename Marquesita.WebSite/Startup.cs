@@ -1,3 +1,6 @@
+using System.IO;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure;
@@ -31,6 +34,7 @@ using Microsoft.Extensions.Hosting;
 using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
 using System;
+using Marquesita.WebSite.PDFUtility;
 
 namespace MarquesitaDashboards
 {
@@ -56,6 +60,7 @@ namespace MarquesitaDashboards
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
             RepositoriesConfiguration(services);
+            PdfConfiguration(services);
         }
 
         private void EmailConfiguration(IServiceCollection services)
@@ -292,6 +297,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IWishListService, WishListService>();
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<IDocumentsService, DocumentsService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();
@@ -299,6 +305,14 @@ namespace MarquesitaDashboards
             services.AddScoped<IConstantsService, ConstantsService>();
             services.AddTransient<IEmailsTextService, EmailsTextService>();
 
+        }
+
+        private void PdfConfiguration(IServiceCollection services)
+        {
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "PDFUtility", "Libraries", "libwkhtmltox.dll"));
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<Role> roleManager)
