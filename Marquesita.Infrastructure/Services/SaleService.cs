@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using Marquesita.Infrastructure.DbContexts;
+﻿using Marquesita.Infrastructure.DbContexts;
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
@@ -7,7 +6,6 @@ using Marquesita.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -245,7 +243,7 @@ namespace Marquesita.Infrastructure.Services
                     sale.TotalAmount += saleDetail.Subtotal;
                     _saleDetailRepository.Add(saleDetail);
 
-                     _shoppingCartService.RemoveShoppingCartItemForSale(detail.ProductId, sale.UserId);
+                    _shoppingCartService.RemoveShoppingCartItemForSale(detail.ProductId, sale.UserId);
                     _saleDetailRepository.SaveChanges();
                 }
             }
@@ -317,36 +315,6 @@ namespace Marquesita.Infrastructure.Services
                 }
             }
             return false;
-        }
-
-        public byte[] GenerateExcelReport()
-        {
-            var sales = GetSaleList();
-            using var workbook = new XLWorkbook();
-
-            var worksheet = workbook.Worksheets.Add("Ventas");
-            var currentRow = 1;
-            worksheet.Cell(currentRow, 1).Value = "Fecha y hora";
-            worksheet.Cell(currentRow, 2).Value = "Metodo de Pago";
-            worksheet.Cell(currentRow, 3).Value = "Tipo de venta";
-            worksheet.Cell(currentRow, 4).Value = "Estado de venta";
-            worksheet.Cell(currentRow, 5).Value = "Monto de venta";
-
-            foreach (var sale in sales)
-            {
-                currentRow++;
-                worksheet.Cell(currentRow, 1).Value = sale.Date;
-                worksheet.Cell(currentRow, 2).Value = sale.PaymentType;
-                worksheet.Cell(currentRow, 3).Value = sale.TypeOfSale;
-                worksheet.Cell(currentRow, 4).Value = sale.SaleStatus;
-                worksheet.Cell(currentRow, 5).Value = "S/. " + sale.TotalAmount;
-            }
-
-            using var stream = new MemoryStream();
-            workbook.SaveAs(stream);
-            var content = stream.ToArray();
-
-            return content;
         }
     }
 }
