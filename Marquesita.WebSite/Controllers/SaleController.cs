@@ -1,6 +1,4 @@
-﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
 using Marquesita.Models.Business;
@@ -8,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,8 +20,9 @@ namespace MarquesitaDashboards.Controllers
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IAddressService _addressService;
         private readonly IConstantsService _constants;
+        private readonly IDocumentsService _documentService;
 
-        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IAddressService addressService, IConstantsService constants)
+        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IAddressService addressService, IConstantsService constants, IDocumentsService documentService)
         {
             _saleService = saleService;
             _usersManager = usersManager;
@@ -32,6 +30,7 @@ namespace MarquesitaDashboards.Controllers
             _shoppingCartService = shoppingCartService;
             _addressService = addressService;
             _constants = constants;
+            _documentService = documentService;
         }
 
         [HttpGet]
@@ -290,11 +289,19 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewSales")]
         public IActionResult DownloadExcelReport()
         {
-            var content = _saleService.GenerateExcelReport();
+            var content = _documentService.GenerateExcelReport();
             var format = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var excelName = "ReporteDeVentas_"+DateTime.Now.ToShortDateString()+".xlsx";
 
             return File(content, format, excelName);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewSales")]
+        public IActionResult DownloadPDFReport()
+        {
+            var file = _documentService.GeneratePdfSale();
+            return File(file, "application/pdf", "SaleReport.pdf");
         }
     }
 }
