@@ -1,5 +1,4 @@
-﻿using Marquesita.Infrastructure.Email;
-using Marquesita.Infrastructure.Interfaces;
+﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Services;
 using Marquesita.Infrastructure.ViewModels.Dashboards;
 using Marquesita.Infrastructure.ViewModels.Dashboards.Users;
@@ -17,14 +16,14 @@ namespace MarquesitaDashboards.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IRoleManagerService _rolesManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IEmailSenderService _emailSender;
+        private readonly IMailService _mailService;
 
-        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IWebHostEnvironment webHostEnvironment, IEmailSenderService emailSender)
+        public UserController(IUserManagerService usersManager, IRoleManagerService rolesManager, IWebHostEnvironment webHostEnvironment, IMailService mailService)
         {
             _usersManager = usersManager;
             _rolesManager = rolesManager;
             _webHostEnvironment = webHostEnvironment;
-            _emailSender = emailSender;
+            _mailService = mailService;
         }
 
         [AllowAnonymous]
@@ -271,10 +270,9 @@ namespace MarquesitaDashboards.Controllers
                     var token = await _usersManager.ConfirmationEmailToken(user);
                     TempData["userEmail"] = model.Email;
                     TempData["userToken"] = token;
-                    var confirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
+                    var emailConfirmationLink = Url.Action("ConfirmEmail", "Home", new { token, email = model.Email }, Request.Scheme);
                     var forgotPasswordLink = $"{Request.Scheme}://{Request.Host}{Url.Action("ForgotPassword", "Home")}";
-                    var message = new Message(new string[] { model.Email }, ConstantsService.EmailSubject.CONFIRM_EMAIL, user, confirmationLink, forgotPasswordLink, null);
-                    await _emailSender.SendEmailConfirmationShopAsync(message);
+                    await _mailService.GenerateAndSendConfirmationEmailByShop(user, emailConfirmationLink, forgotPasswordLink);
                     return RedirectToAction("AddClientSale", "Sale");
                 }
             }

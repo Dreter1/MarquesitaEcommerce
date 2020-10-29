@@ -1,12 +1,11 @@
 ﻿using MailKit.Net.Smtp;
-using Marquesita.Infrastructure.Email;
-using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Infrastructure.EmailConfigurations.Interfaces;
+using Marquesita.Infrastructure.EmailConfigurations.Models;
 using MimeKit;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Marquesita.Infrastructure.Services
+namespace Marquesita.Infrastructure.EmailConfigurations.Services
 {
     public class EmailSenderService : IEmailSenderService
     {
@@ -34,22 +33,6 @@ namespace Marquesita.Infrastructure.Services
             emailMessage.Subject = message.Subject;
 
             var bodyBuilder = new BodyBuilder { HtmlBody =  _emailText.ConfirmMailTextEcommerce(message)};
-
-            if (message.Attachments != null && message.Attachments.Any())
-            {
-                byte[] fileBytes;
-                foreach (var attachment in message.Attachments)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        attachment.CopyTo(ms);
-                        fileBytes = ms.ToArray();
-                    }
-
-                    bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
-                }
-            }
-
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
@@ -57,7 +40,6 @@ namespace Marquesita.Infrastructure.Services
         public async Task SendEmailConfirmationShopAsync(Message message)
         {
             var mailMessage = CreateEmailConfirmationMessageShop(message);
-
             await SendAsync(mailMessage);
         }
 
@@ -69,31 +51,13 @@ namespace Marquesita.Infrastructure.Services
             emailMessage.Subject = message.Subject;
 
             var bodyBuilder = new BodyBuilder { HtmlBody = _emailText.ConfirmMailTextShop(message) };
-
-            if (message.Attachments != null && message.Attachments.Any())
-            {
-                byte[] fileBytes;
-                foreach (var attachment in message.Attachments)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        attachment.CopyTo(ms);
-                        fileBytes = ms.ToArray();
-                    }
-
-                    bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
-                }
-            }
-
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
 
-
         public async Task SendRecoveryPasswordEmailAsync(Message message)
         {
             var mailMessage = CreateRecoveryPasswordEmailMessage(message);
-
             await SendAsync(mailMessage);
         }
 
@@ -105,25 +69,35 @@ namespace Marquesita.Infrastructure.Services
             emailMessage.Subject = message.Subject;
 
             var bodyBuilder = new BodyBuilder { HtmlBody = _emailText.RecoveryPasswordText(message) };
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+            return emailMessage;
+        }
+
+        public async Task SendEmailSaleConfirmationAsync(Message message)
+        {
+            var mailMessage = CreateEmailSaleConfirmationMessage(message);
+
+            await SendAsync(mailMessage);
+        }
+
+        private MimeMessage CreateEmailSaleConfirmationMessage(Message message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            var bodyBuilder = new BodyBuilder { HtmlBody = _emailText.SaleConfirmationText(message) };
 
             if (message.Attachments != null && message.Attachments.Any())
             {
-                byte[] fileBytes;
-                foreach (var attachment in message.Attachments)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        attachment.CopyTo(ms);
-                        fileBytes = ms.ToArray();
-                    }
-
-                    bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
-                }
+                bodyBuilder.Attachments.Add("Confirmación de compra", message.Attachments, ContentType.Parse("application/pdf"));
             }
 
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
+
         private async Task SendAsync(MimeMessage mailMessage)
         {
             using var client = new SmtpClient();

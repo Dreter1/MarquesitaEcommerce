@@ -119,6 +119,7 @@ namespace Marquesita.Infrastructure.Services
         {
             public const string CONFIRM_EMAIL = "Confirma tu correo para La Marquesita";
             public const string FORGOT_PASSWORD = "Cambiar contraseña";
+            public const string SALE_CLIENT_CONFIRMATION = "Confirmación de su compra";
         }
 
         public struct WhatsApp

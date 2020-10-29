@@ -21,10 +21,18 @@ namespace Marquesita.WebSite.ViewComponents
         {
 
             var user = await _userManager.GetUserByIdAsync(userId);
+            if(user != null)
+            {
+                return View(new User
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+            }
             return View(new User
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName
+                FirstName = "",
+                LastName = ""
             });
         }
     }

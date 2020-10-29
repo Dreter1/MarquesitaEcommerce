@@ -21,8 +21,9 @@ namespace MarquesitaDashboards.Controllers
         private readonly IAddressService _addressService;
         private readonly IConstantsService _constants;
         private readonly IDocumentsService _documentService;
+        private readonly IMailService _mailService;
 
-        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IAddressService addressService, IConstantsService constants, IDocumentsService documentService)
+        public SaleController(ISaleService saleService, IUserManagerService usersManager, IProductService productService, IShoppingCartService shoppingCartService, IAddressService addressService, IConstantsService constants, IDocumentsService documentService, IMailService mailService)
         {
             _saleService = saleService;
             _usersManager = usersManager;
@@ -31,6 +32,7 @@ namespace MarquesitaDashboards.Controllers
             _addressService = addressService;
             _constants = constants;
             _documentService = documentService;
+            _mailService = mailService;
         }
 
         [HttpGet]
@@ -205,6 +207,7 @@ namespace MarquesitaDashboards.Controllers
                     _saleService.UpdateStock(tempList);
                     _saleService.SaveSale(employee, sale, tempList);
                     TempData["saleSuccess"] = ConstantsService.Messages.SALE_SUCCESS;
+                    await _mailService.GenerateAndSendSaleEmail(UserId);
                     return true;
                 }
                 TempData["stockError"] = ConstantsService.Errors.STOCK_NOT_AVALIBLE;

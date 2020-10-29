@@ -5,7 +5,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Marquesita.Infrastructure;
 using Marquesita.Infrastructure.DbContexts;
-using Marquesita.Infrastructure.Email;
 using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Infrastructure.Repositories;
 using Marquesita.Infrastructure.Services;
@@ -35,6 +34,10 @@ using MotleyFlash;
 using MotleyFlash.AspNetCore.MessageProviders;
 using System;
 using Marquesita.WebSite.PDFUtility;
+using Microsoft.AspNetCore.Http.Features;
+using Marquesita.Infrastructure.EmailConfigurations.Models;
+using Marquesita.Infrastructure.EmailConfigurations.Interfaces;
+using Marquesita.Infrastructure.EmailConfigurations.Services;
 
 namespace MarquesitaDashboards
 {
@@ -56,20 +59,12 @@ namespace MarquesitaDashboards
             FlashMessagesConfiguration(services);
             DbConnectionsConfiguration(services);
             IdentityConfiguration(services);
-            EmailConfiguration(services);
             PoliciesConfiguration(services);
             ValidatorsConfiguration(services);
             RepositoriesConfiguration(services);
+            ServicesConfiguration(services);
+            EmailConfiguration(services);
             PdfConfiguration(services);
-        }
-
-        private void EmailConfiguration(IServiceCollection services)
-        {
-            var emailConfig = Configuration
-                .GetSection("EmailConfiguration")
-                .Get<EmailConfiguration>();
-            services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
 
         private void MvcConfiguration(IServiceCollection services)
@@ -289,7 +284,10 @@ namespace MarquesitaDashboards
             services.AddTransient<IRepository<ShoppingCart>, ShoppingCartRepository>();
             services.AddTransient<IRepository<WishList>, WishListRepository>();
             services.AddTransient<IRepository<Address>, AddressRepositroy>();
+        }
 
+        private void ServicesConfiguration(IServiceCollection services)
+        {
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISaleService, SaleService>();
@@ -298,13 +296,26 @@ namespace MarquesitaDashboards
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IDocumentsService, DocumentsService>();
+            services.AddTransient<IMailService, MailService>();
 
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();
             services.AddScoped<IAuthManagerService, AuthManagerService>();
             services.AddScoped<IConstantsService, ConstantsService>();
+        }
+
+        private void EmailConfiguration(IServiceCollection services)
+        {
+            var emailConfig = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
             services.AddTransient<IEmailsTextService, EmailsTextService>();
 
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
         }
 
         private void PdfConfiguration(IServiceCollection services)

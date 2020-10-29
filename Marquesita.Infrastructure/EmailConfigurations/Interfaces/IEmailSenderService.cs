@@ -1,12 +1,13 @@
-﻿using Marquesita.Infrastructure.Email;
+﻿using Marquesita.Infrastructure.EmailConfigurations.Models;
 using System.Threading.Tasks;
 
-namespace Marquesita.Infrastructure.Interfaces
+namespace Marquesita.Infrastructure.EmailConfigurations.Interfaces
 {
     public interface IEmailSenderService
     {
         Task SendEmailConfirmationAsync(Message message);
         Task SendEmailConfirmationShopAsync(Message message);
         Task SendRecoveryPasswordEmailAsync(Message message);
+        Task SendEmailSaleConfirmationAsync(Message message);
     }
 }

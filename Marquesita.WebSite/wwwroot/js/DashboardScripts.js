@@ -339,24 +339,46 @@ function confirmOrder() {
         confirmButtonText: 'Confirmar'
     }).then((result) => {
         if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Espere procesamos la orden',
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                }
+            });
             $.post(url, function (response) {
                 if (response) {
+                    Swal.close();
                     Swal.fire({
                         icon: 'success',
                         title: 'Venta realizada con exito',
-                        showConfirmButton: false,
-                        timer: 1500
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = "/Sale/Index";
+                        }
                     });
-                    location.href = "/Sale/Index";
                 }
                 else {
+                    Swal.close();
                     Swal.fire({
                         icon: 'error',
-                        title: 'No se pudo realizar la venta revise la venta',
-                        showConfirmButton: false,
-                        timer: 1500
+                        title: 'No se pudo realizar la venta revise que todo este correcto',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = "/Sale/CreateSale?userId=" + userId;
+                        }
                     });
-                    location.href = "/Sale/CreateSale?userId=" + userId;
                 }
                 getDetailTempList();
             });

@@ -1,4 +1,4 @@
-﻿namespace Marquesita.Infrastructure.Email
+﻿namespace Marquesita.Infrastructure.EmailConfigurations.Models
 {
     public class EmailConfiguration
     {
