@@ -42,7 +42,7 @@ namespace Marquesita.Infrastructure.Services
         public async Task GenerateAndSendSaleShopEmail(string userId, Sale sale)
         {
             var user = await _usersManager.GetUserByIdAsync(userId);
-            var file = await _documentService.GeneratePdfSaleShop(sale);
+            var file = await _documentService.GenerateSalePDF(sale);
             var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.SALE_CLIENT_CONFIRMATION, user, null, null, file);
             await _emailSender.SendEmailSaleConfirmationAsync(message);
         }
@@ -50,9 +50,9 @@ namespace Marquesita.Infrastructure.Services
         public async Task GenerateAndSendSaleEcommerceEmail(string userId, Sale sale)
         {
             var user = await _usersManager.GetUserByIdAsync(userId);
-            var file = await _documentService.GeneratePdfSaleEcommerce(sale);
+            var file = await _documentService.GenerateSalePDF(sale);
             var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.SALE_CLIENT_CONFIRMATION, user, null, null, file);
-            await _emailSender.SendEmailSaleConfirmationAsync(message);
+            await _emailSender.SendEmailEcommerceSaleConfirmationAsync(message);
         }
 
 

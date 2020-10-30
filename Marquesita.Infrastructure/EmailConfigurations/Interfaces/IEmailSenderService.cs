@@ -9,5 +9,6 @@ namespace Marquesita.Infrastructure.EmailConfigurations.Interfaces
         Task SendEmailConfirmationShopAsync(Message message);
         Task SendRecoveryPasswordEmailAsync(Message message);
         Task SendEmailSaleConfirmationAsync(Message message);
+        Task SendEmailEcommerceSaleConfirmationAsync(Message message);
     }
 }

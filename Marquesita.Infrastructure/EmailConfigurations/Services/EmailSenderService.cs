@@ -91,6 +91,31 @@ namespace Marquesita.Infrastructure.EmailConfigurations.Services
 
             if (message.Attachments != null && message.Attachments.Any())
             {
+                bodyBuilder.Attachments.Add("Confirmación hecha en tienda", message.Attachments, ContentType.Parse("application/pdf"));
+            }
+
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+            return emailMessage;
+        }
+
+        public async Task SendEmailEcommerceSaleConfirmationAsync(Message message)
+        {
+            var mailMessage = CreateEmailEcommerceSaleConfirmationMessage(message);
+
+            await SendAsync(mailMessage);
+        }
+
+        private MimeMessage CreateEmailEcommerceSaleConfirmationMessage(Message message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            var bodyBuilder = new BodyBuilder { HtmlBody = _emailText.EcommerceSaleConfirmationText(message) };
+
+            if (message.Attachments != null && message.Attachments.Any())
+            {
                 bodyBuilder.Attachments.Add("Confirmación de compra", message.Attachments, ContentType.Parse("application/pdf"));
             }
 

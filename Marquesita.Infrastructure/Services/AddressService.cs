@@ -125,7 +125,7 @@ namespace Marquesita.Infrastructure.Services
         {
             var address = GetAddressById(addressId);
             if (address != null)
-                return address.Street + " " + address.Region + " " + address.City + " " + address.PostalCode;
+                return "Destinatario: "+ address.FullNames + " - "+ address.Street + " " + address.Region + " " + address.City + " " + address.PostalCode;
             else
                 return "";
         }

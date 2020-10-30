@@ -37,9 +37,13 @@
     <div class="card card-solid">
         <div class="card-body">
             <div class="fa-pull-right">
-                <a asp-controller="Sale" asp-action="DownloadExcelReport" class="btn btn-primary btn-block" title="Generar Reporte"><i class="fas fa-file-excel"></i></a>
-                <a asp-controller="Sale" asp-action="DownloadPDFReport" class="btn btn-primary btn-block" title="Generar Reporte"><i class="fas fa-file-excel"></i>s</a>
+                <a asp-controller="Sale" asp-action="DownloadPDFReport" class="btn btn-primary btn-block" title="Generar Reporte PDF"><i class="fas fa-file-pdf"></i></a>
             </div>
+            <span class="fa-pull-right">&nbsp;&nbsp;</span>
+            <div class="fa-pull-right">
+                <a asp-controller="Sale" asp-action="DownloadExcelReport" class="btn btn-primary btn-block" title="Generar Reporte Excel"><i class="fas fa-file-excel"></i></a>
+            </div>
+            <span class="fa-pull-right">&nbsp;&nbsp;</span>
             @if ((await AuthorizationService.AuthorizeAsync(User, "CanAddSales")).Succeeded)
             {
                 <div class="fa-pull-right">

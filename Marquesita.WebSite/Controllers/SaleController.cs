@@ -280,7 +280,8 @@ namespace MarquesitaDashboards.Controllers
                 if (shoppingCartList.Count() > 0)
                 {
                     _saleService.UpdateStockEcommerce(shoppingCartList);
-                    _saleService.SaveEcommerceSale(sale, shoppingCartList);
+                    var saleSuccess = _saleService.SaveEcommerceSale(sale, shoppingCartList);
+                    await _mailService.GenerateAndSendSaleEcommerceEmail(user.Id, saleSuccess);
                     return true;
                 }
                 return false;
@@ -301,9 +302,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanViewSales")]
-        public IActionResult DownloadPDFReport()
+        public async Task<IActionResult> DownloadPDFReportAsync()
         {
-            var file = _documentService.GeneratePdfSaleReport();
+            var file = await _documentService.GeneratePdfSaleReportAsync();
             return File(file, "application/pdf", "SaleReport.pdf");
         }
     }

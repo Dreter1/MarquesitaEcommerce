@@ -275,24 +275,46 @@ function confirmEcommerceOrder() {
         if (result.isConfirmed) {
             $.get(checkStockUrl, function (response) {
                 if (response) {
+                    Swal.fire({
+                        title: 'Espere procesamos la orden',
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        }
+                    });
                     $.post(url, function (response) {
                         if (response) {
+                            Swal.close();
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Tu pedido se realizo con exito',
-                                showConfirmButton: false,
-                                timer: 10000
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = "/Client/MyOrders";
+                                }
                             });
-                            location.href = "/Client/MyOrders";
                         }
                         else {
+                            Swal.close();
                             Swal.fire({
                                 icon: 'error',
                                 title: 'No se pudo realizar el pedido, vuelva a intentarlo',
-                                showConfirmButton: false,
-                                timer: 10000
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = "/Sale/Checkout";
+                                }
                             });
-                            location.href = "/Sale/Checkout";
                         }
                     });
                 }

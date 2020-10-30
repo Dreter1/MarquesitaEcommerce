@@ -6,8 +6,7 @@ namespace Marquesita.Infrastructure.Interfaces
     public interface IDocumentsService
     {
         Task<byte[]> GenerateExcelReport();
-        byte[] GeneratePdfSaleReport();
-        Task<byte[]> GeneratePdfSaleShop(Sale sale);
-        Task<byte[]> GeneratePdfSaleEcommerce(Sale sale);
+        Task<byte[]> GeneratePdfSaleReportAsync();
+        Task<byte[]> GenerateSalePDF(Sale sale);
     }
 }

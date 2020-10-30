@@ -218,7 +218,7 @@ namespace Marquesita.Infrastructure.Services
             }
         }
 
-        public void SaveEcommerceSale(Sale sale, IEnumerable<ShoppingCart> shoppigCart)
+        public Sale SaveEcommerceSale(Sale sale, IEnumerable<ShoppingCart> shoppigCart)
         {
             if (shoppigCart.Count() > 0)
             {
@@ -253,7 +253,9 @@ namespace Marquesita.Infrastructure.Services
                     _shoppingCartService.RemoveShoppingCartItemForSale(detail.ProductId, sale.UserId);
                     _saleDetailRepository.SaveChanges();
                 }
+                return order;
             }
+            return new Sale();
         }
 
         public bool StockAvailableEcommerce(IEnumerable<ShoppingCart> products)

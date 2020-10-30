@@ -8,5 +8,6 @@ namespace Marquesita.Infrastructure.EmailConfigurations.Interfaces
         string ConfirmMailTextShop(Message message);
         string RecoveryPasswordText(Message message);
         string SaleConfirmationText(Message message);
+        string EcommerceSaleConfirmationText(Message message);
     }
 }
