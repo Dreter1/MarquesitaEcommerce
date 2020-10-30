@@ -205,9 +205,9 @@ namespace MarquesitaDashboards.Controllers
                 if (_saleService.StockAvailable(tempList))
                 {
                     _saleService.UpdateStock(tempList);
-                    _saleService.SaveSale(employee, sale, tempList);
+                    var saleSuccess = _saleService.SaveSale(employee, sale, tempList);
                     TempData["saleSuccess"] = ConstantsService.Messages.SALE_SUCCESS;
-                    await _mailService.GenerateAndSendSaleEmail(UserId);
+                    await _mailService.GenerateAndSendSaleShopEmail(UserId, saleSuccess);
                     return true;
                 }
                 TempData["stockError"] = ConstantsService.Errors.STOCK_NOT_AVALIBLE;
@@ -290,9 +290,9 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanViewSales")]
-        public IActionResult DownloadExcelReport()
+        public async Task<IActionResult> DownloadExcelReportAsync()
         {
-            var content = _documentService.GenerateExcelReport();
+            var content = await _documentService.GenerateExcelReport();
             var format = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var excelName = "ReporteDeVentas_"+DateTime.Now.ToShortDateString()+".xlsx";
 
@@ -303,7 +303,7 @@ namespace MarquesitaDashboards.Controllers
         [Authorize(Policy = "CanViewSales")]
         public IActionResult DownloadPDFReport()
         {
-            var file = _documentService.GeneratePdfSale();
+            var file = _documentService.GeneratePdfSaleReport();
             return File(file, "application/pdf", "SaleReport.pdf");
         }
     }

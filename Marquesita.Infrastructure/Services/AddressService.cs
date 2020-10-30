@@ -29,7 +29,7 @@ namespace Marquesita.Infrastructure.Services
             return _context.Addresses.Where(address => address.UserId == userId).ToList();
         }
 
-        public Address GetAddressById(Guid Id)
+        public Address GetAddressById(Guid? Id)
         {
             return _addresstRepository.Get(Id);
         }
@@ -110,6 +110,24 @@ namespace Marquesita.Infrastructure.Services
                 }
             }
             return false;
+        }
+
+        public string GetAddressPersonaName(Guid? addressId)
+        {
+            var address = GetAddressById(addressId);
+            if (address != null)
+                return address.FullNames;
+            else
+                return "";
+        }
+
+        public string GetAddressFullText(Guid? addressId)
+        {
+            var address = GetAddressById(addressId);
+            if (address != null)
+                return address.Street + " " + address.Region + " " + address.City + " " + address.PostalCode;
+            else
+                return "";
         }
     }
 }

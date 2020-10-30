@@ -1,8 +1,13 @@
-﻿namespace Marquesita.Infrastructure.Interfaces
+﻿using Marquesita.Models.Business;
+using System.Threading.Tasks;
+
+namespace Marquesita.Infrastructure.Interfaces
 {
     public interface IDocumentsService
     {
-        byte[] GenerateExcelReport();
-        byte[] GeneratePdfSale();
+        Task<byte[]> GenerateExcelReport();
+        byte[] GeneratePdfSaleReport();
+        Task<byte[]> GeneratePdfSaleShop(Sale sale);
+        Task<byte[]> GeneratePdfSaleEcommerce(Sale sale);
     }
 }

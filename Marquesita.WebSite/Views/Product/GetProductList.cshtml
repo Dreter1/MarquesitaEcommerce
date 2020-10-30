@@ -11,13 +11,13 @@
                                 @if (product.ImageRoute != null)
                                 {
                                     <img src="@ViewBag.Image@product.ImageRoute"
-                                         width="128" height="128"
+                                         width="150" height="150"
                                          alt="Product Image"
                                          asp-append-version="true" />
                                 }
                                 else
                                 {
-                                    <img src="~/DashboardTemplate/dist/img/user4-128x128.jpg" alt="">
+                                    <img src="~/Images/DefaultProductImage.jpg" width="150" height="150" alt="Product Image">
                                 }
                                 <div class="men-cart-pro">
                                     <div class="inner-men-cart-pro">

@@ -57,6 +57,11 @@ namespace Marquesita.Infrastructure.Services
             return _saleRepository.All().OrderByDescending(sale => sale.Date);
         }
 
+        public int GetSaleListCount()
+        {
+            return _saleRepository.All().Count();
+        }
+
         public IEnumerable<Sale> GetClientSaleList(string userId)
         {
             if (userId == null)
@@ -131,7 +136,7 @@ namespace Marquesita.Infrastructure.Services
             return;
         }
 
-        public void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp)
+        public Sale SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp)
         {
             if (saledetailtemp.Count() > 0)
             {
@@ -166,7 +171,9 @@ namespace Marquesita.Infrastructure.Services
                     RemoveSaleDetailsTemp(detail.ProductId, sale.UserId);
                     _saleDetailRepository.SaveChanges();
                 }
+                return order;
             }
+            return new Sale();
         }
 
         public void RemoveSaleDetailsTemp(Guid IdProducto, string userId)

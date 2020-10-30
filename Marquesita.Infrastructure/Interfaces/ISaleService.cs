@@ -14,6 +14,7 @@ namespace Marquesita.Infrastructure.Interfaces
     {
         Sale GetSaleById(Guid id);
         IEnumerable<Sale> GetSaleList();
+        int GetSaleListCount();
         IEnumerable<Sale> GetClientSaleList(string userId);
         IEnumerable<SaleDetail> GetDetailSaleList(Guid saleId);
         IEnumerable<SaleDetailTemp> GetClientSaleTempList(string userId);
@@ -21,7 +22,7 @@ namespace Marquesita.Infrastructure.Interfaces
         Task AddItemToClientOrderSaleAsync(AddItemViewModel model);
         Task ModifyOrderDetailTempQuantityAsync(Guid id, int quantity);
         Task DeleteDetailTempAsync(Guid id);
-        void SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp);
+        Sale SaveSale(User user, Sale sale, IEnumerable<SaleDetailTemp> saledetailtemp);
         void RemoveSaleDetailsTemp(Guid IdProducto, string userId);
         bool IsProductStocked(Guid productId, int quantity);
         bool StockAvailable(IEnumerable<SaleDetailTemp> productos);

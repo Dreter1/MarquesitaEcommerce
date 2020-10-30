@@ -1,7 +1,9 @@
 ﻿using Marquesita.Infrastructure.EmailConfigurations.Interfaces;
 using Marquesita.Infrastructure.EmailConfigurations.Models;
 using Marquesita.Infrastructure.Interfaces;
+using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
+using System;
 using System.Threading.Tasks;
 
 namespace Marquesita.Infrastructure.Services
@@ -17,14 +19,6 @@ namespace Marquesita.Infrastructure.Services
             _usersManager = usersManager;
             _emailSender = emailSender;
             _documentService = documentService;
-        }
-
-        public async Task GenerateAndSendSaleEmail(string userId)
-        {
-            var user = await _usersManager.GetUserByIdAsync(userId);
-            var file = _documentService.GeneratePdfSale();
-            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.SALE_CLIENT_CONFIRMATION, user, null, null, file);
-            await _emailSender.SendEmailSaleConfirmationAsync(message);
         }
         
         public async Task GenerateAndSendConfirmationEmail(User user, string emailConfirmationLink)
@@ -43,6 +37,22 @@ namespace Marquesita.Infrastructure.Services
         {
             var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.FORGOT_PASSWORD, user, resetPasswordLink, null, null);
             await _emailSender.SendRecoveryPasswordEmailAsync(message);
+        }
+
+        public async Task GenerateAndSendSaleShopEmail(string userId, Sale sale)
+        {
+            var user = await _usersManager.GetUserByIdAsync(userId);
+            var file = await _documentService.GeneratePdfSaleShop(sale);
+            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.SALE_CLIENT_CONFIRMATION, user, null, null, file);
+            await _emailSender.SendEmailSaleConfirmationAsync(message);
+        }
+
+        public async Task GenerateAndSendSaleEcommerceEmail(string userId, Sale sale)
+        {
+            var user = await _usersManager.GetUserByIdAsync(userId);
+            var file = await _documentService.GeneratePdfSaleEcommerce(sale);
+            var message = new Message(new string[] { user.Email }, ConstantsService.EmailSubject.SALE_CLIENT_CONFIRMATION, user, null, null, file);
+            await _emailSender.SendEmailSaleConfirmationAsync(message);
         }
 
 

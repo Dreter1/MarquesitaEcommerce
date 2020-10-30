@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
-    public partial class BussinesDBInit : Migration
+    public partial class BussinesDbInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

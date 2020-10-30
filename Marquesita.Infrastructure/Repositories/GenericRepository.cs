@@ -30,7 +30,7 @@ namespace Marquesita.Infrastructure.Repositories
             return _context.Set<T>().AsQueryable().Where(predicate).ToList();
         }
 
-        public virtual T Get(Guid id)
+        public virtual T Get(Guid? id)
         {
             return _context.Find<T>(id);
         }
