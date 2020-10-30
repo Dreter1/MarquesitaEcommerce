@@ -436,4 +436,5 @@ $RECYCLE.BIN/
 
 /Marquesita.WebSite/appsettings.json
 /Marquesita.WebSite/appsettings.Development.json
-/Marquesita.WebSite/wwwroot/Images/*
+/Marquesita.WebSite/wwwroot/Images/Products/*
+/Marquesita.WebSite/wwwroot/Images/Users/*
