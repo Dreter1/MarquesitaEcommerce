@@ -291,6 +291,38 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanViewSales")]
+        public async Task<IActionResult> Invoice(Guid saleId)
+        {
+            var sale = _saleService.GetSaleById(saleId);
+            if (sale != null)
+            {
+                ViewBag.Sale = sale;
+                ViewBag.Client = await _usersManager.GetUserByIdAsync(sale.UserId);
+                ViewBag.clientAddress = _addressService.GetAddressFullText(sale.AddressId);
+                ViewBag.saleDetail = _saleService.GetDetailSaleList(sale.Id);
+                return View();
+            }
+            return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewSales")]
+        public async Task<IActionResult> PrintInvoice(Guid saleId)
+        {
+            var sale = _saleService.GetSaleById(saleId);
+            if(sale != null)
+            {
+                ViewBag.Sale = sale;
+                ViewBag.Client = await _usersManager.GetUserByIdAsync(sale.UserId);
+                ViewBag.clientAddress = _addressService.GetAddressFullText(sale.AddressId);
+                ViewBag.saleDetail = _saleService.GetDetailSaleList(sale.Id);
+                return View();
+            }
+            return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "CanViewSales")]
         public async Task<IActionResult> DownloadExcelReportAsync()
         {
             var content = await _documentService.GenerateExcelReport();

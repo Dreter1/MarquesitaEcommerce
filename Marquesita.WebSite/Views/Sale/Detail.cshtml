@@ -70,6 +70,8 @@
             </table>
             <hr />
             <a asp-controller="Sale" asp-action="Index" class="btn btn-danger fa-pull-left" title="Regresar"><i class="fas fa-arrow-left"></i></a>
+            <a asp-controller="Sale" asp-action="Invoice" asp-route-saleId="@ViewBag.Sale.Id" class="btn btn-warning fa-pull-right" title="Boleta"><i class="fas fa-file-invoice"></i> Boleta</a>
+
         </div>
     </div>
 

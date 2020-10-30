@@ -51,16 +51,15 @@
                 </div>
                 <br /><br />
             }
-
-            <table id="dataTable" class="table table-bordered table-striped">
+            <table id="dataTable" class="table table-bordered table-striped" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th class="text-center">Cliente</th>
-                        <th class="text-center">Fecha</th>
-                        <th class="text-center">Tipo de venta</th>
-                        <th class="text-center">Estado</th>
-                        <th class="text-center">Vendedor</th>
-                        <th class="text-center">Monto Total</th>
+                        <th class="text-center" style="width: 14.2857142857%">Cliente</th>
+                        <th class="text-center" style="width: 14.2857142857%">Fecha</th>
+                        <th class="text-center" style="width: 14.2857142857%">Tipo de venta</th>
+                        <th class="text-center" style="width: 14.2857142857%">Estado</th>
+                        <th class="text-center" style="width: 14.2857142857%">Vendedor</th>
+                        <th class="text-center" style="width: 14.2857142857%">Monto Total</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -68,7 +67,7 @@
                     @foreach (var sale in Model)
                     {
                         <tr>
-                            <td>
+                            <td style="width: 14.2857142857%">
                                 @if (sale.Date.ToShortDateString() == DateTime.Now.ToShortDateString())
                                 {
                                     @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.UserId })
@@ -80,21 +79,21 @@
                                 }
 
                             </td>
-                            <td class="text-center">@sale.Date.ToShortDateString()</td>
-                            <td class="text-center">@sale.TypeOfSale</td>
-                            <td class="text-center">@sale.SaleStatus</td>
+                            <td class="text-center" style="width: 14.2857142857%">@sale.Date.ToShortDateString()</td>
+                            <td class="text-center" style="width: 14.2857142857%">@sale.TypeOfSale</td>
+                            <td class="text-center" style="width: 14.2857142857%">@sale.SaleStatus</td>
                             @if (sale.EmployeeId != null)
                             {
-                                <td>
+                                <td style="width: 14.2857142857%">
                                     @await Component.InvokeAsync("EcommerceClientInfo", new { userId = sale.EmployeeId })
                                 </td>
                             }
                             else
                             {
-                                <td class="text-center">-</td>
+                                <td class="text-center" style="width: 14.2857142857%">-</td>
                             }
-                            <td class="text-center">S./ @sale.TotalAmount</td>
-                            <td>
+                            <td class="text-center" style="width: 14.2857142857%">S./ @sale.TotalAmount</td>
+                            <td style="width: 14.2857142857%">
                                 <div class="form-row justify-content-center">
                                     <a asp-controller="Sale" asp-action="Edit" asp-route-saleId="@sale.Id" class="btn btn-warning" title="Editar"><i class="fas fa-edit"></i></a><span>&nbsp</span>
                                     <a asp-controller="Sale" asp-action="Detail" asp-route-saleId="@sale.Id" class="btn btn-info" title="Detalles"><i class="fas fa-info-circle"></i></a>
@@ -104,10 +103,8 @@
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
-
 </section>
 
 <script>
