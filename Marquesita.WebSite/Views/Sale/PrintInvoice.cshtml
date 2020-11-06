@@ -73,7 +73,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @{ int count = 0;}
+                                        @{ int count = 0;
+                                            decimal igv = Math.Round((ViewBag.Sale.TotalAmount * Convert.ToDecimal(0.18)), 2);
+                                            decimal subtotal = Math.Round((ViewBag.Sale.TotalAmount - igv), 2);
+                                        }
                                         @foreach (var detail in ViewBag.saleDetail)
                                         {
                                             count += 1;
@@ -98,11 +101,11 @@
                                     <table class="table">
                                         <tr>
                                             <th style="width:50%">Subtotal:</th>
-                                            <td>S/. </td>
+                                            <td>S/. @subtotal</td>
                                         </tr>
                                         <tr>
                                             <th>IGV (18%)</th>
-                                            <td>S/. 10.34</td>
+                                            <td>S/. @igv</td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>

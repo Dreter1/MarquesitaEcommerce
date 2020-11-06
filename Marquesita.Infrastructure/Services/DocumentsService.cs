@@ -62,7 +62,8 @@ namespace Marquesita.Infrastructure.Services
                 {
                     worksheet.Cell(currentRow, 7).Value = "-";
                 }
-                worksheet.Cell(currentRow, 8).Value = "S/. " + sale.TotalAmount;
+                worksheet.Cell(currentRow, 8).Value = sale.TotalAmount;
+
             }
 
             using var stream = new MemoryStream();
@@ -160,8 +161,8 @@ namespace Marquesita.Infrastructure.Services
             var clientAddress = _addressService.GetAddressFullText(sale.AddressId);
             int count = 0;
             var saleDetail = _saleService.GetDetailSaleList(sale.Id);
-            var igv = sale.TotalAmount * Convert.ToDecimal(0.18);
-            var subtotal = sale.TotalAmount - igv;
+            var igv = Math.Round((sale.TotalAmount * Convert.ToDecimal(0.18)), 2);
+            var subtotal = Math.Round((sale.TotalAmount - igv), 2);
             var actualDate = DateTime.Now;
 
             var stringBuilder = new StringBuilder();

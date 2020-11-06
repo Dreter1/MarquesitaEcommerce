@@ -40,13 +40,13 @@
                     </div>
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
-                            De 
-                            <address> 
-                            <strong>La Marquesita</strong><br>
-                            Jr. Los juncos #102 Pueblo Joven María Parada de Bellido<br>
-                            Telefono: (076)280877<br>
-                            Celulares: #976698266 | 986161463<br>
-                            Correo: ventas.lamarquesita@gmail.com
+                            De
+                            <address>
+                                <strong>La Marquesita</strong><br>
+                                Jr. Los juncos #102 Pueblo Joven María Parada de Bellido<br>
+                                Telefono: (076)280877<br>
+                                Celulares: #976698266 | 986161463<br>
+                                Correo: ventas.lamarquesita@gmail.com
                             </address>
                         </div>
                         <div class="col-sm-4 invoice-col">
@@ -80,7 +80,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{ int count = 0;}
+                                    @{ int count = 0;
+                                        decimal igv = Math.Round((ViewBag.Sale.TotalAmount * Convert.ToDecimal(0.18)), 2);
+                                        decimal subtotal = Math.Round((ViewBag.Sale.TotalAmount - igv), 2);
+                                    }
                                     @foreach (var detail in ViewBag.saleDetail)
                                     {
                                         count += 1;
@@ -105,11 +108,11 @@
                                 <table class="table">
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
-                                        <td>S/. </td>
+                                        <td>S/. @subtotal</td>
                                     </tr>
                                     <tr>
                                         <th>IGV (18%)</th>
-                                        <td>S/. 10.34</td>
+                                        <td>S/. @igv</td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>

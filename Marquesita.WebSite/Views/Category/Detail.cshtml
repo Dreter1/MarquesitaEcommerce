@@ -52,11 +52,12 @@
                 </ul>
             </div>
         </div>
+        <input hidden id="categoryId" value="@ViewBag.CategoryId" />
         @if (ViewBag.User != null)
         {
             <input hidden id="userId" value="@ViewBag.User.Id" />
         }
-        <div class="agileinfo-ads-display col-md-9 w3l-rightpro" id="ProducList">
+        <div class="agileinfo-ads-display col-md-9 w3l-rightpro" id="CategoryProductList">
         </div>
     </div>
 </div>
@@ -65,8 +66,9 @@
 <link href="~/EcommerceTemplate/css/simplePagination.css" rel="stylesheet" />
 <script>
     $(document).ready(function () {
-        getProductPanelList();
+        getCategoryProductPanelList();
         productSearchFilter();
         ProductsActiveLink();
     });
 </script>
+

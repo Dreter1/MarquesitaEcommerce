@@ -9,6 +9,15 @@ function getProductPanelList() {
     });
 }
 
+function getCategoryProductPanelList() {
+    var categoryId = $('#categoryId').val();
+    console.log(categoryId)
+    var url = "/Category/GetCategoryProductList?categoryId=" + categoryId;
+    $.get(url, function (e) {
+        $("#CategoryProductList").html(e);
+    });
+}
+
 function getshoppingCartList() {
     var url = "/ShoppingCart/GetUserCartItems";
     $.get(url, function (response) {

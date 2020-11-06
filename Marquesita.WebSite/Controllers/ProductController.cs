@@ -26,8 +26,8 @@ namespace MarquesitaDashboards.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexAsync()
         {
             if (User.Identity.Name != null)
@@ -38,15 +38,17 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     ViewBag.User = user;
+                    ViewBag.Categorys = _categoryService.GetCategoryList();
                     return View();
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
+            ViewBag.Categorys = _categoryService.GetCategoryList();
             return View();
         }
 
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProductList()
         {
             if (User.Identity.Name != null)
