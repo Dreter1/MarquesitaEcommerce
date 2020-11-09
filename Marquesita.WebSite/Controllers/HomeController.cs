@@ -14,13 +14,15 @@ namespace MarquesitaDashboards.Controllers
     {
         private readonly IUserManagerService _usersManager;
         private readonly IAuthManagerService _signsInManager;
+        private readonly ICategoryService _categoryService;
         private readonly IMailService _mailService;
 
-        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IMailService mailService)
+        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IMailService mailService, ICategoryService categoryService)
         {
             _usersManager = usersManager;
             _signsInManager = signsInManager;
             _mailService = mailService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -34,10 +36,12 @@ namespace MarquesitaDashboards.Controllers
                 if (!_usersManager.isColaborator(userRole))
                 {
                     ViewBag.UserId = user.Id;
+                    ViewBag.Categorys = _categoryService.GetCategoryList();
                     return View();
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
+            ViewBag.Categorys = _categoryService.GetCategoryList();
             return View();
         }
 

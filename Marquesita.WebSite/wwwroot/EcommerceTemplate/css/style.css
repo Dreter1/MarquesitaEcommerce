@@ -445,34 +445,34 @@ button.w3view-cart {
 }
 /*-- carousel-slider --*/
 .carousel .item {
-    background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
-    background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
-    background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
-    background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-5.jpg) no-repeat;
+    background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Quesos.jpg) no-repeat;
+    background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Quesos.jpg) no-repeat;
+    background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Quesos.jpg) no-repeat;
+    background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Quesos.jpg) no-repeat;
     background-size: cover;
 }
 
     .carousel .item.item2 {
-        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-2.jpg) no-repeat;
-        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-2.jpg) no-repeat;
-        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-2.jpg) no-repeat;
-        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-2.jpg) no-repeat;
+        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Manjar.jpg) no-repeat;
+        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Manjar.jpg) no-repeat;
+        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Manjar.jpg) no-repeat;
+        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Manjar.jpg) no-repeat;
         background-size: cover;
     }
 
     .carousel .item.item3 {
-        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
-        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
-        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
-        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-6.jpg) no-repeat;
+        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Roscas.jpg) no-repeat;
+        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Roscas.jpg) no-repeat;
+        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Roscas.jpg) no-repeat;
+        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Roscas.jpg) no-repeat;
         background-size: cover;
     }
 
     .carousel .item.item4 {
-        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-4.jpg) no-repeat;
-        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-4.jpg) no-repeat;
-        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-4.jpg) no-repeat;
-        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../images/banner1-4.jpg) no-repeat;
+        background: -webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Queso.jpg) no-repeat;
+        background: -moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Queso.jpg) no-repeat;
+        background: -ms-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Queso.jpg) no-repeat;
+        background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(../../Images/Banners/Banner_Queso.jpg) no-repeat;
         background-size: cover;
     }
 
@@ -1634,7 +1634,7 @@ p.footer-main {
     height: 64px;
     border: none;
     text-indent: 100%;
-    background: url("../images/move-up.png") no-repeat 0px 0px;
+    background: url("../../Images/Flecha_Arriba.png") no-repeat 0px 0px;
 }
 
 #toTopHover {
@@ -1650,7 +1650,7 @@ p.footer-main {
 /*-- //bottom-to-top --*/
 /* contact page */
 .page-head_agile_info_w3l {
-    background: url(../images/fondo.jpg) no-repeat;
+    background: url(../../Images/grumet_quesos.jpg) no-repeat;
     background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;

@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\Errors\" />
+    <Folder Include="wwwroot\Images\Banners\" />
     <Folder Include="wwwroot\Images\Products\" />
     <Folder Include="wwwroot\Images\Products\" />
     <Folder Include="wwwroot\Images\Users\Employees\" />
