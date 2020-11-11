@@ -1,11 +1,8 @@
 ﻿using Marquesita.Infrastructure.ViewModels.Dashboards.Sales;
-using Marquesita.Infrastructure.ViewModels.Ecommerce.Sales;
 using Marquesita.Models.Business;
 using Marquesita.Models.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Marquesita.Infrastructure.Interfaces
@@ -33,5 +30,7 @@ namespace Marquesita.Infrastructure.Interfaces
         bool IsGreaterThan0(int quantity);
         bool SaleExists(Guid saleId);
         bool IsUserSale(Guid saleId, string userId);
+        SaleEditViewModel SaleToViewModel(Sale obj);
+        void UpdateSaleStatus(SaleEditViewModel model, Sale sale);
     }
 }

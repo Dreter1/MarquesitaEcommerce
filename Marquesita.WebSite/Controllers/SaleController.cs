@@ -219,9 +219,33 @@ namespace MarquesitaDashboards.Controllers
 
         [HttpGet]
         [Authorize(Policy = "CanEditSales")]
-        public IActionResult Edit()
+        public IActionResult Edit(Guid saleId)
         {
-            return View();
+            var sale = _saleService.GetSaleById(saleId);
+            if (sale != null)
+            {
+                ViewBag.SaleStatus = _constants.GetSaleStatusList();
+                return View(_saleService.SaleToViewModel(sale));
+            }
+            return RedirectToAction("NotFound404", "Error");
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanEditSales")]
+        public IActionResult Edit(SaleEditViewModel model)
+        {
+            var sale = _saleService.GetSaleById(model.Id);
+
+            if (ModelState.IsValid)
+            {
+                if (sale != null)
+                {
+                    _saleService.UpdateSaleStatus(model, sale);
+                    return RedirectToAction("Index", "Sale");
+                }
+            }
+
+            return View(sale);
         }
 
         [HttpGet]

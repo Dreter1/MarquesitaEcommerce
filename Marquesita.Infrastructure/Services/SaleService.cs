@@ -325,6 +325,26 @@ namespace Marquesita.Infrastructure.Services
             }
             return false;
         }
+
+        public SaleEditViewModel SaleToViewModel(Sale obj)
+        {
+            if (obj != null)
+            {
+                return new SaleEditViewModel
+                {
+                    Id = obj.Id,
+                    SaleStatus = obj.SaleStatus
+                };
+            }
+            return null;
+        }
+
+        public void UpdateSaleStatus(SaleEditViewModel model, Sale sale)
+        {
+            sale.SaleStatus = model.SaleStatus;
+            _saleRepository.Update(sale);
+            _saleRepository.SaveChanges();
+        }
     }
 }
 

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Marquesita.Infrastructure.ViewModels.Ecommerce.Sales
+namespace Marquesita.Infrastructure.ViewModels.Dashboards.Sales
 {
     public class SaleViewModel
     {

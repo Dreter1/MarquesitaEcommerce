@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Ecommerce\Sales\**" />
+    <EmbeddedResource Remove="ViewModels\Ecommerce\Sales\**" />
+    <None Remove="ViewModels\Ecommerce\Sales\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.3" />
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
@@ -25,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="DbContexts\" />
-    <Folder Include="ViewModels\Ecommerce\Sales\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -265,6 +265,7 @@ namespace MarquesitaDashboards
             services.AddTransient<IValidator<RoleEditViewModel>, RoleEditViewModelValidator>();
 
             services.AddTransient<IValidator<ClientViewModel>, ClientViewModelValidator>();
+            services.AddTransient<IValidator<ClientEditViewModel>, ClientEditViewModelValidator>();
 
             services.AddTransient<IValidator<CategoryViewModel>, CategoryViewModelValidator>();
             services.AddTransient<IValidator<ProductViewModel>, ProductViewModelValidator>();
