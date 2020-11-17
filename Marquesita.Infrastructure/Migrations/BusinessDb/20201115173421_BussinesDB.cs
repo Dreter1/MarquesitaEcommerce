@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
-    public partial class BussinesDbInit : Migration
+    public partial class BussinesDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "Addresses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Street = table.Column<string>(nullable: false),
                     Country = table.Column<string>(nullable: false),
                     Region = table.Column<string>(nullable: false),
@@ -30,7 +30,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "Sales",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     TotalAmount = table.Column<decimal>(nullable: false),
                     PaymentType = table.Column<string>(nullable: false),
@@ -50,7 +50,7 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                     SaleStatus = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
                     EmployeeId = table.Column<string>(nullable: true),
-                    AddressId = table.Column<Guid>(nullable: true)
+                    AddressId = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,14 +67,14 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: false),
                     ImageRoute = table.Column<string>(nullable: true),
                     Stock = table.Column<int>(nullable: false),
                     UnitPrice = table.Column<decimal>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: false)
+                    CategoryId = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,11 +91,11 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Text = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<byte[]>(nullable: false),
+                    ProductId = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,12 +112,12 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "SaleDetails",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     UnitPrice = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     Subtotal = table.Column<decimal>(nullable: false),
-                    SaleId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false)
+                    SaleId = table.Column<byte[]>(nullable: false),
+                    ProductId = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,11 +140,11 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "SaleDetailsTemp",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false)
+                    ProductId = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,9 +161,9 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "ShoppingCarts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<byte[]>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -181,8 +181,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                 name: "WishLists",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<byte[]>(nullable: false),
+                    ProductId = table.Column<byte[]>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
