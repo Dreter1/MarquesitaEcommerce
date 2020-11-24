@@ -9,6 +9,13 @@ function getProductPanelList() {
     });
 }
 
+function getProductPanelListTake10() {
+    var url = "/Product/GetProductListTake10";
+    $.get(url, function (e) {
+        $("#ProducListTake10").html(e);
+    });
+}
+
 function getCategoryProductPanelList() {
     var categoryId = $('#categoryId').val();
     console.log(categoryId)

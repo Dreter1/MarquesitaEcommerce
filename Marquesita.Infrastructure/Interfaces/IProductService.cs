@@ -9,6 +9,7 @@ namespace Marquesita.Infrastructure.Interfaces
     public interface IProductService
     {
         IEnumerable<Product> GetProductList();
+        IEnumerable<Product> GetProductListTake10();
         IEnumerable<Product> GetProductListByCategory(Guid categoryId);
         Product GetProductById(Guid Id);
         void CreateProduct(Product product, IFormFile image, string path);

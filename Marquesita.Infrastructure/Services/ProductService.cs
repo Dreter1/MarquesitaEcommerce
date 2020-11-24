@@ -26,6 +26,11 @@ namespace Marquesita.Infrastructure.Services
             return _repository.All();
         }
 
+        public IEnumerable<Product> GetProductListTake10()
+        {
+            return _repository.All().TakeLast(6);
+        }
+
         public IEnumerable<Product> GetProductListByCategory(Guid categoryId)
         {
             return _context.Products.Where(product => product.CategoryId == categoryId).ToList();

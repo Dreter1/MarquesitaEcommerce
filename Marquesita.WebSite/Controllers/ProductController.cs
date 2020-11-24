@@ -69,6 +69,27 @@ namespace MarquesitaDashboards.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetProductListTake10()
+        {
+            if (User.Identity.Name != null)
+            {
+                var user = await _usersManager.GetUserByNameAsync(User.Identity.Name);
+                var userRole = await _usersManager.GetUserRole(user);
+
+                if (!_usersManager.isColaborator(userRole))
+                {
+                    ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
+                    ViewBag.UserId = user.Id;
+                    return PartialView(_productService.GetProductListTake10());
+                }
+                return RedirectToAction("NotFound404", "Error");
+            }
+            ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
+            return PartialView(_productService.GetProductList());
+        }
+
+        [HttpGet]
         [Authorize(Policy = "CanViewProducts")]
         public IActionResult List()
         {

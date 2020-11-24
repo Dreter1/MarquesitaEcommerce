@@ -15,14 +15,16 @@ namespace MarquesitaDashboards.Controllers
         private readonly IUserManagerService _usersManager;
         private readonly IAuthManagerService _signsInManager;
         private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
         private readonly IMailService _mailService;
 
-        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IMailService mailService, ICategoryService categoryService)
+        public HomeController(IUserManagerService usersManager, IAuthManagerService signsInManager, IMailService mailService, ICategoryService categoryService, IProductService productService)
         {
             _usersManager = usersManager;
             _signsInManager = signsInManager;
             _mailService = mailService;
             _categoryService = categoryService;
+            _productService = productService;
         }
 
         [HttpGet]
