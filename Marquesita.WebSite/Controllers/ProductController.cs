@@ -173,12 +173,14 @@ namespace MarquesitaDashboards.Controllers
                 {
                     ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
                     ViewBag.User = user;
+                    ViewBag.Category = _categoryService.GetCategoryById(product.CategoryId);
                     return View(product);
                 }
                 return RedirectToAction("NotFound404", "Error");
             }
 
             ViewBag.Image = ConstantsService.Images.IMG_ROUTE_PRODUCT;
+            ViewBag.Category = _categoryService.GetCategoryById(product.CategoryId);
             return View(product);
         }
 
