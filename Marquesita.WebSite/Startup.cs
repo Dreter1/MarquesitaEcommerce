@@ -331,9 +331,9 @@ namespace MarquesitaDashboards
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
-                // app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
