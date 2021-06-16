@@ -79,25 +79,25 @@ namespace MarquesitaDashboards
 
         private void DbConnectionsConfiguration(IServiceCollection services)
         {
-            services.AddDbContext<BusinessDbContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("BusinessDB"),
-            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
-            );
-
-            services.AddDbContext<AuthIdentityDbContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("IdentityDB"),
-            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
-            );
-
             //services.AddDbContext<BusinessDbContext>(opt =>
-            //opt.UseMySQL(Configuration.GetConnectionString("BusinessDB"),
+            //opt.UseSqlServer(Configuration.GetConnectionString("BusinessDB"),
             //b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
             //);
 
             //services.AddDbContext<AuthIdentityDbContext>(opt =>
-            //opt.UseMySQL(Configuration.GetConnectionString("IdentityDB"),
+            //opt.UseSqlServer(Configuration.GetConnectionString("IdentityDB"),
             //b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
             //);
+
+            services.AddDbContext<BusinessDbContext>(opt =>
+            opt.UseMySQL(Configuration.GetConnectionString("BusinessDB"),
+            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
+            );
+
+            services.AddDbContext<AuthIdentityDbContext>(opt =>
+            opt.UseMySQL(Configuration.GetConnectionString("IdentityDB"),
+            b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
+            );
         }
 
         private void IdentityConfiguration(IServiceCollection services)
@@ -331,7 +331,13 @@ namespace MarquesitaDashboards
         {
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
+                //app.UseStatusCodePagesWithReExecute("/Error/{0}");
+                //app.UseExceptionHandler("/Error");
+                //app.UseHsts();
+            }
+            else
+            {
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
