@@ -33,8 +33,10 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
                 entity.Property(p => p.Description).IsRequired().HasMaxLength(1000);
-                entity.Property(p => p.UnitPrice).IsRequired();
+                entity.Property(p => p.Description).IsRequired().HasMaxLength(1000);
+                entity.Property(p => p.ImageRoute).HasMaxLength(250);
                 entity.Property(p => p.Stock).IsRequired();
+                entity.Property(p => p.UnitPrice).IsRequired();
                 entity.Property(p => p.IsActive).IsRequired();
                 entity.Property(p => p.CategoryId).IsRequired();
 
@@ -49,11 +51,12 @@ namespace Marquesita.Infrastructure.DbContexts
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Date).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
                 entity.Property(p => p.TotalAmount).IsRequired();
-                entity.Property(p => p.SaleStatus).IsRequired();
-                entity.Property(p => p.PaymentType).IsRequired();
-                entity.Property(p => p.TypeOfSale).IsRequired();
+                entity.Property(p => p.SaleStatus).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.PaymentType).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.TypeOfSale).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.EmployeeId).HasMaxLength(250);
 
                 entity.HasOne(a => a.Address)
                 .WithMany(s => s.Sales)
@@ -88,7 +91,7 @@ namespace Marquesita.Infrastructure.DbContexts
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.Quantity).IsRequired();
                 entity.Property(p => p.Price).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
                 entity.Property(p => p.ProductId).IsRequired();
 
                 entity.HasOne(s => s.Product)
@@ -102,7 +105,7 @@ namespace Marquesita.Infrastructure.DbContexts
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.ProductId).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
 
                 entity.HasOne(p => p.Product)
                 .WithMany(wl => wl.WishLists)
@@ -115,7 +118,7 @@ namespace Marquesita.Infrastructure.DbContexts
             {
                 entity.HasKey(pk => pk.Id);
                 entity.Property(p => p.ProductId).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
                 entity.Property(p => p.Quantity).IsRequired();
 
                 entity.HasOne(p => p.Products)
@@ -128,21 +131,21 @@ namespace Marquesita.Infrastructure.DbContexts
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.HasKey(pk => pk.Id);
-                entity.Property(p => p.Street).IsRequired();
-                entity.Property(p => p.Country).IsRequired();
-                entity.Property(p => p.Region).IsRequired();
-                entity.Property(p => p.City).IsRequired();
-                entity.Property(p => p.PostalCode).IsRequired();
-                entity.Property(p => p.FullNames).IsRequired();
-                entity.Property(p => p.Phone).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.Street).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.Country).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.Region).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.City).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.PostalCode).IsRequired().HasMaxLength(20);
+                entity.Property(p => p.FullNames).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.Phone).IsRequired().HasMaxLength(15);
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
             });
 
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.HasKey(pk => pk.Id);
-                entity.Property(p => p.Text).IsRequired();
-                entity.Property(p => p.UserId).IsRequired();
+                entity.Property(p => p.Text).IsRequired().HasMaxLength(250);
+                entity.Property(p => p.UserId).IsRequired().HasMaxLength(250);
                 entity.Property(p => p.ProductId).IsRequired();
 
                 entity.HasOne(p => p.Product)

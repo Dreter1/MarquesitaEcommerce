@@ -16,19 +16,20 @@ namespace Marquesita.Infrastructure.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(b =>
+            modelBuilder.Entity<User>(entity =>
             {
-                b.ToTable("Users");
+                entity.ToTable("Users");
 
-                b.Property(u => u.UserName).IsRequired();
-                b.Property(u => u.Email).IsRequired();
-                b.Property(u => u.FirstName).IsRequired();
-                b.Property(u => u.LastName).IsRequired();
-                b.Property(u => u.Phone).IsRequired();
-                b.Property(u => u.DateOfBirth).IsRequired();
-                b.Property(u => u.RegisterDate).IsRequired();
-                b.Property(u => u.IsActive).IsRequired().HasDefaultValue(true);
-                b.Property(u => u.LockoutEnabled).HasDefaultValue(false);
+                entity.Property(u => u.UserName).IsRequired();
+                entity.Property(u => u.Email).IsRequired().HasMaxLength(350);
+                entity.Property(u => u.FirstName).IsRequired().HasMaxLength(250);
+                entity.Property(u => u.LastName).IsRequired().HasMaxLength(250);
+                entity.Property(u => u.Phone).IsRequired().HasMaxLength(15);
+                entity.Property(u => u.ImageRoute).HasMaxLength(250);
+                entity.Property(u => u.DateOfBirth).IsRequired();
+                entity.Property(u => u.RegisterDate).IsRequired();
+                entity.Property(u => u.IsActive).IsRequired().HasDefaultValue(true);
+                entity.Property(u => u.LockoutEnabled).HasDefaultValue(false);
             });
 
             modelBuilder.Entity<User>()
@@ -37,24 +38,30 @@ namespace Marquesita.Infrastructure.DbContexts
                 .Ignore(t => t.PhoneNumberConfirmed)
                 .Ignore(t => t.TwoFactorEnabled);
 
-            modelBuilder.Entity<IdentityUserClaim<string>>(b =>
+            modelBuilder.Entity<IdentityUserClaim<string>>(entity =>
             {
-                b.ToTable("Claims");
+                entity.ToTable("Claims");
+                entity.Property(claim => claim.ClaimType).HasMaxLength(256);
+                entity.Property(claim => claim.ClaimValue).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<Role>(b =>
+            modelBuilder.Entity<Role>(entity =>
             {
-                b.ToTable("Roles");
+                entity.ToTable("Roles");
             });
 
-            modelBuilder.Entity<IdentityRoleClaim<string>>(b =>
+            modelBuilder.Entity<IdentityRoleClaim<string>>(entity =>
             {
-                b.ToTable("RoleClaim");
+                entity.ToTable("RoleClaim");
+                entity.Property(roleClaim => roleClaim.ClaimType).HasMaxLength(256);
+                entity.Property(roleClaim => roleClaim.ClaimValue).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<IdentityUserRole<string>>(b =>
+            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
             {
-                b.ToTable("UserRoles");
+                entity.ToTable("UserRoles");
+                entity.Property(userRoles => userRoles.UserId).HasMaxLength(256);
+                entity.Property(userRoles => userRoles.RoleId).HasMaxLength(256);
             });
 
             modelBuilder.Ignore<IdentityUserToken<string>>();
