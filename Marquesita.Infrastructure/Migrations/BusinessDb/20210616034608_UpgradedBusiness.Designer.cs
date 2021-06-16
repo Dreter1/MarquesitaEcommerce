@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20201115173421_BussinesDB")]
-    partial class BussinesDB
+    [Migration("20210616034608_UpgradedBusiness")]
+    partial class UpgradedBusiness
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,35 +27,43 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("FullNames")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(15)")
+                        .HasMaxLength(15);
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
@@ -93,11 +101,13 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
-                    b.Property<byte[]>("UserId")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
@@ -122,7 +132,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                         .HasMaxLength(1000);
 
                     b.Property<string>("ImageRoute")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -158,26 +169,31 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
                         .HasColumnType("datetime");
 
                     b.Property<string>("EmployeeId")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("SaleStatus")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("TypeOfSale")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
@@ -236,7 +252,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
@@ -260,7 +277,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
@@ -281,7 +299,8 @@ namespace Marquesita.Infrastructure.Migrations.BusinessDb
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 

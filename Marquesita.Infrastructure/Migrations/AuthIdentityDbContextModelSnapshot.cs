@@ -57,18 +57,20 @@ namespace Marquesita.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("varchar(350)")
+                        .HasMaxLength(350);
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("ImageRoute")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -77,7 +79,8 @@ namespace Marquesita.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<bool>("LockoutEnabled")
                         .ValueGeneratedOnAdd()
@@ -100,7 +103,8 @@ namespace Marquesita.Infrastructure.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(15)")
+                        .HasMaxLength(15);
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime");
@@ -132,10 +136,12 @@ namespace Marquesita.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("RoleId")
                         .IsRequired()
@@ -155,10 +161,12 @@ namespace Marquesita.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -174,10 +182,12 @@ namespace Marquesita.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(767)");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(767)");
+                        .HasColumnType("varchar(256)")
+                        .HasMaxLength(256);
 
                     b.HasKey("UserId", "RoleId");
 

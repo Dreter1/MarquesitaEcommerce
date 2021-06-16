@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Marquesita.Infrastructure.Migrations
 {
-    public partial class IdentityDB : Migration
+    public partial class UpgradedIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Marquesita.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    Email = table.Column<string>(maxLength: 350, nullable: false),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
@@ -37,10 +37,10 @@ namespace Marquesita.Infrastructure.Migrations
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false, defaultValue: false),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    Phone = table.Column<string>(nullable: false),
-                    ImageRoute = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 250, nullable: false),
+                    LastName = table.Column<string>(maxLength: 250, nullable: false),
+                    Phone = table.Column<string>(maxLength: 15, nullable: false),
+                    ImageRoute = table.Column<string>(maxLength: 250, nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     RegisterDate = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false, defaultValue: true)
@@ -57,8 +57,8 @@ namespace Marquesita.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimType = table.Column<string>(maxLength: 256, nullable: true),
+                    ClaimValue = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,8 +78,8 @@ namespace Marquesita.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimType = table.Column<string>(maxLength: 256, nullable: true),
+                    ClaimValue = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,8 +96,8 @@ namespace Marquesita.Infrastructure.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(maxLength: 256, nullable: false),
+                    RoleId = table.Column<string>(maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
