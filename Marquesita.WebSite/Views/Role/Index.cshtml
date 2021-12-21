@@ -54,7 +54,7 @@
                             @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditRoles")).Succeeded || (await AuthorizationService.AuthorizeAsync(User, "CanDeleteRoles")).Succeeded)
                             {
                                 <td class="text-center">
-                                    @if (role.Name != "Super Admin")
+                                    @if (role.Name != "Administrator")
                                     {
                                         <div class="form-row justify-content-center">
                                             <a asp-controller="Role" asp-action="Detail" asp-route-Id="@role.Id" class="btn btn-info" title="Detalle"><i class="fas fa-info-circle"></i></a><span>&nbsp</span>

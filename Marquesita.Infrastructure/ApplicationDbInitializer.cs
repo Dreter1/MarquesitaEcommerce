@@ -59,7 +59,7 @@ namespace Marquesita.Infrastructure
                     EmailConfirmed = ConstantsService.InitialsUsers.EMAIL_CONFIRMED,
                     NormalizedEmail = ConstantsService.InitialsUsers.ADMIN_EMAIL_UPPERCASE,
                     Phone = ConstantsService.InitialsUsers.PHONE,
-                    DateOfBirth = new DateTime(1996, 05, 05),
+                    DateOfBirth = new DateTime(1970, 05, 05),
                     RegisterDate = DateTime.Now   
                 };
 
@@ -77,8 +77,8 @@ namespace Marquesita.Infrastructure
                     RegisterDate = DateTime.Now
                 };
 
-                IdentityResult resultAdmin = userManager.CreateAsync(userAdmin, ConstantsService.InitialsUsers.PASSWORD).Result;
-                IdentityResult resultClient = userManager.CreateAsync(userClient, ConstantsService.InitialsUsers.PASSWORD).Result;
+                IdentityResult resultAdmin = userManager.CreateAsync(userAdmin, ConstantsService.InitialsUsers.ADMIN_PASSWORD).Result;
+                IdentityResult resultClient = userManager.CreateAsync(userClient, ConstantsService.InitialsUsers.CLIENT_PASSWORD).Result;
 
                 if (resultAdmin.Succeeded && resultClient.Succeeded)
                 {
