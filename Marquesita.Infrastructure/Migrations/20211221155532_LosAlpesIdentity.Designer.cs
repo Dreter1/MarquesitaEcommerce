@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations
 {
     [DbContext(typeof(AuthIdentityDbContext))]
-    [Migration("20210616031200_UpgradedIdentity")]
-    partial class UpgradedIdentity
+    [Migration("20211221155532_LosAlpesIdentity")]
+    partial class LosAlpesIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

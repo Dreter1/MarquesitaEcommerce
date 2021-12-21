@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marquesita.Infrastructure.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20210616034608_UpgradedBusiness")]
-    partial class UpgradedBusiness
+    [Migration("20211221155606_LosAlpesBusiness")]
+    partial class LosAlpesBusiness
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Marquesita.Infrastructure.Migrations
 {
-    public partial class UpgradedIdentity : Migration
+    public partial class LosAlpesIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
