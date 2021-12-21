@@ -331,10 +331,10 @@ namespace MarquesitaDashboards
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseStatusCodePagesWithReExecute("/Error/{0}");
-                //app.UseExceptionHandler("/Error");
-                //app.UseHsts();
+                //app.UseDeveloperExceptionPage();
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
             else
             {
