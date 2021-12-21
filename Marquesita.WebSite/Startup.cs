@@ -79,16 +79,6 @@ namespace MarquesitaDashboards
 
         private void DbConnectionsConfiguration(IServiceCollection services)
         {
-            //services.AddDbContext<BusinessDbContext>(opt =>
-            //opt.UseSqlServer(Configuration.GetConnectionString("BusinessDB"),
-            //b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
-            //);
-
-            //services.AddDbContext<AuthIdentityDbContext>(opt =>
-            //opt.UseSqlServer(Configuration.GetConnectionString("IdentityDB"),
-            //b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
-            //);
-
             services.AddDbContext<BusinessDbContext>(opt =>
             opt.UseMySQL(Configuration.GetConnectionString("BusinessDB"),
             b => b.MigrationsAssembly("Marquesita.Infrastructure")).EnableSensitiveDataLogging()
