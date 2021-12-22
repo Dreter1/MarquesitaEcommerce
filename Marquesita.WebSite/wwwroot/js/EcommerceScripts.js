@@ -34,10 +34,9 @@ function getshoppingCartList() {
 
 function addProductToCart(product) {
     var addProduct = product.dataset.id;
-    var userId = $('#userId').val();
     var isLogedUrl = "/User/IsLogged";
-    var productUserExistUrl = "/ShoppingCart/ProductAndUserExistInCart?idProduct=" + addProduct + "&userId=" + userId;
-    var addingProdcutToCartUrl = "/ShoppingCart/AddProductToCart?idProduct=" + addProduct + "&userId=" + userId;
+    var productUserExistUrl = "/ShoppingCart/ProductAndUserExistInCart?idProduct=" + addProduct;
+    var addingProdcutToCartUrl = "/ShoppingCart/AddProductToCart?idProduct=" + addProduct;
     $.get(isLogedUrl, function (response) {
         if (response) {
             $.post(productUserExistUrl, function (response) {
@@ -134,10 +133,9 @@ function getWishList() {
 
 function addProductToWishList(product) {
     var addProduct = product.dataset.id;
-    var userId = $('#userId').val();
     var isLogedUrl = "/User/IsLogged";
-    var productUserExistUrl = "/WishList/ProductAndUserExistInWishList?idProduct=" + addProduct + "&userId=" + userId;
-    var addingProdcutToWishListUrl = "/WishList/AddProductToWishList?idProduct=" + addProduct + "&userId=" + userId;
+    var productUserExistUrl = "/WishList/ProductAndUserExistInWishList?idProduct=" + addProduct;
+    var addingProdcutToWishListUrl = "/WishList/AddProductToWishList?idProduct=" + addProduct;
     $.get(isLogedUrl, function (response) {
         if (response) {
             $.post(productUserExistUrl, function (response) {

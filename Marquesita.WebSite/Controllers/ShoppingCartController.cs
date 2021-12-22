@@ -39,8 +39,10 @@ namespace Marquesita.WebSite.Controllers
 
         [HttpPost]
         [Authorize(Policy = "Client")]
-        public bool ProductAndUserExistInCart(Guid idProduct, string userId)
+        public async Task<bool> ProductAndUserExistInCartAsync(Guid idProduct)
         {
+            var userId = (await _usersManager.GetUserByNameAsync(User.Identity.Name)).Id;
+
             if (idProduct == null && userId == null)
                 return false;
 
@@ -54,12 +56,12 @@ namespace Marquesita.WebSite.Controllers
 
         [HttpPost]
         [Authorize(Policy = "Client")]
-        public async Task<bool> AddProductToCartAsync(Guid idProduct, string userId)
+        public async Task<bool> AddProductToCartAsync(Guid idProduct)
         {
-            var user = await _usersManager.GetUserByIdAsync(userId);
+            var userId = (await _usersManager.GetUserByNameAsync(User.Identity.Name)).Id;
             var product = _productService.GetProductById(idProduct);
 
-            if (user == null || product == null)
+            if (userId == null || product == null)
                 return false;
 
             _shoppingCartService.CreateShoppingCartItem(idProduct, userId);
