@@ -32,8 +32,8 @@
                     <div class="row">
                         <div class="col-12">
                             <h4>
-                                <img src='https://i.ibb.co/W5rCZh2/Marquesita-Logo.png'
-                                     alt='Marquesita-Logo' style='width: 200px; height: 100px; border: 0;'>
+                                <img src='https://i.ibb.co/VNmddvj/Los-Alpes-Logo.png'
+                                     alt='LosAlpes-Logo' style='width: 125px; height: 120px; border: 0;'>
                                 <small class="float-right">Fecha: @DateTime.Now</small>
                             </h4>
                         </div>
@@ -42,11 +42,11 @@
                         <div class="col-sm-4 invoice-col">
                             De
                             <address>
-                                <strong>La Marquesita</strong><br>
-                                Jr. Los juncos #102 Pueblo Joven María Parada de Bellido<br>
-                                Telefono: (076)280877<br>
-                                Celulares: #976698266 | 986161463<br>
-                                Correo: ventas.lamarquesita@gmail.com
+                                <strong>Los Alpes E.I.R.L.</strong><br>
+                                Jr. Junín Nro. 965 (Barrio San Pedro)<br>
+                                Telefono: (076)362287<br>
+                                Celulares: 941342093<br>
+                                Correo: losalpes.cajamarca@gmail.com
                             </address>
                         </div>
                         <div class="col-sm-4 invoice-col">
@@ -59,7 +59,8 @@
                             </address>
                         </div>
                         <div class="col-sm-4 invoice-col">
-                            <b>Invoice #007612</b><br>
+                            @{ int sale = ViewBag.SaleCount + 1; }
+                            <b>Invoice #@sale</b><br>
                             <br>
                             <b>ID de Boleta:</b> @ViewBag.Sale.Id<br>
                             <b>Fecha de pago:</b> @ViewBag.Sale.Date<br>
