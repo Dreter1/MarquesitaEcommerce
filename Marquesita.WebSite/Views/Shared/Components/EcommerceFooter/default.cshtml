@@ -1,10 +1,12 @@
-﻿<div class="footer-top">
+﻿@model Marquesita.Models.Identity.User
+
+<div class="footer-top">
     <div class="container-fluid">
         <div class="col-xs-12 agile-leftmk">
             <h2>¿Qué es el queso?</h2>
             <p>
-                <span>"Los Alpes"</span> te explica que el queso es un producto lácteo hecho a partir de sólidos lácteos. Muchos alimentos se hacen aún más deliciosos con queso derretido, 
-                como la pizza y los nachos. El queso se hace con la leche de vacas, cabras, ovejas, o búfalos, y se acidifica antes de que los sólidos se separen y se presen. 
+                <span>"Los Alpes"</span> te explica que el queso es un producto lácteo hecho a partir de sólidos lácteos. Muchos alimentos se hacen aún más deliciosos con queso derretido,
+                como la pizza y los nachos. El queso se hace con la leche de vacas, cabras, ovejas, o búfalos, y se acidifica antes de que los sólidos se separen y se presen.
                 Hay muchos tipos de queso, que van desde el queso cremoso suave y untable al parmesano duro.
             </p>
         </div>
@@ -50,12 +52,15 @@
                         <li>
                             <a asp-controller="Product" asp-action="Index">Nuestros Productos</a>
                         </li>
-                        <li>
-                            <a asp-controller="Home" asp-action="Register">Registrate</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Home" asp-action="ForgotPassword">Olvide mi contraseña</a>
-                        </li>
+                        @if (Model.Id == null)
+                        {
+                            <li>
+                                <a asp-controller="Home" asp-action="Register">Registrate</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Home" asp-action="ForgotPassword">Olvide mi contraseña</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-xs-7 footer-grids">
