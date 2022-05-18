@@ -1,9 +1,6 @@
 ﻿using Marquesita.Infrastructure.Interfaces;
 using Marquesita.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Marquesita.WebSite.ViewComponents
