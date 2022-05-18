@@ -318,9 +318,11 @@ namespace MarquesitaDashboards.Controllers
         public async Task<IActionResult> Invoice(Guid saleId)
         {
             var sale = _saleService.GetSaleById(saleId);
+            var saleList = _saleService.GetSaleListCount();
             if (sale != null)
             {
                 ViewBag.Sale = sale;
+                ViewBag.SaleCount = saleList;
                 ViewBag.Client = await _usersManager.GetUserByIdAsync(sale.UserId);
                 ViewBag.clientAddress = _addressService.GetAddressFullText(sale.AddressId);
                 ViewBag.saleDetail = _saleService.GetDetailSaleList(sale.Id);
