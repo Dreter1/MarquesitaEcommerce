@@ -341,6 +341,8 @@ function confirmOrder() {
         if (result.isConfirmed) {
             Swal.fire({
                 title: 'Espere procesamos la orden',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
                 onBeforeOpen: () => {
                     Swal.showLoading()
                 }

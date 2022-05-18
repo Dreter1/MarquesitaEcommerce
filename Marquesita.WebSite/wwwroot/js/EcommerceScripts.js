@@ -291,6 +291,8 @@ function confirmEcommerceOrder() {
                 if (response) {
                     Swal.fire({
                         title: 'Espere procesamos la orden',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
                         }
